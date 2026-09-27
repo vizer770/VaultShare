@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login • VaultShare</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="auth-page">
+
+<div class="auth-container">
+
+    <!-- LEFT SIDE -->
+    <section class="auth-visual">
+
+        <div class="auth-brand">
+            <div class="brand-logo">V</div>
+            <span>VaultShare</span>
+        </div>
+
+        <div class="auth-visual-content">
+
+            <div class="welcome-badge">
+                SECURE CLOUD STORAGE
+            </div>
+
+            <h1>
+                Your files.<br>
+                <span>Your control.</span>
+            </h1>
+
+            <p>
+                Store, manage and share your files securely
+                from one simple workspace.
+            </p>
+
+            <div class="auth-features">
+
+                <div class="auth-feature">
+                    <div class="feature-icon">✓</div>
+                    <div>
+                        <strong>Secure storage</strong>
+                        <span>Your files stay organized and protected.</span>
+                    </div>
+                </div>
+
+                <div class="auth-feature">
+                    <div class="feature-icon">↗</div>
+                    <div>
+                        <strong>Easy sharing</strong>
+                        <span>Share files with simple secure links.</span>
+                    </div>
+                </div>
+
+                <div class="auth-feature">
+                    <div class="feature-icon">⚡</div>
+                    <div>
+                        <strong>Fast access</strong>
+                        <span>Access your files whenever you need them.</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="auth-footer">
+            © 2026 VaultShare
+        </div>
+
+    </section>
+
+
+    <!-- RIGHT SIDE -->
+    <section class="auth-form-section">
+
+        <div class="login-card">
+
+            <div class="mobile-brand">
+                <div class="brand-logo">V</div>
+                <span>VaultShare</span>
+            </div>
+
+            <div class="secure-badge">
+                🔒 Secure Login
+            </div>
+
+            <h1>Welcome back</h1>
+
+            <p class="welcome-text">
+                Sign in to access your VaultShare account.
+            </p>
+
+
+            {% if error %}
+                <div class="auth-error">
+                    {{ error }}
+                </div>
+            {% endif %}
+
+
+            <form method="POST"
+                  action="{{ url_for('login') }}">
+
+                <div class="form-group">
+
+                    <label for="username">
+                        Username
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Enter your username"
+                        autocomplete="username"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <div class="password-wrapper">
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            onclick="togglePassword()">
+
+                            👁
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="auth-submit">
+
+                    Sign In
+
+                </button>
+
+            </form>
+
+
+            <div class="auth-divider">
+                <span>New to VaultShare?</span>
+            </div>
+
+
+            <a
+                href="{{ url_for('register') }}"
+                class="auth-secondary-button">
+
+                Create an account
+
+            </a>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+<script>
+
+function togglePassword() {
+
+    const password =
+        document.getElementById("password");
+
+    const button =
+        document.querySelector(".password-toggle");
+
+    if (password.type === "password") {
+
+        password.type = "text";
+        button.textContent = "🙈";
+
+    } else {
+
+        password.type = "password";
+        button.textContent = "👁";
+
+    }
+
+}
+
+</script>
+
+<script src="{{ url_for('static', filename='theme.js') }}"></script>
+
+</body>
+</html>

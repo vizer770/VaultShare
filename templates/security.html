@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>VaultShare | Security</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+<div class="dashboard-page">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                <i class="fa-solid fa-vault"></i>
+            </div>
+
+            <span>VaultShare</span>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a href="/dashboard">
+                <i class="fa-solid fa-table-columns"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="/my-files">
+                <i class="fa-solid fa-folder"></i>
+                <span>My Files</span>
+            </a>
+
+            <a href="/shared">
+                <i class="fa-solid fa-share-nodes"></i>
+                <span>Shared</span>
+            </a>
+
+            <a href="/favorites">
+                <i class="fa-solid fa-star"></i>
+                <span>Favorites</span>
+            </a>
+
+            <a href="/trash">
+                <i class="fa-solid fa-trash"></i>
+                <span>Trash</span>
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <a href="/security" class="active">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>Security</span>
+            </a>
+
+            <a href="/settings">
+                <i class="fa-solid fa-gear"></i>
+                <span>Settings</span>
+            </a>
+
+            <a href="/logout">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="dashboard-main">
+
+        <div class="dashboard-top">
+
+            <div>
+
+                <p class="eyebrow">
+                    ACCOUNT PROTECTION
+                </p>
+
+                <h1>
+                    Security
+                </h1>
+
+                <p class="dashboard-subtitle">
+                    Keep your VaultShare account protected.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- SECURITY STATUS -->
+
+        <div class="security-status-card">
+
+            <div class="security-status-icon">
+
+                <i class="fa-solid fa-shield-halved"></i>
+
+            </div>
+
+            <div>
+
+                <span class="section-label">
+                    ACCOUNT STATUS
+                </span>
+
+                <h2>
+                    Your account is protected
+                </h2>
+
+                <p>
+                    Your password is securely stored using password hashing.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- CHANGE PASSWORD -->
+
+        <div class="settings-card security-card">
+
+            <div class="settings-card-header">
+
+                <div class="settings-icon security">
+
+                    <i class="fa-solid fa-key"></i>
+
+                </div>
+
+                <div>
+
+                    <h2>
+                        Change Password
+                    </h2>
+
+                    <p>
+                        Update your account password.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            {% if error %}
+
+            <div class="flash-message error">
+                {{ error }}
+            </div>
+
+            {% endif %}
+
+
+            {% if success %}
+
+            <div class="flash-message success">
+                {{ success }}
+            </div>
+
+            {% endif %}
+
+
+            <form
+                method="POST"
+                class="security-form">
+
+
+                <div class="form-group">
+
+                    <label>
+                        Current Password
+                    </label>
+
+                    <div class="password-input">
+
+                        <input
+                            type="password"
+                            name="current_password"
+                            required
+                            placeholder="Enter current password">
+
+                        <i class="fa-solid fa-lock"></i>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        New Password
+                    </label>
+
+                    <div class="password-input">
+
+                        <input
+                            type="password"
+                            name="new_password"
+                            required
+                            minlength="6"
+                            placeholder="Enter new password">
+
+                        <i class="fa-solid fa-key"></i>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Confirm New Password
+                    </label>
+
+                    <div class="password-input">
+
+                        <input
+                            type="password"
+                            name="confirm_password"
+                            required
+                            minlength="6"
+                            placeholder="Confirm new password">
+
+                        <i class="fa-solid fa-check"></i>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="settings-button">
+
+                    <i class="fa-solid fa-shield-halved"></i>
+
+                    Change Password
+
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- SECURITY FEATURES -->
+
+        <div class="security-features">
+
+            <div class="settings-card">
+
+                <div class="settings-icon green">
+
+                    <i class="fa-solid fa-lock"></i>
+
+                </div>
+
+                <h3>
+                    Password Protection
+                </h3>
+
+                <p>
+                    Passwords are stored using secure hashing.
+                </p>
+
+            </div>
+
+
+            <div class="settings-card">
+
+                <div class="settings-icon blue">
+
+                    <i class="fa-solid fa-file-shield"></i>
+
+                </div>
+
+                <h3>
+                    Private Files
+                </h3>
+
+                <p>
+                    Your files are accessible only to your account.
+                </p>
+
+            </div>
+
+
+            <div class="settings-card">
+
+                <div class="settings-icon purple">
+
+                    <i class="fa-solid fa-link"></i>
+
+                </div>
+
+                <h3>
+                    Secure Sharing
+                </h3>
+
+                <p>
+                    Files can be shared using unique links.
+                </p>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script src="{{ url_for('static', filename='theme.js') }}"></script>
+
+</body>
+
+</html>

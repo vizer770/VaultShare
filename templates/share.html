@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Share File • VaultShare</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body class="dashboard-page">
+
+
+<div class="app-layout">
+
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                V
+            </div>
+
+            <span>
+                VaultShare
+            </span>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a href="{{ url_for('dashboard') }}">
+                <span>⌂</span>
+                Dashboard
+            </a>
+
+            <a href="{{ url_for('my_files') }}">
+                <span>▣</span>
+                My Files
+            </a>
+
+            <a href="{{ url_for('shared') }}"
+               class="active">
+
+                <span>↗</span>
+                Shared
+
+            </a>
+
+            <a href="{{ url_for('favorites') }}">
+
+                <span>★</span>
+                Favorites
+
+            </a>
+
+            <a href="{{ url_for('trash') }}">
+
+                <span>♻</span>
+                Trash
+
+            </a>
+
+            <a href="{{ url_for('security') }}">
+
+                <span>🔒</span>
+                Security
+
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <a href="{{ url_for('profile') }}">
+
+                <span>◉</span>
+                Profile
+
+            </a>
+
+
+            <a href="{{ url_for('settings') }}">
+
+                <span>⚙</span>
+                Settings
+
+            </a>
+
+
+            <a href="{{ url_for('logout') }}">
+
+                <span>↪</span>
+                Logout
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="dashboard-main">
+
+
+        <div class="dashboard-top">
+
+            <div>
+
+                <div class="eyebrow">
+                    SHARING
+                </div>
+
+                <h1>
+                    Share File
+                </h1>
+
+                <p class="page-subtitle">
+                    Create a secure link for your file.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= SHARE CARD ================= -->
+
+        <div class="settings-container">
+
+
+            <section class="settings-card">
+
+
+                <div class="settings-card-header">
+
+                    <div class="settings-icon purple">
+                        ↗
+                    </div>
+
+
+                    <div>
+
+                        <h2>
+                            {{ file["original_name"] }}
+                        </h2>
+
+                        <p>
+                            Your file is ready to share.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- FILE INFORMATION -->
+
+                <div class="setting-row">
+
+                    <div class="setting-info">
+
+                        <strong>
+                            File name
+                        </strong>
+
+                        <span>
+                            {{ file["original_name"] }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="setting-row">
+
+                    <div class="setting-info">
+
+                        <strong>
+                            File size
+                        </strong>
+
+                        <span>
+                            {{ "%.2f"|format(file["size"] / 1024 / 1024) }} MB
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- SHARE LINK -->
+
+                <div class="share-link-box">
+
+                    <label>
+                        Share link
+                    </label>
+
+
+                    <div class="share-link-row">
+
+                        <input
+                            type="text"
+                            id="shareLink"
+                            value="{{ request.url_root }}s/{{ token }}"
+                            readonly
+                        >
+
+
+                        <button
+                            type="button"
+                            class="settings-button"
+                            onclick="copyShareLink()">
+
+                            Copy
+
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        id="copyMessage"
+                        class="copy-message">
+                    </div>
+
+                </div>
+
+
+
+                <!-- ACTIONS -->
+
+                <div class="share-actions">
+
+                    <a
+                        href="{{ url_for('shared') }}"
+                        class="settings-button">
+
+                        View Shared Files
+
+                    </a>
+
+
+                    <a
+                        href="{{ url_for('dashboard') }}"
+                        class="settings-button">
+
+                        Back to Dashboard
+
+                    </a>
+
+                </div>
+
+
+            </section>
+
+
+        </div>
+
+
+    </main>
+
+</div>
+
+
+
+<script>
+
+function copyShareLink() {
+
+    const input =
+        document.getElementById("shareLink");
+
+    const message =
+        document.getElementById("copyMessage");
+
+
+    navigator.clipboard.writeText(
+        input.value
+    ).then(function () {
+
+        message.textContent =
+            "✓ Link copied to clipboard";
+
+        message.className =
+            "copy-message success";
+
+
+        setTimeout(function () {
+
+            message.textContent = "";
+
+            message.className =
+                "copy-message";
+
+        }, 2500);
+
+    }).catch(function () {
+
+        input.select();
+
+        document.execCommand("copy");
+
+        message.textContent =
+            "✓ Link copied";
+
+        message.className =
+            "copy-message success";
+
+    });
+
+}
+
+</script>
+
+
+<script src="{{ url_for('static', filename='theme.js') }}"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Account • VaultShare</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="auth-page">
+
+<div class="auth-container">
+
+    <!-- ================= LEFT SIDE ================= -->
+
+    <section class="auth-visual">
+
+        <div class="auth-brand">
+            <div class="brand-logo">V</div>
+            <span>VaultShare</span>
+        </div>
+
+
+        <div class="auth-visual-content">
+
+            <div class="welcome-badge">
+                GET STARTED
+            </div>
+
+
+            <h1>
+                Your personal<br>
+                <span>cloud workspace.</span>
+            </h1>
+
+
+            <p>
+                Create your VaultShare account and start
+                managing your files in one secure place.
+            </p>
+
+
+            <div class="auth-features">
+
+                <div class="auth-feature">
+
+                    <div class="feature-icon">
+                        ✓
+                    </div>
+
+                    <div>
+                        <strong>500 MB storage</strong>
+
+                        <span>
+                            Enough space for your important files.
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <div class="auth-feature">
+
+                    <div class="feature-icon">
+                        🔒
+                    </div>
+
+                    <div>
+                        <strong>Private account</strong>
+
+                        <span>
+                            Your files stay linked to your account.
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <div class="auth-feature">
+
+                    <div class="feature-icon">
+                        ↗
+                    </div>
+
+                    <div>
+                        <strong>Simple sharing</strong>
+
+                        <span>
+                            Share files whenever you need to.
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="auth-footer">
+            © 2026 VaultShare
+        </div>
+
+    </section>
+
+
+    <!-- ================= RIGHT SIDE ================= -->
+
+    <section class="auth-form-section">
+
+        <div class="login-card">
+
+
+            <div class="mobile-brand">
+
+                <div class="brand-logo">
+                    V
+                </div>
+
+                <span>
+                    VaultShare
+                </span>
+
+            </div>
+
+
+            <div class="secure-badge">
+                🔐 Create Account
+            </div>
+
+
+            <h1>
+                Create your account
+            </h1>
+
+
+            <p class="welcome-text">
+                Join VaultShare and start storing your files.
+            </p>
+
+
+            {% if error %}
+
+                <div class="auth-error">
+                    {{ error }}
+                </div>
+
+            {% endif %}
+
+
+            <!-- ================= FORM ================= -->
+
+            <form method="POST"
+                  action="{{ url_for('register') }}"
+                  id="registerForm">
+
+
+                <!-- USERNAME -->
+
+                <div class="form-group">
+
+                    <label for="username">
+                        Username
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Choose a username"
+                        autocomplete="username"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        autocomplete="email"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+
+                    <div class="password-wrapper">
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Create a password"
+                            autocomplete="new-password"
+                            minlength="6"
+                            required
+                        >
+
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            onclick="togglePassword('password', this)">
+
+                            👁
+
+                        </button>
+
+                    </div>
+
+
+                    <!-- PASSWORD STRENGTH -->
+
+                    <div class="password-strength">
+
+                        <div class="strength-top">
+
+                            <span>
+                                Password strength
+                            </span>
+
+                            <strong id="strengthText">
+                                —
+                            </strong>
+
+                        </div>
+
+
+                        <div class="strength-bar">
+
+                            <div
+                                id="strengthFill"
+                                class="strength-fill">
+                            </div>
+
+                        </div>
+
+
+                        <div class="password-rules">
+
+                            <span id="ruleLength">
+                                ○ 8+ characters
+                            </span>
+
+                            <span id="ruleUpper">
+                                ○ Uppercase
+                            </span>
+
+                            <span id="ruleNumber">
+                                ○ Number
+                            </span>
+
+                            <span id="ruleSpecial">
+                                ○ Special character
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CONFIRM PASSWORD -->
+
+                <div class="form-group">
+
+                    <label for="confirm_password">
+                        Confirm Password
+                    </label>
+
+
+                    <div class="password-wrapper">
+
+                        <input
+                            type="password"
+                            id="confirm_password"
+                            name="confirm_password"
+                            placeholder="Confirm your password"
+                            autocomplete="new-password"
+                            minlength="6"
+                            required
+                        >
+
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            onclick="togglePassword('confirm_password', this)">
+
+                            👁
+
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        id="passwordMatch"
+                        class="password-match">
+                    </div>
+
+                </div>
+
+
+                <!-- SUBMIT -->
+
+                <button
+                    type="submit"
+                    class="auth-submit">
+
+                    Create Account
+
+                </button>
+
+            </form>
+
+
+            <!-- DIVIDER -->
+
+            <div class="auth-divider">
+                <span>
+                    Already have an account?
+                </span>
+            </div>
+
+
+            <!-- LOGIN -->
+
+            <a
+                href="{{ url_for('login') }}"
+                class="auth-secondary-button">
+
+                Sign in
+
+            </a>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+     ===================================================== -->
+
+<script>
+
+/* =====================================================
+   SHOW / HIDE PASSWORD
+   ===================================================== */
+
+function togglePassword(inputId, button) {
+
+    const input =
+        document.getElementById(inputId);
+
+
+    if (input.type === "password") {
+
+        input.type = "text";
+
+        button.textContent = "🙈";
+
+    } else {
+
+        input.type = "password";
+
+        button.textContent = "👁";
+
+    }
+
+}
+
+
+/* =====================================================
+   PASSWORD STRENGTH
+   ===================================================== */
+
+const passwordInput =
+    document.getElementById("password");
+
+const strengthFill =
+    document.getElementById("strengthFill");
+
+const strengthText =
+    document.getElementById("strengthText");
+
+const ruleLength =
+    document.getElementById("ruleLength");
+
+const ruleUpper =
+    document.getElementById("ruleUpper");
+
+const ruleNumber =
+    document.getElementById("ruleNumber");
+
+const ruleSpecial =
+    document.getElementById("ruleSpecial");
+
+
+passwordInput.addEventListener("input", function () {
+
+    const password = this.value;
+
+
+    const hasLength =
+        password.length >= 8;
+
+    const hasUpper =
+        /[A-Z]/.test(password);
+
+    const hasNumber =
+        /[0-9]/.test(password);
+
+    const hasSpecial =
+        /[^A-Za-z0-9]/.test(password);
+
+
+    /* Update requirement text */
+
+    ruleLength.textContent =
+        (hasLength ? "✓ " : "○ ") +
+        "8+ characters";
+
+    ruleUpper.textContent =
+        (hasUpper ? "✓ " : "○ ") +
+        "Uppercase";
+
+    ruleNumber.textContent =
+        (hasNumber ? "✓ " : "○ ") +
+        "Number";
+
+    ruleSpecial.textContent =
+        (hasSpecial ? "✓ " : "○ ") +
+        "Special character";
+
+
+    /* Update requirement colors */
+
+    ruleLength.classList.toggle(
+        "valid",
+        hasLength
+    );
+
+    ruleUpper.classList.toggle(
+        "valid",
+        hasUpper
+    );
+
+    ruleNumber.classList.toggle(
+        "valid",
+        hasNumber
+    );
+
+    ruleSpecial.classList.toggle(
+        "valid",
+        hasSpecial
+    );
+
+
+    /* Calculate strength */
+
+    let score = 0;
+
+    if (hasLength) score++;
+    if (hasUpper) score++;
+    if (hasNumber) score++;
+    if (hasSpecial) score++;
+
+
+    /* Empty */
+
+    if (password.length === 0) {
+
+        strengthFill.style.width = "0%";
+
+        strengthFill.style.background =
+            "transparent";
+
+        strengthText.textContent = "—";
+
+        strengthText.style.color =
+            "#8d99ad";
+
+        return;
+    }
+
+
+    /* Weak */
+
+    if (score <= 1) {
+
+        strengthFill.style.width = "25%";
+
+        strengthFill.style.background =
+            "#ef4444";
+
+        strengthText.textContent =
+            "Weak";
+
+        strengthText.style.color =
+            "#ef4444";
+
+    }
+
+
+    /* Fair */
+
+    else if (score === 2) {
+
+        strengthFill.style.width = "50%";
+
+        strengthFill.style.background =
+            "#f59e0b";
+
+        strengthText.textContent =
+            "Fair";
+
+        strengthText.style.color =
+            "#f59e0b";
+
+    }
+
+
+    /* Good */
+
+    else if (score === 3) {
+
+        strengthFill.style.width = "75%";
+
+        strengthFill.style.background =
+            "#eab308";
+
+        strengthText.textContent =
+            "Good";
+
+        strengthText.style.color =
+            "#eab308";
+
+    }
+
+
+    /* Strong */
+
+    else {
+
+        strengthFill.style.width = "100%";
+
+        strengthFill.style.background =
+            "#22c55e";
+
+        strengthText.textContent =
+            "Strong";
+
+        strengthText.style.color =
+            "#22c55e";
+
+    }
+
+});
+
+
+/* =====================================================
+   CONFIRM PASSWORD
+   ===================================================== */
+
+const confirmPassword =
+    document.getElementById("confirm_password");
+
+const passwordMatch =
+    document.getElementById("passwordMatch");
+
+
+function checkPasswordMatch() {
+
+    const password =
+        passwordInput.value;
+
+    const confirm =
+        confirmPassword.value;
+
+
+    if (confirm.length === 0) {
+
+        passwordMatch.textContent = "";
+
+        passwordMatch.className =
+            "password-match";
+
+        return;
+
+    }
+
+
+    if (password === confirm) {
+
+        passwordMatch.textContent =
+            "✓ Passwords match";
+
+        passwordMatch.className =
+            "password-match match";
+
+    } else {
+
+        passwordMatch.textContent =
+            "✕ Passwords do not match";
+
+        passwordMatch.className =
+            "password-match no-match";
+
+    }
+
+}
+
+
+confirmPassword.addEventListener(
+    "input",
+    checkPasswordMatch
+);
+
+passwordInput.addEventListener(
+    "input",
+    checkPasswordMatch
+);
+
+
+/* =====================================================
+   FORM VALIDATION
+   ===================================================== */
+
+document
+    .getElementById("registerForm")
+    .addEventListener("submit", function (event) {
+
+        const password =
+            passwordInput.value;
+
+        const confirm =
+            confirmPassword.value;
+
+
+        if (password !== confirm) {
+
+            event.preventDefault();
+
+            alert(
+                "Passwords do not match."
+            );
+
+            return;
+
+        }
+
+
+        if (password.length < 6) {
+
+            event.preventDefault();
+
+            alert(
+                "Password must contain at least 6 characters."
+            );
+
+        }
+
+    });
+
+</script>
+
+
+<script src="{{ url_for('static', filename='theme.js') }}"></script>
+
+</body>
+</html>

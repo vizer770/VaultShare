@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>VaultShare | Profile</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+<div class="dashboard-page">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                <i class="fa-solid fa-vault"></i>
+            </div>
+
+            <span>VaultShare</span>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a href="/dashboard">
+                <i class="fa-solid fa-table-columns"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="/my-files">
+                <i class="fa-solid fa-folder"></i>
+                <span>My Files</span>
+            </a>
+
+            <a href="/shared">
+                <i class="fa-solid fa-share-nodes"></i>
+                <span>Shared</span>
+            </a>
+
+            <a href="/favorites">
+                <i class="fa-solid fa-star"></i>
+                <span>Favorites</span>
+            </a>
+
+            <a href="/trash">
+                <i class="fa-solid fa-trash"></i>
+                <span>Trash</span>
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <a href="/security">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>Security</span>
+            </a>
+
+            <a href="/settings">
+                <i class="fa-solid fa-gear"></i>
+                <span>Settings</span>
+            </a>
+
+            <a href="/logout">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="dashboard-main">
+
+        <div class="dashboard-top">
+
+            <div>
+
+                <p class="eyebrow">
+                    ACCOUNT
+                </p>
+
+                <h1>
+                    Profile
+                </h1>
+
+                <p class="dashboard-subtitle">
+                    Customize your VaultShare account.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- PROFILE CARD -->
+
+        <div class="profile-card">
+
+
+            <!-- PROFILE HEADER -->
+
+            <div class="profile-header">
+
+                <div class="profile-avatar">
+
+                    <span>
+                        {{
+                            (
+                                user["display_name"]
+                                or user["username"]
+                            )[0]|upper
+                        }}
+                    </span>
+
+                </div>
+
+
+                <div>
+
+                    <h2>
+                        {{ user["display_name"] or user["username"] }}
+                    </h2>
+
+                    <p>
+                        @{{ user["username"] }}
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- ERROR -->
+
+            {% if error %}
+
+            <div class="flash-message error">
+                {{ error }}
+            </div>
+
+            {% endif %}
+
+
+            <!-- FORM -->
+
+            <form
+                method="POST"
+                class="profile-form">
+
+
+                <div class="form-group">
+
+                    <label for="display_name">
+                        Display Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="display_name"
+                        name="display_name"
+                        value="{{ user['display_name'] or '' }}"
+                        placeholder="Your display name">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="username">
+                        Username
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        value="{{ user['username'] }}"
+                        required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value="{{ user['email'] or '' }}"
+                        placeholder="you@example.com">
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="settings-button">
+
+                    <i class="fa-solid fa-floppy-disk"></i>
+
+                    Save Changes
+
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- ACCOUNT INFORMATION -->
+
+        <div class="profile-info-grid">
+
+            <div class="settings-card">
+
+                <div class="settings-icon blue">
+
+                    <i class="fa-solid fa-hard-drive"></i>
+
+                </div>
+
+                <div>
+
+                    <span class="info-label">
+                        Storage Limit
+                    </span>
+
+                    <h3>
+                        {{ "%.0f"|format(
+                            user["storage_limit"] / 1024 / 1024
+                        ) }}
+                        MB
+                    </h3>
+
+                </div>
+
+            </div>
+
+
+            <div class="settings-card">
+
+                <div class="settings-icon green">
+
+                    <i class="fa-solid fa-shield-halved"></i>
+
+                </div>
+
+                <div>
+
+                    <span class="info-label">
+                        Account
+                    </span>
+
+                    <h3>
+                        Protected
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script src="{{ url_for('static', filename='theme.js') }}"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>VaultShare | Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+<div class="dashboard-page">
+
+    <!-- ================================================= -->
+    <!-- SIDEBAR -->
+    <!-- ================================================= -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-logo">
+                <i class="fa-solid fa-vault"></i>
+            </div>
+
+            <span>VaultShare</span>
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a href="/dashboard" class="active">
+                <i class="fa-solid fa-table-columns"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="/my-files">
+                <i class="fa-solid fa-folder"></i>
+                <span>My Files</span>
+            </a>
+
+            <a href="/shared">
+                <i class="fa-solid fa-share-nodes"></i>
+                <span>Shared</span>
+            </a>
+
+            <a href="/favorites">
+                <i class="fa-solid fa-star"></i>
+                <span>Favorites</span>
+            </a>
+
+            <a href="/trash">
+                <i class="fa-solid fa-trash"></i>
+                <span>Trash</span>
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <a href="/security">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>Security</span>
+            </a>
+
+            <a href="/settings">
+                <i class="fa-solid fa-gear"></i>
+                <span>Settings</span>
+            </a>
+
+            <a href="/logout">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================================================= -->
+    <!-- MAIN -->
+    <!-- ================================================= -->
+
+    <main class="dashboard-main">
+
+        <!-- TOP -->
+        <div class="dashboard-top">
+
+            <div>
+                <p class="eyebrow">YOUR PERSONAL VAULT</p>
+
+                <h1>
+                    Welcome,
+                    {{ user["display_name"] or user["username"] }}
+                    👋
+                </h1>
+
+                <p class="dashboard-subtitle">
+                    Store, manage and share your files securely.
+                </p>
+            </div>
+
+
+            <a href="#uploadArea"
+               class="primary-button">
+
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                Upload Files
+
+            </a>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- STAT CARDS -->
+        <!-- ================================================= -->
+
+        <section class="stats-grid">
+
+            <!-- FILES -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon purple">
+                    <i class="fa-solid fa-file"></i>
+                </div>
+
+                <div>
+
+                    <span class="stat-label">
+                        My Files
+                    </span>
+
+                    <strong>
+                        {{ files|length }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- STORAGE -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon blue">
+                    <i class="fa-solid fa-database"></i>
+                </div>
+
+                <div>
+
+                    <span class="stat-label">
+                        Storage Used
+                    </span>
+
+                    <strong>
+                        {{ "%.2f"|format(user["storage_used"] / 1024 / 1024) }}
+                        MB
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- SHARED -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon cyan">
+                    <i class="fa-solid fa-share-nodes"></i>
+                </div>
+
+                <div>
+
+                    <span class="stat-label">
+                        Shared Files
+                    </span>
+
+                    <strong>
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- SECURITY -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon green">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+
+                <div>
+
+                    <span class="stat-label">
+                        Security
+                    </span>
+
+                    <strong>
+                        Protected
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- STORAGE -->
+        <!-- ================================================= -->
+
+        <section class="storage-card">
+
+            <div class="storage-header">
+
+                <div>
+
+                    <span class="section-label">
+                        STORAGE
+                    </span>
+
+                    <h2>
+                        Your Vault
+                    </h2>
+
+                </div>
+
+                <div class="storage-number">
+
+                    {{ "%.1f"|format(storage_percent) }}%
+
+                </div>
+
+            </div>
+
+
+            <div class="storage-bar">
+
+                <div
+                    class="storage-fill"
+                    data-storage="{{ storage_percent }}">
+                </div>
+
+            </div>
+
+
+            <div class="storage-footer">
+
+                <span>
+                    {{ "%.2f"|format(user["storage_used"] / 1024 / 1024) }}
+                    MB used
+                </span>
+
+                <span>
+                    {{ "%.0f"|format(user["storage_limit"] / 1024 / 1024) }}
+                    MB available
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- UPLOAD -->
+        <!-- ================================================= -->
+
+        <section
+            class="upload-card"
+            id="uploadArea">
+
+            <div class="upload-icon">
+
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+
+            </div>
+
+            <h2>
+                Upload your files
+            </h2>
+
+            <p>
+                Drag & drop files here or choose files from your computer.
+            </p>
+
+
+            <form
+                action="/upload"
+                method="POST"
+                enctype="multipart/form-data"
+                id="uploadForm">
+
+                <input
+                    type="file"
+                    name="file"
+                    id="fileInput"
+                    multiple
+                    hidden>
+
+                <label
+                    for="fileInput"
+                    class="upload-button">
+
+                    <i class="fa-solid fa-folder-open"></i>
+
+                    Choose Files
+
+                </label>
+
+                <button
+                    type="submit"
+                    id="uploadButton"
+                    class="upload-submit"
+                    style="display:none;">
+
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                    Upload Selected
+
+                </button>
+
+            </form>
+
+
+            <div
+                id="dropMessage"
+                class="drop-message">
+
+                Drop files anywhere inside this box
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- RECENT FILES -->
+        <!-- ================================================= -->
+
+        <section class="recent-section">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span class="section-label">
+                        YOUR FILES
+                    </span>
+
+                    <h2>
+                        Recent Files
+                    </h2>
+
+                </div>
+
+
+                <a href="/my-files"
+                   class="view-all">
+
+                    View All
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </a>
+
+            </div>
+
+
+            {% if files %}
+
+                <div class="file-list">
+
+                    {% for file in files[:5] %}
+
+                        <div class="file-row">
+
+                            <div class="file-type-icon">
+
+                                <i class="fa-solid fa-file"></i>
+
+                            </div>
+
+
+                            <div class="file-info">
+
+                                <strong>
+                                    {{ file["filename"] }}
+                                </strong>
+
+                                <span>
+
+                                    {{ "%.2f"|format(file["size"] / 1024) }}
+                                    KB
+
+                                    •
+                                    {{ file["uploaded_at"] }}
+
+                                </span>
+
+                            </div>
+
+
+                            <div class="file-actions">
+
+                                <a
+                                    href="/favorite/{{ file['id'] }}"
+                                    title="Favorite">
+
+                                    <i class="fa-solid fa-star"></i>
+
+                                </a>
+
+
+                                <a
+                                    href="/share/{{ file['id'] }}"
+                                    title="Share">
+
+                                    <i class="fa-solid fa-share-nodes"></i>
+
+                                </a>
+
+
+                                <a
+                                    href="/download/{{ file['id'] }}"
+                                    title="Download">
+
+                                    <i class="fa-solid fa-download"></i>
+
+                                </a>
+
+
+                                <a
+                                    href="/delete/{{ file['id'] }}"
+                                    title="Move to Trash"
+                                    onclick="return confirm('Move this file to Trash?')">
+
+                                    <i class="fa-solid fa-trash"></i>
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="empty-state">
+
+                    <div class="empty-icon">
+
+                        <i class="fa-solid fa-folder-open"></i>
+
+                    </div>
+
+                    <h3>
+                        No files yet
+                    </h3>
+
+                    <p>
+                        Upload your first file to get started.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- ===================================================== -->
+<!-- UPLOAD / STORAGE JS -->
+<!-- ===================================================== -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        /* -----------------------------------------
+           STORAGE BAR
+        ----------------------------------------- */
+
+        const storageFill =
+            document.querySelector(".storage-fill");
+
+        if (storageFill) {
+
+            const percentage =
+                parseFloat(
+                    storageFill.dataset.storage || 0
+                );
+
+            storageFill.style.width =
+                Math.min(percentage, 100) + "%";
+        }
+
+
+        /* -----------------------------------------
+           DRAG & DROP
+        ----------------------------------------- */
+
+        const uploadArea =
+            document.getElementById("uploadArea");
+
+        const fileInput =
+            document.getElementById("fileInput");
+
+        const uploadButton =
+            document.getElementById("uploadButton");
+
+
+        if (
+            uploadArea &&
+            fileInput
+        ) {
+
+            uploadArea.addEventListener(
+                "dragover",
+                function (event) {
+
+                    event.preventDefault();
+
+                    uploadArea.classList.add(
+                        "drag-active"
+                    );
+
+                }
+            );
+
+
+            uploadArea.addEventListener(
+                "dragleave",
+                function () {
+
+                    uploadArea.classList.remove(
+                        "drag-active"
+                    );
+
+                }
+            );
+
+
+            uploadArea.addEventListener(
+                "drop",
+                function (event) {
+
+                    event.preventDefault();
+
+                    uploadArea.classList.remove(
+                        "drag-active"
+                    );
+
+
+                    if (
+                        event.dataTransfer.files.length
+                    ) {
+
+                        fileInput.files =
+                            event.dataTransfer.files;
+
+                        showUploadButton();
+
+                    }
+
+                }
+            );
+
+
+            fileInput.addEventListener(
+                "change",
+                function () {
+
+                    showUploadButton();
+
+                }
+            );
+
+        }
+
+
+        function showUploadButton() {
+
+            if (!uploadButton) {
+                return;
+            }
+
+            if (
+                fileInput.files &&
+                fileInput.files.length > 0
+            ) {
+
+                uploadButton.style.display =
+                    "inline-flex";
+
+                uploadButton.innerHTML =
+                    '<i class="fa-solid fa-cloud-arrow-up"></i> ' +
+                    'Upload ' +
+                    fileInput.files.length +
+                    ' File(s)';
+
+            }
+
+        }
+
+    }
+);
+
+</script>
+
+
+<script src="{{ url_for('static', filename='theme.js') }}"></script>
+
+</body>
+</html>

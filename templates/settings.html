@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Settings • VaultShare</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="dashboard-page">
+
+<div class="app-layout">
+
+    <!-- ================= SIDEBAR ================= -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-logo">V</div>
+            <span>VaultShare</span>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="{{ url_for('dashboard') }}">
+                <span>⌂</span>
+                Dashboard
+            </a>
+
+            <a href="{{ url_for('my_files') }}">
+                <span>▣</span>
+                My Files
+            </a>
+
+            <a href="{{ url_for('shared') }}">
+                <span>↗</span>
+                Shared
+            </a>
+
+            <a href="{{ url_for('favorites') }}">
+                <span>★</span>
+                Favorites
+            </a>
+
+            <a href="{{ url_for('trash') }}">
+                <span>♻</span>
+                Trash
+            </a>
+
+            <a href="{{ url_for('security') }}">
+                <span>🔒</span>
+                Security
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <a href="{{ url_for('profile') }}">
+                <span>◉</span>
+                Profile
+            </a>
+
+            <a href="{{ url_for('settings') }}" class="active">
+                <span>⚙</span>
+                Settings
+            </a>
+
+            <a href="{{ url_for('logout') }}">
+                <span>↪</span>
+                Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+    <main class="dashboard-main">
+
+        <div class="dashboard-top">
+
+            <div>
+                <div class="eyebrow">ACCOUNT</div>
+
+                <h1>Settings</h1>
+
+                <p class="page-subtitle">
+                    Customize your VaultShare experience.
+                </p>
+            </div>
+
+        </div>
+
+
+        <!-- ================= SETTINGS ================= -->
+
+        <div class="settings-container">
+
+            <!-- Appearance -->
+            <section class="settings-card">
+
+                <div class="settings-card-header">
+
+                    <div class="settings-icon purple">
+                        ◐
+                    </div>
+
+                    <div>
+                        <h2>Appearance</h2>
+
+                        <p>
+                            Change how VaultShare looks.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="setting-row">
+
+                    <div class="setting-info">
+
+                        <strong>Theme</strong>
+
+                        <span>
+                            Choose your preferred interface theme.
+                        </span>
+
+                    </div>
+
+
+                    <select id="themeSelect"
+                            class="settings-select">
+
+                        <option value="dark">
+                            Dark
+                        </option>
+
+                        <option value="light">
+                            Light
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </section>
+
+
+            <!-- Notifications -->
+            <section class="settings-card">
+
+                <div class="settings-card-header">
+
+                    <div class="settings-icon blue">
+                        🔔
+                    </div>
+
+                    <div>
+                        <h2>Notifications</h2>
+
+                        <p>
+                            Manage application notifications.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="setting-row">
+
+                    <div class="setting-info">
+
+                        <strong>Notifications</strong>
+
+                        <span>
+                            Enable or disable VaultShare notifications.
+                        </span>
+
+                    </div>
+
+
+                    <label class="toggle">
+
+                        <input
+                            type="checkbox"
+                            id="notificationToggle"
+                            checked
+                        >
+
+                        <span class="toggle-slider"></span>
+
+                    </label>
+
+                </div>
+
+            </section>
+
+
+            <!-- Storage -->
+            <section class="settings-card">
+
+                <div class="settings-card-header">
+
+                    <div class="settings-icon cyan">
+                        ☁
+                    </div>
+
+                    <div>
+                        <h2>Storage</h2>
+
+                        <p>
+                            Information about your storage space.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="setting-row">
+
+                    <div class="setting-info">
+
+                        <strong>Storage Limit</strong>
+
+                        <span>
+                            Maximum storage available for your account.
+                        </span>
+
+                    </div>
+
+                    <strong>500 MB</strong>
+
+                </div>
+
+
+                <div class="setting-row">
+
+                    <div class="setting-info">
+
+                        <strong>Manage Files</strong>
+
+                        <span>
+                            View, download or delete your files.
+                        </span>
+
+                    </div>
+
+                    <a href="{{ url_for('my_files') }}"
+                       class="settings-button">
+
+                        My Files
+
+                    </a>
+
+                </div>
+
+            </section>
+
+
+            <!-- Account -->
+            <section class="settings-card">
+
+                <div class="settings-card-header">
+
+                    <div class="settings-icon green">
+                        👤
+                    </div>
+
+                    <div>
+                        <h2>Account</h2>
+
+                        <p>
+                            Manage your VaultShare account.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="setting-row">
+
+                    <div class="setting-info">
+
+                        <strong>Profile</strong>
+
+                        <span>
+                            Update your name, username and email.
+                        </span>
+
+                    </div>
+
+                    <a href="{{ url_for('profile') }}"
+                       class="settings-button">
+
+                        Edit Profile
+
+                    </a>
+
+                </div>
+
+
+                <div class="setting-row">
+
+                    <div class="setting-info">
+
+                        <strong>Security</strong>
+
+                        <span>
+                            Change your account password.
+                        </span>
+
+                    </div>
+
+                    <a href="{{ url_for('security') }}"
+                       class="settings-button">
+
+                        Security
+
+                    </a>
+
+                </div>
+
+
+                <div class="setting-row danger-row">
+
+                    <div class="setting-info">
+
+                        <strong>Logout</strong>
+
+                        <span>
+                            Sign out from your VaultShare account.
+                        </span>
+
+                    </div>
+
+                    <a href="{{ url_for('logout') }}"
+                       class="settings-button danger-button">
+
+                        Logout
+
+                    </a>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<!-- ================= SETTINGS SCRIPT ================= -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const themeSelect =
+        document.getElementById("themeSelect");
+
+    const notificationToggle =
+        document.getElementById("notificationToggle");
+
+
+    // ---------------- THEME ----------------
+
+    const savedTheme =
+        localStorage.getItem("vaultshare-theme") || "dark";
+
+    themeSelect.value = savedTheme;
+
+
+    themeSelect.addEventListener("change", function () {
+
+        const theme = this.value;
+
+        localStorage.setItem(
+            "vaultshare-theme",
+            theme
+        );
+
+        if (theme === "light") {
+
+            document.body.classList.add("light-mode");
+
+        } else {
+
+            document.body.classList.remove("light-mode");
+
+        }
+
+    });
+
+
+    // ---------------- NOTIFICATIONS ----------------
+
+    const savedNotifications =
+        localStorage.getItem(
+            "vaultshare-notifications"
+        );
+
+
+    if (savedNotifications === "off") {
+
+        notificationToggle.checked = false;
+
+    } else {
+
+        notificationToggle.checked = true;
+
+    }
+
+
+    notificationToggle.addEventListener(
+        "change",
+        function () {
+
+            if (this.checked) {
+
+                localStorage.setItem(
+                    "vaultshare-notifications",
+                    "on"
+                );
+
+                document.body.classList.remove(
+                    "notifications-off"
+                );
+
+            } else {
+
+                localStorage.setItem(
+                    "vaultshare-notifications",
+                    "off"
+                );
+
+                document.body.classList.add(
+                    "notifications-off"
+                );
+
+            }
+
+        }
+    );
+
+});
+
+</script>
+
+<script src="{{ url_for('static', filename='theme.js') }}"></script>
+
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>VaultShare | Favorites</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+<div class="dashboard-page">
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                <i class="fa-solid fa-vault"></i>
+            </div>
+
+            <span>VaultShare</span>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a href="/dashboard">
+                <i class="fa-solid fa-table-columns"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="/my-files">
+                <i class="fa-solid fa-folder"></i>
+                <span>My Files</span>
+            </a>
+
+            <a href="/shared">
+                <i class="fa-solid fa-share-nodes"></i>
+                <span>Shared</span>
+            </a>
+
+            <a href="/favorites" class="active">
+                <i class="fa-solid fa-star"></i>
+                <span>Favorites</span>
+            </a>
+
+            <a href="/trash">
+                <i class="fa-solid fa-trash"></i>
+                <span>Trash</span>
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <a href="/security">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>Security</span>
+            </a>
+
+            <a href="/settings">
+                <i class="fa-solid fa-gear"></i>
+                <span>Settings</span>
+            </a>
+
+            <a href="/logout">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <main class="dashboard-main">
+
+        <div class="dashboard-top">
+
+            <div>
+
+                <p class="eyebrow">
+                    SAVED FILES
+                </p>
+
+                <h1>
+                    Favorites
+                </h1>
+
+                <p class="dashboard-subtitle">
+                    Quickly access the files you use most.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="section-heading">
+
+            <div>
+
+                <span class="section-label">
+                    YOUR FAVORITES
+                </span>
+
+                <h2>
+                    Favorite Files
+                </h2>
+
+            </div>
+
+            <span class="file-count">
+                {{ files|length }}
+                file{% if files|length != 1 %}s{% endif %}
+            </span>
+
+        </div>
+
+
+        {% if files %}
+
+        <div class="file-list">
+
+            {% for file in files %}
+
+            <div class="file-row">
+
+                <div class="file-type-icon favorite-icon">
+
+                    <i class="fa-solid fa-star"></i>
+
+                </div>
+
+
+                <div class="file-info">
+
+                    <strong>
+                        {{ file["filename"] }}
+                    </strong>
+
+                    <span>
+                        {{ "%.2f"|format(file["size"] / 1024) }}
+                        KB
+                        •
+                        {{ file["uploaded_at"] }}
+                    </span>
+
+                </div>
+
+
+                <div class="file-actions">
+
+                    <a
+                        href="/favorite/{{ file['id'] }}"
+                        title="Remove from Favorites">
+
+                        <i class="fa-solid fa-star"></i>
+
+                    </a>
+
+
+                    <a
+                        href="/download/{{ file['id'] }}"
+                        title="Download">
+
+                        <i class="fa-solid fa-download"></i>
+
+                    </a>
+
+
+                    <a
+                        href="/delete/{{ file['id'] }}"
+                        title="Move to Trash"
+                        onclick="return confirm('Move this file to Trash?')">
+
+                        <i class="fa-solid fa-trash"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        {% else %}
+
+        <div class="empty-state">
+
+            <div class="empty-icon">
+
+                <i class="fa-regular fa-star"></i>
+
+            </div>
+
+            <h3>
+                No favorite files
+            </h3>
+
+            <p>
+                Click the star icon on any file to add it here.
+            </p>
+
+            <a
+                href="/my-files"
+                class="primary-button">
+
+                <i class="fa-solid fa-folder"></i>
+
+                Browse My Files
+
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </main>
+
+</div>
+
+
+<script src="{{ url_for('static', filename='theme.js') }}"></script>
+
+</body>
+
+</html>

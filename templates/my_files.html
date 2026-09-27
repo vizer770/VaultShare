@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>VaultShare | My Files</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+<div class="dashboard-page">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                <i class="fa-solid fa-vault"></i>
+            </div>
+
+            <span>VaultShare</span>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a href="/dashboard">
+                <i class="fa-solid fa-table-columns"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="/my-files" class="active">
+                <i class="fa-solid fa-folder"></i>
+                <span>My Files</span>
+            </a>
+
+            <a href="/shared">
+                <i class="fa-solid fa-share-nodes"></i>
+                <span>Shared</span>
+            </a>
+
+            <a href="/favorites">
+                <i class="fa-solid fa-star"></i>
+                <span>Favorites</span>
+            </a>
+
+            <a href="/trash">
+                <i class="fa-solid fa-trash"></i>
+                <span>Trash</span>
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <a href="/security">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>Security</span>
+            </a>
+
+            <a href="/settings">
+                <i class="fa-solid fa-gear"></i>
+                <span>Settings</span>
+            </a>
+
+            <a href="/logout">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="dashboard-main">
+
+
+        <!-- HEADER -->
+
+        <div class="dashboard-top">
+
+            <div>
+
+                <p class="eyebrow">
+                    YOUR STORAGE
+                </p>
+
+                <h1>
+                    My Files
+                </h1>
+
+                <p class="dashboard-subtitle">
+                    Manage all your uploaded files in one place.
+                </p>
+
+            </div>
+
+
+            <a
+                href="/dashboard#uploadArea"
+                class="primary-button">
+
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                Upload Files
+
+            </a>
+
+        </div>
+
+
+        <!-- ================= STORAGE CARD ================= -->
+
+        <section class="storage-card">
+
+            <div class="storage-header">
+
+                <div>
+
+                    <span class="section-label">
+                        STORAGE
+                    </span>
+
+                    <h2>
+                        Storage Overview
+                    </h2>
+
+                </div>
+
+
+                <div class="storage-number">
+
+                    {{ "%.1f"|format(
+                        (storage_used / user["storage_limit"]) * 100
+                    ) }}%
+
+                </div>
+
+            </div>
+
+
+            <div class="storage-bar">
+
+                <div
+                    class="storage-fill"
+                    data-storage="{{
+                        (storage_used / user['storage_limit']) * 100
+                    }}">
+                </div>
+
+            </div>
+
+
+            <div class="storage-footer">
+
+                <span>
+
+                    <strong>
+                        {{ "%.2f"|format(storage_used / 1024 / 1024) }}
+                        MB
+                    </strong>
+
+                    used
+
+                </span>
+
+
+                <span>
+
+                    <strong>
+                        {{ "%.0f"|format(
+                            user["storage_limit"] / 1024 / 1024
+                        ) }}
+                        MB
+                    </strong>
+
+                    total
+
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= FILE HEADER ================= -->
+
+        <div class="section-heading">
+
+            <div>
+
+                <span class="section-label">
+                    YOUR FILES
+                </span>
+
+                <h2>
+                    All Files
+                </h2>
+
+            </div>
+
+
+            <span class="file-count">
+
+                {{ files|length }}
+
+                file{% if files|length != 1 %}s{% endif %}
+
+            </span>
+
+        </div>
+
+
+        <!-- ================= FILE LIST ================= -->
+
+        {% if files %}
+
+        <div class="file-list">
+
+            {% for file in files %}
+
+            <div class="file-row">
+
+
+                <!-- FILE ICON -->
+
+                <div class="file-type-icon">
+
+                    <i class="fa-solid fa-file"></i>
+
+                </div>
+
+
+                <!-- FILE INFO -->
+
+                <div class="file-info">
+
+                    <strong title="{{ file['filename'] }}">
+
+                        {{ file["filename"] }}
+
+                    </strong>
+
+
+                    <span>
+
+                        {% if file["size"] < 1024 %}
+
+                            {{ file["size"] }} B
+
+                        {% elif file["size"] < 1024 * 1024 %}
+
+                            {{ "%.2f"|format(
+                                file["size"] / 1024
+                            ) }} KB
+
+                        {% else %}
+
+                            {{ "%.2f"|format(
+                                file["size"] / 1024 / 1024
+                            ) }} MB
+
+                        {% endif %}
+
+                        &nbsp; • &nbsp;
+
+                        {{ file["uploaded_at"] }}
+
+                    </span>
+
+                </div>
+
+
+                <!-- ACTIONS -->
+
+                <div class="file-actions">
+
+
+                    <!-- DOWNLOAD -->
+
+                    <a
+                        href="/download/{{ file['id'] }}"
+                        title="Download">
+
+                        <i class="fa-solid fa-download"></i>
+
+                    </a>
+
+
+                    <!-- DELETE -->
+
+                    <a
+                        href="/delete/{{ file['id'] }}"
+                        title="Delete"
+                        onclick="return confirm('Move this file to Trash?')">
+
+                        <i class="fa-solid fa-trash"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        {% else %}
+
+        <!-- EMPTY -->
+
+        <div class="empty-state">
+
+            <div class="empty-icon">
+
+                <i class="fa-solid fa-folder-open"></i>
+
+            </div>
+
+
+            <h3>
+                No files yet
+            </h3>
+
+
+            <p>
+                Your uploaded files will appear here.
+            </p>
+
+
+            <a
+                href="/dashboard#uploadArea"
+                class="primary-button">
+
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                Upload Your First File
+
+            </a>
+
+        </div>
+
+        {% endif %}
+
+
+    </main>
+
+</div>
+
+
+<!-- ================= STORAGE JS ================= -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        const storageFill =
+            document.querySelector(".storage-fill");
+
+
+        if (storageFill) {
+
+            let percentage =
+                parseFloat(
+                    storageFill.dataset.storage || 0
+                );
+
+
+            percentage =
+                Math.min(
+                    Math.max(percentage, 0),
+                    100
+                );
+
+
+            storageFill.style.width =
+                percentage + "%";
+
+        }
+
+    }
+);
+
+</script>
+
+
+<script src="{{ url_for('static', filename='theme.js') }}"></script>
+
+</body>
+</html>

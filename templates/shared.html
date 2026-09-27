@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>VaultShare | Shared</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+<div class="dashboard-page">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                <i class="fa-solid fa-vault"></i>
+            </div>
+
+            <span>VaultShare</span>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a href="/dashboard">
+                <i class="fa-solid fa-table-columns"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="/my-files">
+                <i class="fa-solid fa-folder"></i>
+                <span>My Files</span>
+            </a>
+
+            <a href="/shared" class="active">
+                <i class="fa-solid fa-share-nodes"></i>
+                <span>Shared</span>
+            </a>
+
+            <a href="/favorites">
+                <i class="fa-solid fa-star"></i>
+                <span>Favorites</span>
+            </a>
+
+            <a href="/trash">
+                <i class="fa-solid fa-trash"></i>
+                <span>Trash</span>
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <a href="/security">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>Security</span>
+            </a>
+
+            <a href="/settings">
+                <i class="fa-solid fa-gear"></i>
+                <span>Settings</span>
+            </a>
+
+            <a href="/logout">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="dashboard-main">
+
+        <div class="dashboard-top">
+
+            <div>
+
+                <p class="eyebrow">
+                    FILE SHARING
+                </p>
+
+                <h1>
+                    Shared Files
+                </h1>
+
+                <p class="dashboard-subtitle">
+                    Manage the files you've shared with others.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- SHARED FILES -->
+
+        <div class="section-heading">
+
+            <div>
+
+                <span class="section-label">
+                    SHARING
+                </span>
+
+                <h2>
+                    Your Share Links
+                </h2>
+
+            </div>
+
+
+            <span class="file-count">
+                {{ shares|length }}
+                link{% if shares|length != 1 %}s{% endif %}
+            </span>
+
+        </div>
+
+
+        {% if shares %}
+
+        <div class="file-list">
+
+            {% for share in shares %}
+
+            <div class="file-row">
+
+                <!-- ICON -->
+
+                <div class="file-type-icon">
+
+                    <i class="fa-solid fa-share-nodes"></i>
+
+                </div>
+
+
+                <!-- FILE INFO -->
+
+                <div class="file-info">
+
+                    <strong>
+                        {{ share["filename"] }}
+                    </strong>
+
+                    <span>
+                        Shared {{ share["created_at"] }}
+                    </span>
+
+                </div>
+
+
+                <!-- ACTIONS -->
+
+                <div class="file-actions">
+
+                    <button
+                        type="button"
+                        class="share-copy-button"
+                        data-link="{{ request.url_root }}s/{{ share['token'] }}"
+                        title="Copy share link">
+
+                        <i class="fa-solid fa-copy"></i>
+
+                    </button>
+
+
+                    <a
+                        href="/s/{{ share['token'] }}"
+                        target="_blank"
+                        title="Open shared file">
+
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        {% else %}
+
+
+        <!-- EMPTY -->
+
+        <div class="empty-state">
+
+            <div class="empty-icon">
+
+                <i class="fa-solid fa-share-nodes"></i>
+
+            </div>
+
+            <h3>
+                No shared files
+            </h3>
+
+            <p>
+                Share a file from your Dashboard or My Files.
+            </p>
+
+            <a
+                href="/dashboard"
+                class="primary-button">
+
+                <i class="fa-solid fa-folder"></i>
+
+                Go to My Files
+
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </main>
+
+</div>
+
+
+<!-- COPY LINK -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        const buttons =
+            document.querySelectorAll(
+                ".share-copy-button"
+            );
+
+
+        buttons.forEach(
+            function (button) {
+
+                button.addEventListener(
+                    "click",
+                    async function () {
+
+                        const link =
+                            button.dataset.link;
+
+
+                        try {
+
+                            await navigator.clipboard.writeText(
+                                link
+                            );
+
+
+                            const oldHTML =
+                                button.innerHTML;
+
+
+                            button.innerHTML =
+                                '<i class="fa-solid fa-check"></i>';
+
+
+                            setTimeout(
+                                function () {
+
+                                    button.innerHTML =
+                                        oldHTML;
+
+                                },
+                                1500
+                            );
+
+
+                        } catch (error) {
+
+                            prompt(
+                                "Copy this share link:",
+                                link
+                            );
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+    }
+);
+
+</script>
+
+
+<script src="{{ url_for('static', filename='theme.js') }}"></script>
+
+</body>
+
+</html>
