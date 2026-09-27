@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Analysis — VaultShare</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
+    <style>
+
+        /* =====================================================
+           AI ANALYSIS PAGE
+        ===================================================== */
+
+        .ai-page {
+            overflow-x: hidden;
+        }
+
+
+        /* =====================================================
+           AMBIENT BACKGROUND
+        ===================================================== */
+
+        .ai-page::before,
+        .ai-page::after {
+
+            content: "";
+
+            position: fixed;
+
+            width: 420px;
+            height: 420px;
+
+            border-radius: 50%;
+
+            filter: blur(120px);
+
+            pointer-events: none;
+
+            z-index: -1;
+        }
+
+
+        .ai-page::before {
+
+            background: rgba(124, 60, 255, 0.12);
+
+            top: -220px;
+            right: -120px;
+
+            animation: aiOrb1 10s ease-in-out infinite;
+        }
+
+
+        .ai-page::after {
+
+            background: rgba(35, 190, 255, 0.08);
+
+            bottom: -220px;
+            left: 250px;
+
+            animation: aiOrb2 12s ease-in-out infinite;
+        }
+
+
+        @keyframes aiOrb1 {
+
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            50% {
+                transform: translate(-70px, 60px) scale(1.12);
+            }
+        }
+
+
+        @keyframes aiOrb2 {
+
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            50% {
+                transform: translate(70px, -50px) scale(1.1);
+            }
+        }
+
+
+        /* =====================================================
+           MAIN CONTENT SIZE
+        ===================================================== */
+
+        .ai-page .dashboard-main {
+
+            max-width: 1500px;
+
+            padding-top: 35px;
+            padding-bottom: 50px;
+        }
+
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .ai-hero {
+
+            max-width: 1150px;
+
+            padding: 0 0 25px;
+        }
+
+
+        .ai-eyebrow {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            color: #a477ff;
+
+            font-size: 13px;
+
+            font-weight: 900;
+
+            letter-spacing: 2.5px;
+
+            text-transform: uppercase;
+        }
+
+
+        .ai-eyebrow i {
+
+            font-size: 16px;
+
+            animation: sparkle 2s ease-in-out infinite;
+        }
+
+
+        @keyframes sparkle {
+
+            0%, 100% {
+                transform: rotate(0deg) scale(1);
+            }
+
+            50% {
+                transform: rotate(12deg) scale(1.2);
+            }
+        }
+
+
+        .ai-hero h1 {
+
+            margin: 10px 0 8px;
+
+            font-size: clamp(38px, 4vw, 52px);
+
+            line-height: 1.05;
+
+            font-weight: 900;
+
+            background:
+                linear-gradient(
+                    100deg,
+                    #ffffff,
+                    #a66cff,
+                    #66d9ff,
+                    #ffffff
+                );
+
+            background-size: 250% auto;
+
+            -webkit-background-clip: text;
+            background-clip: text;
+
+            color: transparent;
+
+            animation: titleFlow 6s linear infinite;
+        }
+
+
+        @keyframes titleFlow {
+
+            0% {
+                background-position: 0% center;
+            }
+
+            100% {
+                background-position: 250% center;
+            }
+        }
+
+
+        .ai-hero-subtitle {
+
+            max-width: 850px;
+
+            margin: 0;
+
+            color: #8f9db7;
+
+            font-size: 15px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =====================================================
+           STATUS
+        ===================================================== */
+
+        .ai-status {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            margin-top: 16px;
+
+            padding: 8px 14px;
+
+            border-radius: 999px;
+
+            color: #c1a5ff;
+
+            background:
+                rgba(124, 60, 255, 0.08);
+
+            border:
+                1px solid
+                rgba(139, 92, 246, 0.25);
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+
+        .ai-status-dot {
+
+            width: 8px;
+            height: 8px;
+
+            border-radius: 50%;
+
+            background: #9361ff;
+
+            box-shadow:
+                0 0 8px #9361ff,
+                0 0 18px rgba(147, 97, 255, .6);
+
+            animation: statusPulse 1.5s infinite;
+        }
+
+
+        @keyframes statusPulse {
+
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.4);
+                opacity: .55;
+            }
+        }
+
+
+        /* =====================================================
+           FILE CARD
+        ===================================================== */
+
+        .ai-file-card {
+
+            position: relative;
+
+            width: 100%;
+
+            max-width: 1200px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 18px;
+
+            padding: 16px 20px;
+
+            margin-bottom: 18px;
+
+            border-radius: 19px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(124, 60, 255, .08),
+                    rgba(18, 23, 38, .95)
+                );
+
+            border:
+                1px solid
+                rgba(139, 92, 246, .20);
+
+            box-shadow:
+                0 15px 45px rgba(0, 0, 0, .16);
+
+            overflow: hidden;
+        }
+
+
+        .ai-file-left {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            min-width: 0;
+        }
+
+
+        .ai-file-icon {
+
+            width: 46px;
+            height: 46px;
+
+            flex-shrink: 0;
+
+            display: grid;
+
+            place-items: center;
+
+            border-radius: 13px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #713cff,
+                    #3f7cff
+                );
+
+            color: white;
+
+            font-size: 18px;
+
+            box-shadow:
+                0 0 24px
+                rgba(124, 60, 255, .28);
+        }
+
+
+        .ai-file-details {
+            min-width: 0;
+        }
+
+
+        .ai-file-label {
+
+            display: block;
+
+            margin-bottom: 3px;
+
+            color: #78869f;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            letter-spacing: 1.4px;
+
+            text-transform: uppercase;
+        }
+
+
+        .ai-file-name {
+
+            display: block;
+
+            max-width: 650px;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+
+            white-space: nowrap;
+
+            color: #f2f4ff;
+
+            font-size: 15px;
+
+            font-weight: 800;
+        }
+
+
+        .ai-powered-badge {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            padding: 7px 11px;
+
+            border-radius: 999px;
+
+            color: #bea4ff;
+
+            background:
+                rgba(124, 60, 255, .08);
+
+            border:
+                1px solid
+                rgba(139, 92, 246, .20);
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            flex-shrink: 0;
+        }
+
+
+        /* =====================================================
+           RESULT CARD
+        ===================================================== */
+
+        .ai-result-card {
+
+            position: relative;
+
+            width: 100%;
+
+            max-width: 1200px;
+
+            padding: 24px;
+
+            border-radius: 22px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(18, 23, 38, .98),
+                    rgba(10, 14, 25, .98)
+                );
+
+            border:
+                1px solid
+                rgba(124, 60, 255, .20);
+
+            box-shadow:
+                0 20px 60px
+                rgba(0, 0, 0, .22);
+
+            overflow: hidden;
+
+            animation: resultAppear .6s ease both;
+        }
+
+
+        @keyframes resultAppear {
+
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        /* moving purple line */
+
+        .ai-result-card::before {
+
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+
+            left: -35%;
+
+            width: 35%;
+
+            height: 2px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    #864cff,
+                    #62d9ff,
+                    transparent
+                );
+
+            box-shadow:
+                0 0 18px #864cff;
+
+            animation:
+                scanLine
+                4s
+                linear
+                infinite;
+        }
+
+
+        @keyframes scanLine {
+
+            from {
+                left: -35%;
+            }
+
+            to {
+                left: 120%;
+            }
+        }
+
+
+        /* =====================================================
+           RESULT HEADER
+        ===================================================== */
+
+        .ai-result-header {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            padding-bottom: 17px;
+
+            margin-bottom: 18px;
+
+            border-bottom:
+                1px solid
+                rgba(255, 255, 255, .06);
+        }
+
+
+        .ai-result-icon {
+
+            width: 48px;
+            height: 48px;
+
+            display: grid;
+
+            place-items: center;
+
+            flex-shrink: 0;
+
+            border-radius: 14px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #743cff,
+                    #4f70ff,
+                    #28cfff
+                );
+
+            color: white;
+
+            font-size: 19px;
+
+            box-shadow:
+                0 0 25px
+                rgba(124, 60, 255, .28);
+
+            animation:
+                robotFloat
+                3s
+                ease-in-out
+                infinite;
+        }
+
+
+        @keyframes robotFloat {
+
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-4px);
+            }
+        }
+
+
+        .ai-result-header .section-label {
+
+            font-size: 10px;
+
+            letter-spacing: 1.4px;
+        }
+
+
+        .ai-result-header h2 {
+
+            margin: 3px 0 0;
+
+            color: #f5f6ff;
+
+            font-size: 21px;
+        }
+
+
+        /* =====================================================
+           RESULT TEXT
+        ===================================================== */
+
+        .ai-result-content {
+
+            color: #bbc6da;
+
+            font-size: 14px;
+
+            line-height: 1.8;
+
+            white-space: pre-wrap;
+
+            word-break: break-word;
+
+            max-width: 1050px;
+        }
+
+
+        /* =====================================================
+           ACTIONS
+        ===================================================== */
+
+        .ai-bottom-actions {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 11px;
+
+            margin-top: 18px;
+        }
+
+
+        .ai-download-btn,
+        .ai-back-btn {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            padding: 12px 18px;
+
+            border-radius: 13px;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            transition: .25s ease;
+        }
+
+
+        .ai-download-btn {
+
+            color: white !important;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #743cff,
+                    #584cff
+                );
+
+            box-shadow:
+                0 10px 25px
+                rgba(124, 60, 255, .22);
+        }
+
+
+        .ai-download-btn:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 15px 35px
+                rgba(124, 60, 255, .38);
+        }
+
+
+        .ai-back-btn {
+
+            color: #aebbd0 !important;
+
+            background:
+                rgba(255, 255, 255, .025);
+
+            border:
+                1px solid
+                rgba(150, 160, 190, .18);
+        }
+
+
+        .ai-back-btn:hover {
+
+            transform: translateY(-2px);
+
+            color: white !important;
+
+            border-color:
+                rgba(124, 60, 255, .4);
+
+            background:
+                rgba(124, 60, 255, .07);
+        }
+
+
+        /* =====================================================
+           INFO
+        ===================================================== */
+
+        .ai-info {
+
+            display: flex;
+
+            gap: 13px;
+
+            max-width: 1200px;
+
+            margin-top: 18px;
+
+            padding: 17px 20px;
+
+            border-radius: 17px;
+
+            background:
+                rgba(124, 60, 255, .045);
+
+            border:
+                1px solid
+                rgba(124, 60, 255, .13);
+        }
+
+
+        .ai-info-icon {
+
+            width: 42px;
+            height: 42px;
+
+            flex-shrink: 0;
+
+            display: grid;
+
+            place-items: center;
+
+            border-radius: 12px;
+
+            color: #b998ff;
+
+            background:
+                rgba(124, 60, 255, .10);
+        }
+
+
+        .ai-info h3 {
+
+            margin: 0 0 4px;
+
+            color: #f0f2fa;
+
+            font-size: 15px;
+        }
+
+
+        .ai-info p {
+
+            margin: 0;
+
+            color: #8795ad;
+
+            font-size: 12px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =====================================================
+           LIGHT MODE
+        ===================================================== */
+
+        body.light-mode .ai-page::before {
+
+            background:
+                rgba(124, 60, 255, .10);
+        }
+
+
+        body.light-mode .ai-page::after {
+
+            background:
+                rgba(35, 190, 255, .07);
+        }
+
+
+        body.light-mode .ai-hero h1 {
+
+            background:
+                linear-gradient(
+                    100deg,
+                    #24134f,
+                    #743cff,
+                    #008fca,
+                    #24134f
+                );
+
+            background-size: 250% auto;
+
+            -webkit-background-clip: text;
+            background-clip: text;
+
+            color: transparent;
+        }
+
+
+        body.light-mode .ai-hero-subtitle {
+
+            color: #65728b;
+        }
+
+
+        body.light-mode .ai-file-card {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ffffff,
+                    #f5f0ff
+                );
+
+            border-color:
+                rgba(124, 60, 255, .14);
+        }
+
+
+        body.light-mode .ai-file-name {
+
+            color: #171b2e;
+        }
+
+
+        body.light-mode .ai-result-card {
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #ffffff,
+                    #f7f4ff
+                );
+
+            border-color:
+                rgba(124, 60, 255, .15);
+        }
+
+
+        body.light-mode .ai-result-header {
+
+            border-bottom-color:
+                rgba(50, 60, 90, .10);
+        }
+
+
+        body.light-mode .ai-result-header h2 {
+
+            color: #171b2e;
+        }
+
+
+        body.light-mode .ai-result-content {
+
+            color: #526079;
+        }
+
+
+        body.light-mode .ai-info {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ffffff,
+                    #f6f1ff
+                );
+        }
+
+
+        body.light-mode .ai-info h3 {
+
+            color: #171b2e;
+        }
+
+
+        body.light-mode .ai-info p {
+
+            color: #65728b;
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 800px) {
+
+            .ai-page .dashboard-main {
+
+                padding-top: 25px;
+            }
+
+
+            .ai-hero h1 {
+
+                font-size: 38px;
+            }
+
+
+            .ai-file-card {
+
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+
+            .ai-result-card {
+
+                padding: 19px;
+            }
+
+
+            .ai-result-header h2 {
+
+                font-size: 19px;
+            }
+
+
+            .ai-file-name {
+
+                max-width: 260px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="dashboard-page ai-page">
+
+    <div class="app-layout">
+
+
+        <!-- =================================================
+             SIDEBAR
+        ================================================= -->
+
+        <aside class="sidebar">
+
+            <div class="brand">
+
+                <div class="brand-logo">
+
+                    <i class="fa-solid fa-vault"></i>
+
+                </div>
+
+                <span>VaultShare</span>
+
+            </div>
+
+
+            <nav class="sidebar-nav">
+
+                <a href="/dashboard">
+
+                    <i class="fa-solid fa-table-columns"></i>
+
+                    <span>Dashboard</span>
+
+                </a>
+
+
+                <a href="/my-files"
+                   class="active">
+
+                    <i class="fa-solid fa-folder"></i>
+
+                    <span>My Files</span>
+
+                </a>
+
+
+                <a href="/shared">
+
+                    <i class="fa-solid fa-share-nodes"></i>
+
+                    <span>Shared</span>
+
+                </a>
+
+
+                <a href="/favorites">
+
+                    <i class="fa-solid fa-star"></i>
+
+                    <span>Favorites</span>
+
+                </a>
+
+
+                <a href="/trash">
+
+                    <i class="fa-solid fa-trash"></i>
+
+                    <span>Trash</span>
+
+                </a>
+
+            </nav>
+
+
+            <div class="sidebar-bottom">
+
+                <a href="/security">
+
+                    <i class="fa-solid fa-shield-halved"></i>
+
+                    <span>Security</span>
+
+                </a>
+
+
+                <a href="/settings">
+
+                    <i class="fa-solid fa-gear"></i>
+
+                    <span>Settings</span>
+
+                </a>
+
+
+                <a href="/logout">
+
+                    <i class="fa-solid fa-right-from-bracket"></i>
+
+                    <span>Logout</span>
+
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <!-- =================================================
+             MAIN
+        ================================================= -->
+
+        <main class="dashboard-main">
+
+
+            <!-- HERO -->
+
+            <section class="ai-hero">
+
+                <div class="ai-eyebrow">
+
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+
+                    Artificial Intelligence
+
+                </div>
+
+
+                <h1>
+                    AI File Analysis
+                </h1>
+
+
+                <p class="ai-hero-subtitle">
+
+                    VaultShare's AI engine has analyzed your document
+                    and generated useful insights automatically.
+
+                </p>
+
+
+                <div class="ai-status">
+
+                    <span class="ai-status-dot"></span>
+
+                    Analysis completed
+
+                </div>
+
+            </section>
+
+
+            <!-- FILE -->
+
+            <section class="ai-file-card">
+
+                <div class="ai-file-left">
+
+                    <div class="ai-file-icon">
+
+                        <i class="fa-solid fa-file-lines"></i>
+
+                    </div>
+
+
+                    <div class="ai-file-details">
+
+                        <span class="ai-file-label">
+
+                            Analyzed document
+
+                        </span>
+
+
+                        <span
+                            class="ai-file-name"
+                            title="{{ file['filename'] }}"
+                        >
+
+                            {{ file["filename"] }}
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="ai-powered-badge">
+
+                    <i class="fa-solid fa-microchip"></i>
+
+                    Gemini AI
+
+                </div>
+
+            </section>
+
+
+            <!-- RESULT -->
+
+            <section class="ai-result-card">
+
+                <div class="ai-result-header">
+
+                    <div class="ai-result-icon">
+
+                        <i class="fa-solid fa-robot"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <span class="section-label">
+
+                            AI GENERATED
+
+                        </span>
+
+
+                        <h2>
+
+                            Analysis Result
+
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="ai-result-content">
+
+                    {{ ai_result }}
+
+                </div>
+
+            </section>
+
+
+            <!-- ACTIONS -->
+
+            <div class="ai-bottom-actions">
+
+                <a
+                    href="/download/{{ file['id'] }}"
+                    class="ai-download-btn"
+                >
+
+                    <i class="fa-solid fa-download"></i>
+
+                    Download File
+
+                </a>
+
+
+                <a
+                    href="/my-files"
+                    class="ai-back-btn"
+                >
+
+                    <i class="fa-solid fa-folder"></i>
+
+                    Back to Files
+
+                </a>
+
+            </div>
+
+
+            <!-- INFO -->
+
+            <section class="ai-info">
+
+                <div class="ai-info-icon">
+
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        Smart File Insights
+                    </h3>
+
+
+                    <p>
+
+                        VaultShare's AI helps turn your documents
+                        into useful insights, summaries and
+                        organization suggestions — making it easier
+                        to understand and manage your files.
+
+                    </p>
+
+                </div>
+
+            </section>
+
+
+        </main>
+
+    </div>
+
+</div>
+
+
+<script src="{{ url_for('static', filename='theme.js') }}"></script>
+
+</body>
+
+</html>

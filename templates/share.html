@@ -8,76 +8,59 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>Share File • VaultShare</title>
+    <title>VaultShare | Share File</title>
 
     <link rel="stylesheet"
           href="{{ url_for('static', filename='style.css') }}">
 
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 </head>
 
 
-<body class="dashboard-page">
+<body>
 
-
-<div class="app-layout">
-
-
-    <!-- ================= SIDEBAR ================= -->
+<div class="dashboard-page">
 
     <aside class="sidebar">
 
         <div class="brand">
 
             <div class="brand-logo">
-                V
+                <i class="fa-solid fa-vault"></i>
             </div>
 
-            <span>
-                VaultShare
-            </span>
+            <span>VaultShare</span>
 
         </div>
 
 
         <nav class="sidebar-nav">
 
-            <a href="{{ url_for('dashboard') }}">
-                <span>⌂</span>
-                Dashboard
+            <a href="/dashboard">
+                <i class="fa-solid fa-table-columns"></i>
+                <span>Dashboard</span>
             </a>
 
-            <a href="{{ url_for('my_files') }}">
-                <span>▣</span>
-                My Files
+            <a href="/my-files">
+                <i class="fa-solid fa-folder"></i>
+                <span>My Files</span>
             </a>
 
-            <a href="{{ url_for('shared') }}"
-               class="active">
-
-                <span>↗</span>
-                Shared
-
+            <a href="/shared" class="active">
+                <i class="fa-solid fa-share-nodes"></i>
+                <span>Shared</span>
             </a>
 
-            <a href="{{ url_for('favorites') }}">
-
-                <span>★</span>
-                Favorites
-
+            <a href="/favorites">
+                <i class="fa-solid fa-star"></i>
+                <span>Favorites</span>
             </a>
 
-            <a href="{{ url_for('trash') }}">
-
-                <span>♻</span>
-                Trash
-
-            </a>
-
-            <a href="{{ url_for('security') }}">
-
-                <span>🔒</span>
-                Security
-
+            <a href="/trash">
+                <i class="fa-solid fa-trash"></i>
+                <span>Trash</span>
             </a>
 
         </nav>
@@ -85,27 +68,19 @@
 
         <div class="sidebar-bottom">
 
-            <a href="{{ url_for('profile') }}">
-
-                <span>◉</span>
-                Profile
-
+            <a href="/security">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>Security</span>
             </a>
 
-
-            <a href="{{ url_for('settings') }}">
-
-                <span>⚙</span>
-                Settings
-
+            <a href="/settings">
+                <i class="fa-solid fa-gear"></i>
+                <span>Settings</span>
             </a>
 
-
-            <a href="{{ url_for('logout') }}">
-
-                <span>↪</span>
-                Logout
-
+            <a href="/logout">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
             </a>
 
         </div>
@@ -113,25 +88,24 @@
     </aside>
 
 
-
-    <!-- ================= MAIN ================= -->
-
     <main class="dashboard-main">
 
+
+        <!-- HEADER -->
 
         <div class="dashboard-top">
 
             <div>
 
-                <div class="eyebrow">
+                <p class="eyebrow">
                     SHARING
-                </div>
+                </p>
 
                 <h1>
                     Share File
                 </h1>
 
-                <p class="page-subtitle">
+                <p class="dashboard-subtitle">
                     Create a secure link for your file.
                 </p>
 
@@ -140,196 +114,187 @@
         </div>
 
 
+        <!-- SHARE CARD -->
 
-        <!-- ================= SHARE CARD ================= -->
-
-        <div class="settings-container">
-
-
-            <section class="settings-card">
+        <section class="storage-card">
 
 
-                <div class="settings-card-header">
+            <div class="storage-header">
 
-                    <div class="settings-icon purple">
-                        ↗
-                    </div>
+                <div>
 
+                    <span class="section-label">
+                        READY TO SHARE
+                    </span>
 
-                    <div>
+                    <h2>
+                        <i class="fa-solid fa-share-nodes"></i>
 
-                        <h2>
-                            {{ file["original_name"] }}
-                        </h2>
-
-                        <p>
-                            Your file is ready to share.
-                        </p>
-
-                    </div>
+                        Your file is ready to share.
+                    </h2>
 
                 </div>
 
+            </div>
 
 
-                <!-- FILE INFORMATION -->
+            <div class="section-heading">
 
-                <div class="setting-row">
+                <div>
 
-                    <div class="setting-info">
+                    <span class="section-label">
+                        FILE NAME
+                    </span>
 
-                        <strong>
-                            File name
-                        </strong>
-
-                        <span>
-                            {{ file["original_name"] }}
-                        </span>
-
-                    </div>
+                    <h2>
+                        {{ file["filename"] }}
+                    </h2>
 
                 </div>
 
+            </div>
 
 
-                <div class="setting-row">
+            <!-- FILE SIZE -->
 
-                    <div class="setting-info">
+            <div class="section-heading">
 
-                        <strong>
-                            File size
-                        </strong>
+                <div>
 
-                        <span>
-                            {{ "%.2f"|format(file["size"] / 1024 / 1024) }} MB
-                        </span>
+                    <span class="section-label">
+                        FILE SIZE
+                    </span>
 
-                    </div>
+                    <p>
 
-                </div>
+                        {{ "%.2f"|format(
+                            file["size"] / 1024 / 1024
+                        ) }}
 
+                        MB
 
-
-                <!-- SHARE LINK -->
-
-                <div class="share-link-box">
-
-                    <label>
-                        Share link
-                    </label>
-
-
-                    <div class="share-link-row">
-
-                        <input
-                            type="text"
-                            id="shareLink"
-                            value="{{ request.url_root }}s/{{ token }}"
-                            readonly
-                        >
-
-
-                        <button
-                            type="button"
-                            class="settings-button"
-                            onclick="copyShareLink()">
-
-                            Copy
-
-                        </button>
-
-                    </div>
-
-
-                    <div
-                        id="copyMessage"
-                        class="copy-message">
-                    </div>
+                    </p>
 
                 </div>
 
+            </div>
 
 
-                <!-- ACTIONS -->
+            <!-- SHARE LINK -->
 
-                <div class="share-actions">
+            <div style="margin-top: 25px;">
 
-                    <a
-                        href="{{ url_for('shared') }}"
-                        class="settings-button">
+                <label
+                    style="
+                        display: block;
+                        margin-bottom: 10px;
+                        font-weight: 600;
+                    "
+                >
+                    Share link
+                </label>
 
-                        View Shared Files
 
-                    </a>
+                <div
+                    style="
+                        display: flex;
+                        gap: 10px;
+                        align-items: center;
+                    "
+                >
+
+                    <input
+                        id="shareLink"
+                        type="text"
+                        value="{{ share_url }}"
+                        readonly
+                        style="
+                            flex: 1;
+                            padding: 14px;
+                            border-radius: 10px;
+                            border: 1px solid rgba(255,255,255,0.12);
+                            background: rgba(255,255,255,0.04);
+                            color: inherit;
+                            font-size: 14px;
+                        "
+                    >
 
 
-                    <a
-                        href="{{ url_for('dashboard') }}"
-                        class="settings-button">
+                    <button
+                        type="button"
+                        class="secondary-button"
+                        onclick="copyShareLink()"
+                    >
 
-                        Back to Dashboard
+                        <i class="fa-solid fa-copy"></i>
 
-                    </a>
+                        Copy
+
+                    </button>
 
                 </div>
 
+            </div>
 
-            </section>
+
+            <!-- BUTTONS -->
+
+            <div
+                style="
+                    display: flex;
+                    gap: 12px;
+                    margin-top: 28px;
+                    flex-wrap: wrap;
+                "
+            >
+
+                <a
+                    href="/shared"
+                    class="secondary-button"
+                >
+
+                    <i class="fa-solid fa-share-nodes"></i>
+
+                    View Shared Files
+
+                </a>
 
 
-        </div>
+                <a
+                    href="/dashboard"
+                    class="secondary-button"
+                >
 
+                    <i class="fa-solid fa-table-columns"></i>
+
+                    Back to Dashboard
+
+                </a>
+
+            </div>
+
+
+        </section>
 
     </main>
 
 </div>
 
 
-
 <script>
 
 function copyShareLink() {
 
-    const input =
+    const link =
         document.getElementById("shareLink");
 
-    const message =
-        document.getElementById("copyMessage");
+    link.select();
 
+    link.setSelectionRange(0, 99999);
 
-    navigator.clipboard.writeText(
-        input.value
-    ).then(function () {
+    navigator.clipboard.writeText(link.value);
 
-        message.textContent =
-            "✓ Link copied to clipboard";
-
-        message.className =
-            "copy-message success";
-
-
-        setTimeout(function () {
-
-            message.textContent = "";
-
-            message.className =
-                "copy-message";
-
-        }, 2500);
-
-    }).catch(function () {
-
-        input.select();
-
-        document.execCommand("copy");
-
-        message.textContent =
-            "✓ Link copied";
-
-        message.className =
-            "copy-message success";
-
-    });
+    alert("Share link copied!");
 
 }
 

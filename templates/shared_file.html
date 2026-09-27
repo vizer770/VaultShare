@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Shared File — VaultShare</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="dashboard-page">
+
+    <div class="app-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+
+            <div class="brand">
+                <div class="brand-logo">V</div>
+
+                <div>
+                    <div class="brand-name">VaultShare</div>
+                    <div class="brand-subtitle">Secure Storage</div>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="{{ url_for('login') }}">
+                    <span>←</span>
+                    Back to VaultShare
+                </a>
+            </nav>
+
+        </aside>
+
+
+        <!-- MAIN -->
+        <main class="dashboard-main">
+
+            <div class="dashboard-top">
+
+                <div>
+                    <div class="eyebrow">
+                        SHARED FILE
+                    </div>
+
+                    <h1>
+                        Someone shared a file with you
+                    </h1>
+
+                    <p class="dashboard-subtitle">
+                        You can view the file information and download it securely.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- FILE CARD -->
+            <section class="share-card">
+
+                <div class="share-file-icon">
+                    📄
+                </div>
+
+                <div class="share-file-info">
+
+                    <div class="share-label">
+                        FILE
+                    </div>
+
+                    <h2>
+                        {{ file["filename"] }}
+                    </h2>
+
+                    <p>
+                        {% if file["size"] < 1024 %}
+                            {{ file["size"] }} B
+                        {% elif file["size"] < 1024 * 1024 %}
+                            {{ "%.2f"|format(file["size"] / 1024) }} KB
+                        {% else %}
+                            {{ "%.2f"|format(file["size"] / 1024 / 1024) }} MB
+                        {% endif %}
+                    </p>
+
+                </div>
+
+
+                <div class="share-actions">
+
+                    <a
+                        href="{{ url_for('download_shared_file', token=file['token']) }}"
+                        class="primary-button"
+                    >
+                        ⬇ Download File
+                    </a>
+
+                </div>
+
+            </section>
+
+
+            <!-- SECURITY INFO -->
+            <section class="security-info-card">
+
+                <div class="security-info-icon">
+                    🔒
+                </div>
+
+                <div>
+
+                    <h3>
+                        Secure Shared Link
+                    </h3>
+
+                    <p>
+                        This file is being shared through a unique VaultShare
+                        link. The original file remains stored securely in
+                        the owner's VaultShare storage.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- FOOTER -->
+            <div class="shared-footer">
+
+                <div>
+                    Powered by <strong>VaultShare</strong>
+                </div>
+
+                <div>
+                    Secure • Simple • Private
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='theme.js') }}"></script>
+
+</body>
+</html>

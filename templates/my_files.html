@@ -3,7 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>VaultShare | My Files</title>
 
@@ -14,12 +16,12 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 
+
 <body>
 
 <div class="dashboard-page">
 
-    <!-- ================= SIDEBAR ================= -->
-
+    <!-- SIDEBAR -->
     <aside class="sidebar">
 
         <div class="brand">
@@ -85,13 +87,11 @@
     </aside>
 
 
-    <!-- ================= MAIN ================= -->
-
+    <!-- MAIN -->
     <main class="dashboard-main">
 
 
         <!-- HEADER -->
-
         <div class="dashboard-top">
 
             <div>
@@ -113,19 +113,16 @@
 
             <a
                 href="/dashboard#uploadArea"
-                class="primary-button">
-
+                class="primary-button"
+            >
                 <i class="fa-solid fa-cloud-arrow-up"></i>
-
                 Upload Files
-
             </a>
 
         </div>
 
 
-        <!-- ================= STORAGE CARD ================= -->
-
+        <!-- STORAGE -->
         <section class="storage-card">
 
             <div class="storage-header">
@@ -145,7 +142,7 @@
 
                 <div class="storage-number">
 
-                    {{ "%.1f"|format(
+                    {{ "%.2f"|format(
                         (storage_used / user["storage_limit"]) * 100
                     ) }}%
 
@@ -160,8 +157,8 @@
                     class="storage-fill"
                     data-storage="{{
                         (storage_used / user['storage_limit']) * 100
-                    }}">
-                </div>
+                    }}"
+                ></div>
 
             </div>
 
@@ -171,8 +168,9 @@
                 <span>
 
                     <strong>
-                        {{ "%.2f"|format(storage_used / 1024 / 1024) }}
-                        MB
+                        {{ "%.2f"|format(
+                            storage_used / 1024 / 1024
+                        ) }} MB
                     </strong>
 
                     used
@@ -185,8 +183,7 @@
                     <strong>
                         {{ "%.0f"|format(
                             user["storage_limit"] / 1024 / 1024
-                        ) }}
-                        MB
+                        ) }} MB
                     </strong>
 
                     total
@@ -198,8 +195,7 @@
         </section>
 
 
-        <!-- ================= FILE HEADER ================= -->
-
+        <!-- FILE HEADER -->
         <div class="section-heading">
 
             <div>
@@ -226,19 +222,33 @@
         </div>
 
 
-        <!-- ================= FILE LIST ================= -->
-
+        <!-- FILES -->
         {% if files %}
 
-        <div class="file-list">
+        <div
+            class="file-list"
+            style="
+                display: flex;
+                flex-direction: column;
+                gap: 14px;
+                width: 100%;
+            "
+        >
 
             {% for file in files %}
 
-            <div class="file-row">
+            <div
+                class="file-row"
+                style="
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    gap: 16px;
+                    box-sizing: border-box;
+                "
+            >
 
-
-                <!-- FILE ICON -->
-
+                <!-- ICON -->
                 <div class="file-type-icon">
 
                     <i class="fa-solid fa-file"></i>
@@ -246,9 +256,14 @@
                 </div>
 
 
-                <!-- FILE INFO -->
-
-                <div class="file-info">
+                <!-- INFORMATION -->
+                <div
+                    class="file-info"
+                    style="
+                        flex: 1;
+                        min-width: 0;
+                    "
+                >
 
                     <strong title="{{ file['filename'] }}">
 
@@ -287,30 +302,52 @@
 
 
                 <!-- ACTIONS -->
+                <div
+                    class="file-actions"
+                    style="
+                        flex-shrink: 0;
+                        display: flex;
+                        align-items: center;
+                        gap: 14px;
+                    "
+                >
 
-                <div class="file-actions">
+                    <!-- AI -->
+                    <a
+                        href="{{ url_for('ai_analyze_loading', file_id=file['id']) }}"
+                        class="file-action"
+                        title="AI Analyze"
+                    >
+                        🤖
+                    </a>
+
+
+                    <!-- SHARE -->
+                    <a
+                        href="{{ url_for('create_share', file_id=file['id']) }}"
+                        class="file-action"
+                        title="Share"
+                    >
+                        🔗
+                    </a>
 
 
                     <!-- DOWNLOAD -->
-
                     <a
                         href="/download/{{ file['id'] }}"
-                        title="Download">
-
+                        title="Download"
+                    >
                         <i class="fa-solid fa-download"></i>
-
                     </a>
 
 
                     <!-- DELETE -->
-
                     <a
                         href="/delete/{{ file['id'] }}"
                         title="Delete"
-                        onclick="return confirm('Move this file to Trash?')">
-
+                        onclick="return confirm('Move this file to Trash?')"
+                    >
                         <i class="fa-solid fa-trash"></i>
-
                     </a>
 
                 </div>
@@ -324,8 +361,8 @@
 
         {% else %}
 
-        <!-- EMPTY -->
 
+        <!-- EMPTY -->
         <div class="empty-state">
 
             <div class="empty-icon">
@@ -347,7 +384,8 @@
 
             <a
                 href="/dashboard#uploadArea"
-                class="primary-button">
+                class="primary-button"
+            >
 
                 <i class="fa-solid fa-cloud-arrow-up"></i>
 
@@ -359,13 +397,10 @@
 
         {% endif %}
 
-
     </main>
 
 </div>
 
-
-<!-- ================= STORAGE JS ================= -->
 
 <script>
 
@@ -406,4 +441,5 @@ document.addEventListener(
 <script src="{{ url_for('static', filename='theme.js') }}"></script>
 
 </body>
+
 </html>

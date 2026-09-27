@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Analyzing — VaultShare</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .ai-loading-page {
+
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            position: relative;
+
+            overflow: hidden;
+
+            background:
+                radial-gradient(
+                    circle at 20% 20%,
+                    rgba(124, 60, 255, .16),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at 80% 80%,
+                    rgba(0, 190, 255, .10),
+                    transparent 35%
+                ),
+                #080b14;
+
+        }
+
+
+        /* ================= ORBS ================= */
+
+        .ai-orb {
+
+            position: absolute;
+
+            width: 400px;
+            height: 400px;
+
+            border-radius: 50%;
+
+            filter: blur(100px);
+
+            pointer-events: none;
+
+        }
+
+
+        .ai-orb-1 {
+
+            background: rgba(124, 60, 255, .20);
+
+            top: -180px;
+            left: -120px;
+
+            animation: orbMove1 8s ease-in-out infinite;
+
+        }
+
+
+        .ai-orb-2 {
+
+            background: rgba(0, 200, 255, .12);
+
+            right: -150px;
+            bottom: -180px;
+
+            animation: orbMove2 10s ease-in-out infinite;
+
+        }
+
+
+        @keyframes orbMove1 {
+
+            0%,100% {
+                transform: translate(0,0);
+            }
+
+            50% {
+                transform: translate(100px,80px);
+            }
+
+        }
+
+
+        @keyframes orbMove2 {
+
+            0%,100% {
+                transform: translate(0,0);
+            }
+
+            50% {
+                transform: translate(-100px,-80px);
+            }
+
+        }
+
+
+        /* ================= GRID ================= */
+
+        .ai-grid {
+
+            position: absolute;
+
+            inset: 0;
+
+            background-image:
+
+                linear-gradient(
+                    rgba(255,255,255,.025) 1px,
+                    transparent 1px
+                ),
+
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,.025) 1px,
+                    transparent 1px
+                );
+
+            background-size: 45px 45px;
+
+            mask-image:
+                radial-gradient(
+                    ellipse at center,
+                    black 20%,
+                    transparent 75%
+                );
+
+            pointer-events: none;
+
+        }
+
+
+        /* ================= CONTENT ================= */
+
+        .ai-loading-content {
+
+            position: relative;
+
+            z-index: 5;
+
+            width: min(620px, 90%);
+
+            text-align: center;
+
+            padding: 45px 35px;
+
+            border-radius: 30px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(20,24,40,.92),
+                    rgba(10,14,25,.88)
+                );
+
+            border: 1px solid rgba(139,92,246,.22);
+
+            box-shadow:
+
+                0 35px 100px rgba(0,0,0,.45),
+
+                inset 0 1px 0
+                rgba(255,255,255,.04);
+
+            backdrop-filter: blur(25px);
+
+            animation: cardAppear .7s ease;
+
+        }
+
+
+        @keyframes cardAppear {
+
+            from {
+                opacity: 0;
+                transform: translateY(25px) scale(.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+
+        }
+
+
+        /* ================= AI ICON ================= */
+
+        .ai-loading-icon {
+
+            width: 90px;
+            height: 90px;
+
+            margin: 0 auto 22px;
+
+            position: relative;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 26px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #713cff,
+                    #4e6cff,
+                    #21cfff
+                );
+
+            color: white;
+
+            font-size: 30px;
+
+            box-shadow:
+                0 0 35px rgba(124,60,255,.35);
+
+        }
+
+
+        .ai-icon-ring {
+
+            position: absolute;
+
+            inset: -9px;
+
+            border-radius: 32px;
+
+            border: 2px solid transparent;
+
+            border-top-color: #9b6cff;
+            border-right-color: #45d7ff;
+
+            animation: rotateRing 2s linear infinite;
+
+        }
+
+
+        @keyframes rotateRing {
+
+            to {
+                transform: rotate(360deg);
+            }
+
+        }
+
+
+        /* ================= LABEL ================= */
+
+        .ai-loading-label {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            color: #a98cff;
+
+            font-size: 11px;
+
+            font-weight: 900;
+
+            letter-spacing: 2px;
+
+            margin-bottom: 12px;
+
+        }
+
+
+        .ai-live-dot {
+
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: #8c5cff;
+
+            box-shadow:
+                0 0 8px #8c5cff;
+
+            animation: livePulse 1.2s infinite;
+
+        }
+
+
+        @keyframes livePulse {
+
+            0%,100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.6);
+                opacity: .45;
+            }
+
+        }
+
+
+        /* ================= TITLE ================= */
+
+        .ai-loading-content h1 {
+
+            margin: 0;
+
+            font-size: clamp(38px, 6vw, 58px);
+
+            line-height: 1;
+
+            font-weight: 900;
+
+            color: white;
+
+            letter-spacing: -2px;
+
+        }
+
+
+        .ai-loading-content h1 span {
+
+            display: block;
+
+            margin-top: 7px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #8b5cff,
+                    #48d7ff,
+                    #a56cff
+                );
+
+            -webkit-background-clip: text;
+
+            background-clip: text;
+
+            color: transparent;
+
+            background-size: 200% auto;
+
+            animation: gradientMove 3s linear infinite;
+
+        }
+
+
+        @keyframes gradientMove {
+
+            to {
+                background-position: 200% center;
+            }
+
+        }
+
+
+        .ai-loading-subtitle {
+
+            max-width: 480px;
+
+            margin: 18px auto 28px;
+
+            color: #8794aa;
+
+            font-size: 14px;
+
+            line-height: 1.7;
+
+        }
+
+
+        /* ================= PROCESSING BOX ================= */
+
+        .ai-processing-box {
+
+            position: relative;
+
+            text-align: left;
+
+            padding: 20px;
+
+            border-radius: 20px;
+
+            background: rgba(255,255,255,.025);
+
+            border: 1px solid rgba(255,255,255,.07);
+
+            overflow: hidden;
+
+        }
+
+
+        .ai-processing-line {
+
+            position: absolute;
+
+            top: 0;
+            left: -30%;
+
+            width: 30%;
+
+            height: 2px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    #8b5cff,
+                    #4edcff,
+                    transparent
+                );
+
+            box-shadow:
+                0 0 15px #8b5cff;
+
+            animation: scan 2.2s linear infinite;
+
+        }
+
+
+        @keyframes scan {
+
+            from {
+                left: -30%;
+            }
+
+            to {
+                left: 120%;
+            }
+
+        }
+
+
+        /* ================= STEPS ================= */
+
+        .ai-processing-steps {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 14px;
+
+        }
+
+
+        .ai-step {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            padding: 10px;
+
+            border-radius: 13px;
+
+            opacity: .35;
+
+            transition: .35s ease;
+
+        }
+
+
+        .ai-step.active {
+
+            opacity: 1;
+
+            background:
+                rgba(124,60,255,.08);
+
+        }
+
+
+        .ai-step-icon {
+
+            width: 38px;
+            height: 38px;
+
+            flex-shrink: 0;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 11px;
+
+            background: rgba(124,60,255,.10);
+
+            color: #a47aff;
+
+        }
+
+
+        .ai-step.active .ai-step-icon {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #713cff,
+                    #4f7cff
+                );
+
+            color: white;
+
+            box-shadow:
+                0 0 18px
+                rgba(124,60,255,.25);
+
+        }
+
+
+        .ai-step strong {
+
+            display: block;
+
+            color: #e8ebf5;
+
+            font-size: 13px;
+
+            margin-bottom: 3px;
+
+        }
+
+
+        .ai-step span {
+
+            color: #707e96;
+
+            font-size: 11px;
+
+        }
+
+
+        /* ================= STATUS ================= */
+
+        .ai-loading-status {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 9px;
+
+            margin-top: 22px;
+
+            color: #a5b0c3;
+
+            font-size: 12px;
+
+        }
+
+
+        .typing-dot {
+
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: #8b5cff;
+
+            box-shadow:
+                0 0 10px #8b5cff;
+
+            animation: typing 1s infinite;
+
+        }
+
+
+        @keyframes typing {
+
+            0%,100% {
+                opacity: .25;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+        }
+
+
+        /* ================= LIGHT MODE ================= */
+
+        body.light-mode .ai-loading-page {
+
+            background:
+                radial-gradient(
+                    circle at 20% 20%,
+                    rgba(124,60,255,.12),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at 80% 80%,
+                    rgba(0,190,255,.08),
+                    transparent 35%
+                ),
+                #f4f6ff;
+
+        }
+
+
+        body.light-mode .ai-loading-content {
+
+            background:
+                rgba(255,255,255,.82);
+
+            border-color:
+                rgba(124,60,255,.15);
+
+            box-shadow:
+                0 30px 80px
+                rgba(50,60,120,.15);
+
+        }
+
+
+        body.light-mode .ai-loading-content h1 {
+
+            color: #171b2e;
+
+        }
+
+
+        body.light-mode .ai-loading-subtitle {
+
+            color: #69758c;
+
+        }
+
+
+        body.light-mode .ai-processing-box {
+
+            background:
+                rgba(124,60,255,.035);
+
+            border-color:
+                rgba(80,90,130,.10);
+
+        }
+
+
+        body.light-mode .ai-step strong {
+
+            color: #252a3d;
+
+        }
+
+
+        body.light-mode .ai-step span {
+
+            color: #738097;
+
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media(max-width:600px) {
+
+            .ai-loading-content {
+
+                padding: 32px 20px;
+
+                border-radius: 24px;
+
+            }
+
+            .ai-loading-content h1 {
+
+                font-size: 40px;
+
+            }
+
+            .ai-loading-icon {
+
+                width: 75px;
+                height: 75px;
+
+                font-size: 25px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="ai-loading-page">
+
+
+    <div class="ai-orb ai-orb-1"></div>
+
+    <div class="ai-orb ai-orb-2"></div>
+
+    <div class="ai-grid"></div>
+
+
+    <div class="ai-loading-content">
+
+
+        <div class="ai-loading-icon">
+
+            <div class="ai-icon-ring"></div>
+
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+
+        </div>
+
+
+        <div class="ai-loading-label">
+
+            <span class="ai-live-dot"></span>
+
+            VAULTSHARE AI
+
+        </div>
+
+
+        <h1>
+
+            Analyzing
+
+            <span>Your File</span>
+
+        </h1>
+
+
+        <p class="ai-loading-subtitle">
+
+            Gemini AI is reading your document and preparing
+            intelligent insights. Please wait a moment.
+
+        </p>
+
+
+        <div class="ai-processing-box">
+
+            <div class="ai-processing-line"></div>
+
+
+            <div class="ai-processing-steps">
+
+
+                <div class="ai-step active">
+
+                    <div class="ai-step-icon">
+
+                        <i class="fa-solid fa-file-lines"></i>
+
+                    </div>
+
+                    <div>
+
+                        <strong>Reading document</strong>
+
+                        <span>
+                            Extracting useful content
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="ai-step">
+
+                    <div class="ai-step-icon">
+
+                        <i class="fa-solid fa-brain"></i>
+
+                    </div>
+
+                    <div>
+
+                        <strong>Understanding content</strong>
+
+                        <span>
+                            Gemini AI is processing
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="ai-step">
+
+                    <div class="ai-step-icon">
+
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+
+                    </div>
+
+                    <div>
+
+                        <strong>Generating insights</strong>
+
+                        <span>
+                            Creating your analysis
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <div class="ai-loading-status">
+
+            <span class="typing-dot"></span>
+
+            <span id="loadingText">
+                Reading your document...
+            </span>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<script>
+
+const fileId = "{{ file_id }}";
+
+
+/* =========================
+   LOADING MESSAGES
+========================= */
+
+const loadingMessages = [
+    "Reading your document...",
+    "Understanding the content...",
+    "Finding important information...",
+    "Generating intelligent insights...",
+    "Almost ready..."
+];
+
+let messageIndex = 0;
+
+const messageTimer = setInterval(() => {
+
+    messageIndex++;
+
+    if (messageIndex < loadingMessages.length) {
+
+        document.getElementById("loadingText").textContent =
+            loadingMessages[messageIndex];
+
+    }
+
+}, 1800);
+
+
+/* =========================
+   PROCESSING STEPS
+========================= */
+
+const steps = document.querySelectorAll(".ai-step");
+
+let currentStep = 0;
+
+const stepTimer = setInterval(() => {
+
+    steps.forEach(step => {
+        step.classList.remove("active");
+    });
+
+    steps[currentStep].classList.add("active");
+
+    currentStep++;
+
+    if (currentStep >= steps.length) {
+        currentStep = 0;
+    }
+
+}, 1800);
+
+
+/* =========================
+   MINIMUM LOADING TIME
+========================= */
+
+const startTime = Date.now();
+
+const MIN_LOADING_TIME = 9000;
+
+let aiResult = null;
+
+
+/* =========================
+   RUN GEMINI
+========================= */
+
+async function getAIResult() {
+
+    try {
+
+        const response =
+            await fetch("/ai-analyze/run/" + fileId);
+
+        const html =
+            await response.text();
+
+        if (!response.ok) {
+            throw new Error("AI analysis failed");
+        }
+
+        aiResult = html;
+
+        checkComplete();
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        clearInterval(messageTimer);
+        clearInterval(stepTimer);
+
+        document.getElementById("loadingText").textContent =
+            "Something went wrong. Please try again.";
+
+    }
+
+}
+
+
+/* =========================
+   CHECK BOTH CONDITIONS
+========================= */
+
+function checkComplete() {
+
+    /*
+     * Wait until Gemini has finished
+     */
+
+    if (!aiResult) {
+        return;
+    }
+
+
+    /*
+     * Check how long loading screen
+     * has already been displayed.
+     */
+
+    const elapsed = Date.now() - startTime;
+
+    const remaining =
+        MIN_LOADING_TIME - elapsed;
+
+
+    /*
+     * If Gemini finished too early,
+     * wait until 9 seconds are complete.
+     */
+
+    if (remaining > 0) {
+
+        setTimeout(() => {
+
+            finishLoading();
+
+        }, remaining);
+
+    }
+
+    else {
+
+        finishLoading();
+
+    }
+
+}
+
+
+/* =========================
+   FINISH LOADING
+========================= */
+
+function finishLoading() {
+
+    clearInterval(messageTimer);
+    clearInterval(stepTimer);
+
+
+    /*
+     * Final message
+     */
+
+    document.getElementById("loadingText").textContent =
+        "Analysis complete!";
+
+
+    /*
+     * Small final pause
+     */
+
+    setTimeout(() => {
+
+        document.open();
+
+        document.write(aiResult);
+
+        document.close();
+
+    }, 700);
+
+}
+
+
+/* =========================
+   START ANALYSIS
+========================= */
+
+setTimeout(() => {
+
+    getAIResult();
+
+}, 500);
+
+</script>
+
+
+<script src="{{ url_for('static', filename='theme.js') }}"></script>
+
+</body>
+
+</html>

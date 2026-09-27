@@ -7,6 +7,7 @@ from flask import (
     send_from_directory,
     flash,
     url_for
+    
 )
 
 from werkzeug.security import (
@@ -19,6 +20,21 @@ from werkzeug.utils import secure_filename
 import sqlite3
 import os
 import uuid
+import webbrowser
+import threading
+from dotenv import load_dotenv
+from google import genai
+import os
+
+load_dotenv()
+
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+
+client = genai.Client(
+    api_key=GEMINI_API_KEY
+)
+
+
 
 
 # =========================================================
@@ -597,6 +613,227 @@ def my_files():
         storage_used=storage_used
     )
 
+# =========================================================
+# AI ANALYSIS LOADING PAGE
+# =========================================================
+
+@app.route("/ai-analyze/<int:file_id>")
+def ai_analyze_loading(file_id):
+
+    if "user_id" not in session:
+        return redirect("/login")
+
+    return render_template(
+        "ai_loading.html",
+        file_id=file_id
+    )
+
+
+# =========================================================
+# AI FILE ANALYSIS
+# =========================================================
+
+@app.route("/ai-analyze/run/<int:file_id>")
+def ai_analyze(file_id):
+
+    if "user_id" not in session:
+        return redirect("/login")
+
+    conn = get_db()
+
+    file = conn.execute("""
+        SELECT *
+        FROM files
+        WHERE id = ?
+        AND user_id = ?
+        AND is_deleted = 0
+    """, (
+        file_id,
+        session["user_id"]
+    )).fetchone()
+
+    conn.close()
+
+    if not file:
+        return "File not found.", 404
+
+    filename = file["filename"]
+
+    allowed_extensions = [".txt", ".pdf", ".pptx"]
+
+    extension = os.path.splitext(filename)[1].lower()
+
+    if extension not in allowed_extensions:
+        return """
+        <h2>AI Analysis</h2>
+        <p>
+            AI analysis currently supports TXT and PDF files.
+        </p>
+        <a href="/my-files">← Back to My Files</a>
+        """, 400
+
+    user_folder = os.path.join(
+        UPLOAD_FOLDER,
+        str(file["user_id"])
+    )
+
+    file_path = os.path.join(
+        user_folder,
+        file["stored_name"]
+    )
+
+    if not os.path.exists(file_path):
+        return "Physical file not found.", 404
+
+    # -----------------------------------------------------
+    # READ TEXT FILE
+    # -----------------------------------------------------
+
+    if extension == ".txt":
+
+        with open(
+            file_path,
+            "r",
+            encoding="utf-8",
+            errors="ignore"
+        ) as f:
+
+            text = f.read()
+
+    # -----------------------------------------------------
+    # READ PDF
+    # -----------------------------------------------------
+
+    elif extension == ".pdf":
+
+        try:
+
+            import PyPDF2
+
+            text = ""
+
+            with open(file_path, "rb") as f:
+
+                reader = PyPDF2.PdfReader(f)
+
+                for page in reader.pages:
+
+                    page_text = page.extract_text()
+
+                    if page_text:
+                        text += page_text + "\n"
+
+        except Exception as e:
+
+            return f"""
+            <h2>PDF Reading Error</h2>
+            <p>{str(e)}</p>
+            <a href="/my-files">← Back to My Files</a>
+            """, 500
+
+
+            # -----------------------------------------------------
+    # READ POWERPOINT
+    # -----------------------------------------------------
+
+    elif extension == ".pptx":
+
+        try:
+
+            from pptx import Presentation
+
+            presentation = Presentation(file_path)
+
+            text = ""
+
+            for slide in presentation.slides:
+
+                for shape in slide.shapes:
+
+                    if hasattr(shape, "text") and shape.text:
+
+                        text += shape.text + "\n"
+
+        except Exception as e:
+
+            return f"""
+            <h2>PowerPoint Reading Error</h2>
+            <p>{str(e)}</p>
+            <a href="/my-files">← Back to My Files</a>
+            """, 500
+
+    if not text.strip():
+
+        return """
+        <h2>No readable text found</h2>
+        <p>
+            This file doesn't contain readable text that
+            VaultShare can analyze.
+        </p>
+        <a href="/my-files">← Back to My Files</a>
+        """, 400
+
+    # -----------------------------------------------------
+    # LIMIT TEXT SENT TO AI
+    # -----------------------------------------------------
+
+    text = text[:20000]
+
+    # -----------------------------------------------------
+    # ASK GEMINI
+    # -----------------------------------------------------
+
+    prompt = f"""
+You are the AI assistant inside VaultShare.
+
+Analyze the following document.
+
+Give the answer in this exact structure:
+
+SUMMARY:
+Write a short 3-5 sentence summary.
+
+KEY POINTS:
+- Point 1
+- Point 2
+- Point 3
+- Point 4
+- Point 5
+
+SUGGESTED CATEGORY:
+Give one suitable category for this document.
+
+DOCUMENT:
+{text}
+"""
+
+    try:
+
+        response = client.models.generate_content(
+            model="gemini-3.5-flash-lite",
+            contents=prompt
+        )
+
+        ai_result = response.text
+
+    except Exception as e:
+
+        return f"""
+        <h2>AI Analysis Error</h2>
+        <p>{str(e)}</p>
+        <a href="/my-files">← Back to My Files</a>
+        """, 500
+
+    return render_template(
+        "ai_result.html",
+        file=file,
+        ai_result=ai_result
+    )
+
+
+
+
+
 
 # =========================================================
 # DOWNLOAD
@@ -1032,7 +1269,8 @@ def shared_file(token):
 
     return render_template(
         "shared_file.html",
-        file=result
+        file=result,
+        token=token
     )
 
 
@@ -1314,16 +1552,26 @@ def page_not_found(error):
     ), 404
 
 
+
+
+
 # =========================================================
 # START APP
 # =========================================================
 
 if __name__ == "__main__":
-
     init_db()
 
-    app.run(
-        debug=True,
-        host="127.0.0.1",
-        port=5000
-    )
+    url = "http://127.0.0.1:5000"
+
+    threading.Timer(
+        1.0,
+        lambda: webbrowser.open(url)
+    ).start()
+
+    app.run(debug=True, use_reloader=False)
+
+
+
+
+   

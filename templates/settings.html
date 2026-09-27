@@ -8,6 +8,8 @@
 
     <link rel="stylesheet"
           href="{{ url_for('static', filename='style.css') }}">
+          <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 
 <body class="dashboard-page">
@@ -17,65 +19,65 @@
     <!-- ================= SIDEBAR ================= -->
     <aside class="sidebar">
 
-        <div class="brand">
-            <div class="brand-logo">V</div>
-            <span>VaultShare</span>
+    <div class="brand">
+        <div class="brand-logo">
+            <span>V</span>
         </div>
 
-        <nav class="sidebar-nav">
+        <span class="brand-name">VaultShare</span>
+    </div>
 
-            <a href="{{ url_for('dashboard') }}">
-                <span>⌂</span>
-                Dashboard
-            </a>
 
-            <a href="{{ url_for('my_files') }}">
-                <span>▣</span>
-                My Files
-            </a>
+    <nav class="sidebar-nav">
 
-            <a href="{{ url_for('shared') }}">
-                <span>↗</span>
-                Shared
-            </a>
+        <a href="/dashboard">
+            <i class="fa-solid fa-table-columns"></i>
+            <span>Dashboard</span>
+        </a>
 
-            <a href="{{ url_for('favorites') }}">
-                <span>★</span>
-                Favorites
-            </a>
+        <a href="/my-files">
+            <i class="fa-solid fa-folder"></i>
+            <span>My Files</span>
+        </a>
 
-            <a href="{{ url_for('trash') }}">
-                <span>♻</span>
-                Trash
-            </a>
+        <a href="/shared">
+            <i class="fa-solid fa-share-nodes"></i>
+            <span>Shared</span>
+        </a>
 
-            <a href="{{ url_for('security') }}">
-                <span>🔒</span>
-                Security
-            </a>
+        <a href="/favorites">
+            <i class="fa-solid fa-star"></i>
+            <span>Favorites</span>
+        </a>
 
-        </nav>
+        <a href="/trash">
+            <i class="fa-solid fa-trash"></i>
+            <span>Trash</span>
+        </a>
 
-        <div class="sidebar-bottom">
+    </nav>
 
-            <a href="{{ url_for('profile') }}">
-                <span>◉</span>
-                Profile
-            </a>
 
-            <a href="{{ url_for('settings') }}" class="active">
-                <span>⚙</span>
-                Settings
-            </a>
+    <div class="sidebar-bottom">
 
-            <a href="{{ url_for('logout') }}">
-                <span>↪</span>
-                Logout
-            </a>
+        <a href="/security">
+            <i class="fa-solid fa-shield-halved"></i>
+            <span>Security</span>
+        </a>
 
-        </div>
+        <a href="/settings" class="active">
+            <i class="fa-solid fa-gear"></i>
+            <span>Settings</span>
+        </a>
 
-    </aside>
+        <a href="/logout">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span>Logout</span>
+        </a>
+
+    </div>
+
+</aside>
 
 
     <!-- ================= MAIN ================= -->
