@@ -1742,13 +1742,15 @@ def page_not_found(error):
 
 
 
+
 # =========================================================
 # START APP
 # =========================================================
 
-if __name__ == "__main__":
-    init_db()
+# Initialize database when the app is imported by Gunicorn
+init_db()
 
+if __name__ == "__main__":
     url = "http://127.0.0.1:5000"
 
     threading.Timer(
@@ -1757,6 +1759,7 @@ if __name__ == "__main__":
     ).start()
 
     app.run(debug=True, use_reloader=False)
+
 
 
 
