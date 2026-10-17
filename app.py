@@ -48,7 +48,7 @@ def get_gemini_client():
 
 app = Flask(__name__)
 
-app.secret_key = "vaultshare-secret-key-change-later"
+app.secret_key = os.environ.get("SECRET_KEY")
 
 UPLOAD_FOLDER = os.path.join(APP_DIR, "storage")
 STORAGE_LIMIT = 500 * 1024 * 1024
