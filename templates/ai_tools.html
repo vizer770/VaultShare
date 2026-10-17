@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VaultShare | AI Analyze</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        .ai-tools-intro { padding: 28px; border: 1px solid rgba(135, 100, 255, .25); border-radius: 22px; background: linear-gradient(135deg, rgba(118, 76, 255, .16), rgba(40, 180, 255, .07)); margin-bottom: 24px; }
+        .ai-tools-intro h2 { margin: 0 0 10px; font-size: clamp(22px, 3vw, 30px); }
+        .ai-tools-intro p { margin: 0; line-height: 1.65; color: var(--muted-text, #a7a4b8); }
+        .ai-tools-list { display: grid; gap: 12px; }
+        .ai-tool-file { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 18px; border: 1px solid var(--border-color, rgba(255,255,255,.1)); border-radius: 16px; background: var(--card-bg, rgba(255,255,255,.035)); }
+        .ai-tool-file-info { display: flex; align-items: center; gap: 14px; min-width: 0; }
+        .ai-tool-file-icon { width: 46px; height: 46px; flex-shrink: 0; display: grid; place-items: center; border-radius: 14px; background: rgba(124, 82, 255, .16); color: #a78bfa; font-size: 19px; }
+        .ai-tool-file-name { font-weight: 700; overflow-wrap: anywhere; }
+        .ai-tool-file-meta { margin-top: 5px; font-size: 13px; opacity: .7; }
+        .ai-tool-action { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 11px 15px; border: 0; border-radius: 12px; text-decoration: none; white-space: nowrap; color: #fff; background: linear-gradient(135deg, #7948f5, #5368f7); font-weight: 700; }
+        .ai-tool-action.disabled { color: inherit; background: rgba(130,130,150,.16); opacity: .65; cursor: not-allowed; }
+        .ai-tools-empty { text-align: center; padding: 46px 20px; border: 1px dashed var(--border-color, rgba(255,255,255,.18)); border-radius: 18px; }
+        .ai-tools-empty i { font-size: 34px; color: #9b82ff; margin-bottom: 14px; }
+        @media (max-width: 620px) { .ai-tool-file { align-items: flex-start; flex-direction: column; } .ai-tool-action { width: 100%; } }
+    </style>
+</head>
+<body>
+<div class="dashboard-page">
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-logo"><i class="fa-solid fa-vault"></i></div>
+            <span>VaultShare</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="/dashboard"><i class="fa-solid fa-table-columns"></i><span>Dashboard</span></a>
+            <a href="/my-files"><i class="fa-solid fa-folder"></i><span>My Files</span></a>
+            <a href="/ai-tools" class="active"><i class="fa-solid fa-wand-magic-sparkles"></i><span>AI Analyze</span></a>
+            <a href="/shared"><i class="fa-solid fa-share-nodes"></i><span>Shared</span></a>
+            <a href="/favorites"><i class="fa-solid fa-star"></i><span>Favorites</span></a>
+            <a href="/trash"><i class="fa-solid fa-trash"></i><span>Trash</span></a>
+        </nav>
+        <div class="sidebar-bottom">
+
+            <a href="/activity"><i class="fa-solid fa-clock-rotate-left"></i><span>Activity History</span></a>
+            <a href="/security"><i class="fa-solid fa-shield-halved"></i><span>Security</span></a>
+            <a href="/settings"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
+            <a href="/logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
+        </div>
+    </aside>
+
+    <main class="dashboard-main">
+        <div class="dashboard-top">
+            <div>
+                <p class="eyebrow">DOCUMENT WORKSPACE</p>
+                <h1>AI Analyze</h1>
+                <p class="dashboard-subtitle">Choose a document to summarize and find its key points.</p>
+            </div>
+        </div>
+
+        <section class="ai-tools-intro">
+            <h2><i class="fa-solid fa-wand-magic-sparkles"></i> Document analysis</h2>
+            <p>Select one of your supported files to generate a summary, key points and a suggested category. Supported formats: TXT, PDF and PPTX.</p>
+        </section>
+
+        <div class="section-heading" style="margin-bottom: 16px;">
+            <div><span class="section-label">YOUR DOCUMENTS</span><h2>Choose a file</h2></div>
+            <a href="/my-files" class="secondary-button"><i class="fa-solid fa-folder-open"></i> My Files</a>
+        </div>
+
+        {% if files %}
+        <div class="ai-tools-list">
+            {% for file in files %}
+            <div class="ai-tool-file">
+                <div class="ai-tool-file-info">
+                    <div class="ai-tool-file-icon"><i class="fa-solid fa-file-lines"></i></div>
+                    <div style="min-width: 0;">
+                        <div class="ai-tool-file-name">{{ file["filename"] }}</div>
+                        <div class="ai-tool-file-meta">{{ "%.2f"|format(file["size"] / 1024) }} KB · Uploaded {{ file["uploaded_at"] }}</div>
+                    </div>
+                </div>
+                {% if file["ai_supported"] %}
+                <a class="ai-tool-action" href="{{ url_for('ai_analyze_loading', file_id=file['id']) }}"><i class="fa-solid fa-wand-magic-sparkles"></i> Analyze</a>
+                {% else %}
+                <span class="ai-tool-action disabled" title="Only TXT, PDF and PPTX files are supported"><i class="fa-solid fa-circle-info"></i> Unsupported format</span>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="ai-tools-empty">
+            <i class="fa-solid fa-file-arrow-up"></i>
+            <h2>No files to analyze yet</h2>
+            <p>Upload a TXT, PDF or PPTX document to get started.</p>
+            <a href="/my-files" class="ai-tool-action" style="margin-top: 16px;"><i class="fa-solid fa-folder-open"></i> Open My Files</a>
+        </div>
+        {% endif %}
+    </main>
+</div>
+<script src="{{ url_for('static', filename='theme.js') }}"></script>
+</body>
+</html>

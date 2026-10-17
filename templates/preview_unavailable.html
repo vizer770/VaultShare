@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Preview unavailable • VaultShare</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body class="dashboard-page">
+<div class="app-layout">
+    <aside class="sidebar">
+        <div class="brand"><div class="brand-logo"><i class="fa-solid fa-vault"></i></div><span class="brand-name">VaultShare</span></div>
+        <nav class="sidebar-nav">
+            <a href="/dashboard"><i class="fa-solid fa-table-columns"></i><span>Dashboard</span></a>
+            <a href="/my-files"><i class="fa-solid fa-folder"></i><span>My Files</span></a>
+            <a href="/ai-tools"><i class="fa-solid fa-wand-magic-sparkles"></i><span>AI Analyze</span></a>
+            <a href="/shared"><i class="fa-solid fa-share-nodes"></i><span>Shared</span></a>
+            <a href="/favorites"><i class="fa-solid fa-star"></i><span>Favorites</span></a>
+            <a href="/trash"><i class="fa-solid fa-trash"></i><span>Trash</span></a>
+        </nav>
+        <div class="sidebar-bottom">
+            <a href="/activity"><i class="fa-solid fa-clock-rotate-left"></i><span>Activity History</span></a>
+            <a href="/security"><i class="fa-solid fa-shield-halved"></i><span>Security</span></a>
+            <a href="/settings"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
+            <a href="/logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
+        </div>
+    </aside>
+    <main class="dashboard-main">
+        <div class="dashboard-top"><div><p class="eyebrow">FILE PREVIEW</p><h1>Preview isn't available yet</h1><p class="dashboard-subtitle">This file type can't be previewed in the browser. Your original file is safe and can still be downloaded.</p></div></div>
+        <section class="preview-unavailable-card">
+            <span class="preview-unavailable-icon"><i class="fa-solid fa-file-circle-question"></i></span>
+            <h2>{{ file["filename"] }}</h2>
+            <p>VaultShare supports previews for images, PDFs and plain-text files.</p>
+            <div class="preview-actions"><a class="primary-button" href="{{ url_for('download_file', file_id=file['id']) }}"><i class="fa-solid fa-download"></i> Download file</a><a class="secondary-button" href="/my-files">Back to My Files</a></div>
+        </section>
+    </main>
+</div>
+<script src="{{ url_for('static', filename='theme.js') }}"></script>
+</body>
+</html>

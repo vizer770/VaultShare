@@ -47,6 +47,11 @@
                 <span>My Files</span>
             </a>
 
+<a href="/ai-tools">
+    <i class="fa-solid fa-wand-magic-sparkles"></i>
+    <span>AI Analyze</span>
+</a>
+
             <a href="/shared">
                 <i class="fa-solid fa-share-nodes"></i>
                 <span>Shared</span>
@@ -66,6 +71,8 @@
 
 
         <div class="sidebar-bottom">
+
+            <a href="/activity"><i class="fa-solid fa-clock-rotate-left"></i><span>Activity History</span></a>
 
             <a href="/security">
                 <i class="fa-solid fa-shield-halved"></i>
@@ -163,33 +170,10 @@
             </div>
 
 
-            <div class="storage-footer">
-
-                <span>
-
-                    <strong>
-                        {{ "%.2f"|format(
-                            storage_used / 1024 / 1024
-                        ) }} MB
-                    </strong>
-
-                    used
-
-                </span>
-
-
-                <span>
-
-                    <strong>
-                        {{ "%.0f"|format(
-                            user["storage_limit"] / 1024 / 1024
-                        ) }} MB
-                    </strong>
-
-                    total
-
-                </span>
-
+            <div class="storage-footer storage-breakdown">
+                <span><strong>{{ format_bytes(storage_used) }}</strong><small>Used</small></span>
+                <span><strong>{{ format_bytes(storage_remaining) }}</strong><small>Available</small></span>
+                <span><strong>{{ format_bytes(user["storage_limit"]) }}</strong><small>Total</small></span>
             </div>
 
         </section>
@@ -312,13 +296,15 @@
                     "
                 >
 
-                    <!-- AI -->
+                    <!-- FAVORITE -->
                     <a
-                        href="{{ url_for('ai_analyze_loading', file_id=file['id']) }}"
-                        class="file-action"
-                        title="AI Analyze"
+                        href="{{ url_for('toggle_favorite', file_id=file['id']) }}"
+                        class="file-action favorite-action"
+                        title="{{ 'Remove from Favorites' if file['is_favorite'] else 'Add to Favorites' }}"
+                        aria-label="{{ 'Remove from Favorites' if file['is_favorite'] else 'Add to Favorites' }}"
                     >
-                        🤖
+                        <i class="{{ 'fa-solid' if file['is_favorite'] else 'fa-regular' }} fa-star"
+                           style="color: {{ '#fbbf24' if file['is_favorite'] else 'inherit' }};"></i>
                     </a>
 
 
@@ -331,6 +317,10 @@
                         🔗
                     </a>
 
+
+                    <a href="{{ url_for('preview_file', file_id=file['id']) }}" title="Preview file">
+                        <i class="fa-solid fa-eye"></i>
+                    </a>
 
                     <!-- DOWNLOAD -->
                     <a

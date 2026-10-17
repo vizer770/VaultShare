@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Can't analyze this file | VaultShare</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    .unavailable-wrap{min-height:100vh;display:grid;place-items:center;padding:28px;background:radial-gradient(circle at 15% 15%,rgba(124,58,237,.2),transparent 34%),radial-gradient(circle at 85% 80%,rgba(14,165,233,.12),transparent 30%),#090d16;color:#f4f5fb}
+    .unavailable-card{width:min(100%,650px);position:relative;overflow:hidden;padding:clamp(26px,5vw,48px);border-radius:28px;border:1px solid rgba(153,117,255,.28);background:linear-gradient(145deg,rgba(22,27,44,.97),rgba(12,17,29,.98));box-shadow:0 30px 100px rgba(0,0,0,.42);animation:unavailableIn .65s cubic-bezier(.2,.8,.2,1) both}
+    .unavailable-card:before{content:"";position:absolute;inset:0 15% auto;height:2px;background:linear-gradient(90deg,transparent,#8b5cf6,#22d3ee,transparent);animation:scanLine 4s ease-in-out infinite}
+    .unavailable-icon{width:76px;height:76px;display:grid;place-items:center;border-radius:24px;font-size:30px;color:white;background:linear-gradient(135deg,#7c3aed,#536dfe 65%,#22c7e8);box-shadow:0 12px 35px rgba(103,80,255,.32);margin-bottom:24px;animation:iconFloat 4s ease-in-out infinite}
+    .unavailable-kicker{font-size:12px;letter-spacing:.18em;font-weight:800;color:#b6a2ff;text-transform:uppercase}.unavailable-card h1{font-size:clamp(28px,5vw,42px);line-height:1.12;margin:10px 0 14px}.unavailable-card p{line-height:1.75;color:#aeb9ce}.unavailable-file{display:flex;gap:12px;align-items:center;margin:24px 0;padding:15px 17px;border-radius:15px;background:rgba(124,58,237,.09);border:1px solid rgba(139,92,246,.22);overflow-wrap:anywhere}.unavailable-file i{color:#a78bfa;font-size:22px}.unavailable-note{padding:16px;border-radius:15px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08);color:#c7d0e1;font-size:14px}.unavailable-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}.unavailable-actions a{display:inline-flex;align-items:center;gap:9px;padding:13px 17px;border-radius:13px;font-weight:750;text-decoration:none;color:white;background:linear-gradient(135deg,#7c3aed,#536dfe);box-shadow:0 9px 24px rgba(92,75,225,.2);transition:transform .2s,box-shadow .2s}.unavailable-actions a:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(92,75,225,.3)}.unavailable-actions a.secondary{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);box-shadow:none;color:#dce3f2}
+    @keyframes unavailableIn{from{opacity:0;transform:translateY(20px) scale(.98)}to{opacity:1;transform:none}}@keyframes iconFloat{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-6px) rotate(-2deg)}}@keyframes scanLine{0%,100%{opacity:.4;transform:translateX(-10%)}50%{opacity:1;transform:translateX(10%)}}@media(prefers-reduced-motion:reduce){.unavailable-card,.unavailable-icon,.unavailable-card:before{animation:none}}
+  </style>
+</head>
+<body>
+  <main class="unavailable-wrap">
+    <section class="unavailable-card">
+      <div class="unavailable-icon"><i class="fa-solid fa-file-circle-question"></i></div>
+      <div class="unavailable-kicker">VaultShare · Document tools</div>
+      <h1>{{ reason }}</h1>
+      <p>VaultShare couldn't create an analysis for this document. Your file is still in your account; nothing has been deleted.</p>
+      <div class="unavailable-file"><i class="fa-solid fa-file-lines"></i><div><strong>{{ filename }}</strong><div style="font-size:13px;color:#aeb9ce;margin-top:4px">Analysis unavailable</div></div></div>
+      <div class="unavailable-note"><strong>What you can try</strong><br>{{ detail }}</div>
+      <div class="unavailable-actions"><a href="{{ url_for('ai_tools') }}"><i class="fa-solid fa-wand-magic-sparkles"></i> Choose another file</a><a class="secondary" href="{{ url_for('my_files') }}"><i class="fa-solid fa-folder-open"></i> Back to My Files</a></div>
+    </section>
+  </main>
+</body>
+</html>

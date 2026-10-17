@@ -1411,146 +1411,62 @@ select {
    LIGHT MODE
    ========================================================= */
 
-body.light-mode {
-    background: #f4f6fb;
-    color: #171b24;
-}
 
-body.light-mode .dashboard-page,
-body.light-mode .dashboard-main {
-    background: #f4f6fb;
-}
 
-body.light-mode .sidebar {
-    background: #ffffff;
-    border-right-color: #e3e7ef;
-}
 
-body.light-mode .brand,
-body.light-mode .dashboard-top h1,
-body.light-mode .section-label,
-body.light-mode .stat-card h3,
-body.light-mode .storage-header h3,
-body.light-mode .settings-card-header h2 {
-    color: #171b24;
-}
 
-body.light-mode .sidebar a {
-    color: #344054;
-}
 
-body.light-mode .sidebar a:hover {
-    background: #f1f3f8;
-    color: #111827;
-}
 
-body.light-mode .sidebar a.active {
-    color: #ffffff;
-}
 
-body.light-mode .stat-card,
-body.light-mode .storage-card,
-body.light-mode .file-list,
-body.light-mode .settings-card {
-    background: #ffffff;
-    border-color: #e3e7ef;
-}
 
-body.light-mode .stat-card:hover,
-body.light-mode .file-row:hover {
-    border-color: #d3d8e2;
-}
 
-body.light-mode .file-row {
-    border-bottom-color: #edf0f4;
-}
 
-body.light-mode .file-info strong,
-body.light-mode .setting-info strong {
-    color: #1f2937;
-}
 
-body.light-mode .file-info span,
-body.light-mode .setting-info span {
-    color: #667085;
-}
 
-body.light-mode .upload-card #uploadArea,
-body.light-mode #uploadArea {
-    background: #ffffff;
-    border-color: #cfd5df;
-}
 
-body.light-mode #uploadArea:hover {
-    background: #f9fafb;
-}
 
-body.light-mode .settings-button {
-    background: #ffffff;
-    border-color: #d5dae3;
-    color: #344054;
-}
 
-body.light-mode .settings-button:hover {
-    background: #f3f4f6;
-}
 
-body.light-mode .settings-select,
-body.light-mode .profile-form input,
-body.light-mode .share-link-row input {
-    background: #ffffff;
-    border-color: #d5dae3;
-    color: #1f2937;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /* =========================================================
    AUTH LIGHT MODE
    ========================================================= */
 
-body.light-mode.auth-page {
-    background: #f4f6fb;
-}
 
-body.light-mode .auth-visual {
-    background: #ffffff;
-    border-right-color: #e3e7ef;
-}
 
-body.light-mode .auth-brand,
-body.light-mode .auth-visual h1,
-body.light-mode .login-card h1 {
-    color: #171b24;
-}
 
-body.light-mode .auth-visual-content > p,
-body.light-mode .welcome-text {
-    color: #667085;
-}
 
-body.light-mode .auth-feature strong {
-    color: #344054;
-}
 
-body.light-mode .auth-feature span {
-    color: #667085;
-}
 
-body.light-mode .form-group label {
-    color: #344054;
-}
 
-body.light-mode .form-group input {
-    background: #ffffff;
-    border-color: #d5dae3;
-    color: #1f2937;
-}
 
-body.light-mode .auth-secondary-button {
-    background: #ffffff;
-    border-color: #d5dae3;
-    color: #344054;
-}
+
+
+
+
+
+
+
+
+
 
 
 /* =========================================================
@@ -3675,351 +3591,113 @@ body {
    LIGHT MODE
 ========================================================= */
 
-body.light-mode {
 
-    --vs-bg: #f5f7fb;
-
-    --vs-bg-secondary: #ffffff;
-
-    --vs-card: #ffffff;
-
-    --vs-card-hover: #f8fafc;
-
-    --vs-text: #111827;
-
-    --vs-muted: #64748b;
-
-    --vs-border: rgba(15,23,42,0.10);
-
-    background:
-        radial-gradient(
-            circle at 10% 10%,
-            rgba(124,58,237,0.08),
-            transparent 28%
-        ),
-        radial-gradient(
-            circle at 90% 20%,
-            rgba(6,182,212,0.07),
-            transparent 28%
-        ),
-        #f5f7fb !important;
-
-    color:
-        var(--vs-text) !important;
-
-}
 
 
 /* =========================================================
    LIGHT MODE SIDEBAR
 ========================================================= */
 
-body.light-mode .sidebar {
-
-    background:
-        rgba(255,255,255,0.92) !important;
-
-    backdrop-filter:
-        blur(20px);
-
-    border-right:
-        1px solid rgba(15,23,42,0.08) !important;
-
-    box-shadow:
-        10px 0 35px rgba(15,23,42,0.05);
-
-}
 
 
-body.light-mode .sidebar-nav a,
-body.light-mode .sidebar-bottom a {
-
-    color:
-        #475569 !important;
-
-}
 
 
-body.light-mode .sidebar-nav a:hover,
-body.light-mode .sidebar-bottom a:hover {
-
-    color:
-        #111827 !important;
-
-    background:
-        rgba(124,58,237,0.07);
-
-}
 
 
-body.light-mode .sidebar-nav a.active {
 
-    color: white !important;
 
-    background:
-        linear-gradient(
-            100deg,
-            #7c3aed,
-            #6366f1
-        ) !important;
 
-}
+
 
 
 /* =========================================================
    LIGHT MODE MAIN
 ========================================================= */
 
-body.light-mode .dashboard-main {
-
-    color:
-        #111827 !important;
-
-}
 
 
-body.light-mode h1,
-body.light-mode h2,
-body.light-mode h3,
-body.light-mode h4 {
-
-    color:
-        #111827 !important;
-
-}
 
 
-body.light-mode .dashboard-subtitle,
-body.light-mode .file-info span,
-body.light-mode .storage-footer {
-
-    color:
-        #64748b !important;
-
-}
 
 
-body.light-mode .eyebrow,
-body.light-mode .section-label {
 
-    color:
-        #7c3aed !important;
 
-}
+
+
 
 
 /* =========================================================
    LIGHT MODE CARDS
 ========================================================= */
 
-body.light-mode .storage-card,
-body.light-mode .upload-card,
-body.light-mode .stat-card,
-body.light-mode .ai-result-card,
-body.light-mode .security-info-card {
-
-    background:
-        rgba(255,255,255,0.90) !important;
-
-    border:
-        1px solid rgba(15,23,42,0.08) !important;
-
-    box-shadow:
-        0 12px 35px rgba(15,23,42,0.06) !important;
-
-}
 
 
-body.light-mode .storage-card:hover,
-body.light-mode .upload-card:hover,
-body.light-mode .stat-card:hover,
-body.light-mode .ai-result-card:hover,
-body.light-mode .security-info-card:hover {
 
-    box-shadow:
-        0 18px 45px rgba(15,23,42,0.10) !important;
 
-}
 
 
 /* =========================================================
    LIGHT MODE FILES
 ========================================================= */
 
-body.light-mode .file-row {
-
-    background:
-        rgba(255,255,255,0.90) !important;
-
-    border:
-        1px solid rgba(15,23,42,0.08) !important;
-
-}
 
 
-body.light-mode .file-row:hover {
-
-    background:
-        rgba(124,58,237,0.045) !important;
-
-    border-color:
-        rgba(124,58,237,0.18) !important;
-
-}
 
 
-body.light-mode .file-type-icon {
 
-    background:
-        rgba(124,58,237,0.08) !important;
 
-}
+
 
 
 /* =========================================================
    LIGHT MODE AI
 ========================================================= */
 
-body.light-mode .ai-result-content {
 
-    color:
-        #334155 !important;
-
-    background:
-        #f8fafc !important;
-
-    border:
-        1px solid rgba(15,23,42,0.07);
-
-}
 
 
 /* =========================================================
    LIGHT MODE SECONDARY BUTTON
 ========================================================= */
 
-body.light-mode .secondary-button {
-
-    color:
-        #334155 !important;
-
-    background:
-        #ffffff !important;
-
-    border:
-        1px solid rgba(15,23,42,0.12) !important;
-
-}
 
 
-body.light-mode .secondary-button:hover {
 
-    color:
-        #6d28d9 !important;
 
-    background:
-        rgba(124,58,237,0.06) !important;
-
-}
 
 
 /* =========================================================
    LIGHT MODE INPUTS
 ========================================================= */
 
-body.light-mode input,
-body.light-mode select,
-body.light-mode textarea {
-
-    color:
-        #111827 !important;
-
-    background:
-        #ffffff !important;
-
-    border-color:
-        rgba(15,23,42,0.12) !important;
-
-}
 
 
-body.light-mode input::placeholder,
-body.light-mode textarea::placeholder {
 
-    color:
-        #94a3b8 !important;
 
-}
 
 
 /* =========================================================
    LIGHT MODE STORAGE BAR
 ========================================================= */
 
-body.light-mode .storage-bar {
-
-    background:
-        #e2e8f0 !important;
-
-}
 
 
-body.light-mode .storage-fill {
 
-    background:
-        linear-gradient(
-            90deg,
-            #7c3aed,
-            #6366f1,
-            #3b82f6
-        ) !important;
 
-}
 
 
 /* =========================================================
    LIGHT MODE SHARE LINK
 ========================================================= */
 
-body.light-mode #shareLink {
 
-    color:
-        #111827 !important;
-
-    background:
-        #f8fafc !important;
-
-    border-color:
-        rgba(15,23,42,0.12) !important;
-
-}
 
 
 /* =========================================================
    LIGHT MODE BRAND
 ========================================================= */
 
-body.light-mode .brand > span {
 
-    background:
-        linear-gradient(
-            90deg,
-            #111827,
-            #6d28d9,
-            #2563eb,
-            #111827
-        );
-
-    background-size:
-        250% auto;
-
-    -webkit-background-clip: text;
-
-    background-clip: text;
-
-    color: transparent;
-
-}
 
 
 /* =========================================================
@@ -4220,45 +3898,17 @@ body.light-mode .brand > span {
 
 /* ===== LIGHT MODE SIDEBAR ===== */
 
-body.light-mode .sidebar {
-    background: #ffffff !important;
 
-    border-right:
-        1px solid rgba(15,23,42,0.08) !important;
-}
 
-body.light-mode .sidebar-nav a,
-body.light-mode .sidebar-bottom a {
-    color: #64748b !important;
-}
 
-body.light-mode .sidebar-nav a i,
-body.light-mode .sidebar-bottom a i {
-    color: #64748b !important;
-}
 
-body.light-mode .sidebar-nav a:hover,
-body.light-mode .sidebar-bottom a:hover {
-    color: #4c1d95 !important;
 
-    background:
-        rgba(124,58,237,0.07) !important;
-}
 
-body.light-mode .sidebar-nav a.active {
-    color: white !important;
 
-    background:
-        linear-gradient(
-            100deg,
-            #7c3aed,
-            #6366f1
-        ) !important;
-}
 
-body.light-mode .sidebar-nav a.active i {
-    color: white !important;
-}
+
+
+
 
 /* ===== FINAL SIDEBAR ACTIVE FIX ===== */
 
@@ -4460,19 +4110,9 @@ body.light-mode .sidebar-nav a.active i {
 
 /* Light mode: still dark track, purple glow */
 
-body.light-mode .storage-bar {
-    background: #e8e5ef !important;
 
-    box-shadow: none !important;
-}
 
-body.light-mode .storage-fill {
-    background: #7c3aed !important;
 
-    box-shadow:
-        0 0 5px rgba(124, 58, 237, 0.8),
-        0 0 12px rgba(124, 58, 237, 0.5) !important;
-}
 
 /* =========================================================
    VAULTSHARE — NEON VAULT STORAGE RAIL
@@ -4649,1120 +4289,378 @@ body.light-mode .storage-fill {
    LIGHT MODE
 ========================================================= */
 
-body.light-mode .storage-bar {
-    background: #e8e4f2 !important;
 
-    border-color: rgba(124, 58, 237, 0.15) !important;
 
-    box-shadow:
-        inset 0 1px 4px rgba(0,0,0,0.08) !important;
-}
 
-body.light-mode .storage-fill {
-    background:
-        linear-gradient(
-            90deg,
-            #6d28d9,
-            #7c3aed,
-            #a855f7
-        ) !important;
-
-    box-shadow:
-        0 0 8px rgba(124,58,237,0.7),
-        0 0 18px rgba(139,92,246,0.4) !important;
-}
 
 /* =========================================================
    VAULTSHARE — PREMIUM COLOR LIGHT MODE
    Purple / Blue / Lavender Glass Theme
 ========================================================= */
 
-body.light-mode {
-    background:
-        radial-gradient(
-            circle at 10% 10%,
-            rgba(124, 58, 237, 0.14),
-            transparent 28%
-        ),
-        radial-gradient(
-            circle at 85% 15%,
-            rgba(59, 130, 246, 0.12),
-            transparent 25%
-        ),
-        radial-gradient(
-            circle at 70% 85%,
-            rgba(168, 85, 247, 0.10),
-            transparent 30%
-        ),
-        linear-gradient(
-            135deg,
-            #f8f7ff 0%,
-            #f1efff 45%,
-            #f8faff 100%
-        ) !important;
 
-    color: #171329 !important;
-}
 
 
 /* =========================================================
    SIDEBAR
 ========================================================= */
 
-body.light-mode .sidebar {
-    background:
-        linear-gradient(
-            180deg,
-            rgba(255,255,255,0.92),
-            rgba(246,243,255,0.94)
-        ) !important;
 
-    border-right: 1px solid rgba(124,58,237,0.13) !important;
-
-    box-shadow:
-        8px 0 35px rgba(91,33,182,0.08) !important;
-
-    backdrop-filter: blur(20px);
-}
 
 
 /* Logo box */
 
-body.light-mode .brand-logo {
-    background:
-        linear-gradient(
-            135deg,
-            #7c3aed,
-            #6366f1,
-            #3b82f6
-        ) !important;
 
-    box-shadow:
-        0 10px 30px rgba(124,58,237,0.30),
-        0 0 25px rgba(139,92,246,0.18) !important;
-}
 
 
 /* Logo text */
 
-body.light-mode .brand span {
-    background:
-        linear-gradient(
-            90deg,
-            #6d28d9,
-            #7c3aed,
-            #2563eb
-        );
 
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent !important;
-
-    font-weight: 800 !important;
-}
 
 
 /* Sidebar links */
 
-body.light-mode .sidebar-nav a,
-body.light-mode .sidebar-bottom a {
-    color: #64748b !important;
 
-    transition:
-        color .25s ease,
-        background .25s ease,
-        transform .25s ease,
-        box-shadow .25s ease !important;
-}
 
 
 /* Icons */
 
-body.light-mode .sidebar-nav a i,
-body.light-mode .sidebar-bottom a i {
-    color: #64748b !important;
 
-    transition:
-        color .25s ease,
-        transform .25s ease !important;
-}
 
 
 /* Hover */
 
-body.light-mode .sidebar-nav a:hover,
-body.light-mode .sidebar-bottom a:hover {
-    color: #6d28d9 !important;
-
-    background:
-        linear-gradient(
-            90deg,
-            rgba(124,58,237,0.10),
-            rgba(99,102,241,0.04)
-        ) !important;
-
-    transform: translateX(4px);
-
-    box-shadow:
-        inset 3px 0 0 #8b5cf6 !important;
-}
 
 
-body.light-mode .sidebar-nav a:hover i,
-body.light-mode .sidebar-bottom a:hover i {
-    color: #7c3aed !important;
 
-    transform: scale(1.12);
-}
+
 
 
 /* Active sidebar */
 
-body.light-mode .sidebar-nav a.active,
-body.light-mode .sidebar-bottom a.active {
-    color: white !important;
-
-    background:
-        linear-gradient(
-            100deg,
-            #7c3aed,
-            #6366f1,
-            #8b5cf6
-        ) !important;
-
-    box-shadow:
-        0 12px 30px rgba(124,58,237,0.30),
-        0 0 25px rgba(139,92,246,0.15) !important;
-}
 
 
-body.light-mode .sidebar-nav a.active i,
-body.light-mode .sidebar-bottom a.active i {
-    color: white !important;
-}
+
+
 
 
 /* =========================================================
    MAIN CONTENT
 ========================================================= */
 
-body.light-mode .dashboard-main {
-    background: transparent !important;
-}
+
 
 
 /* Headings */
 
-body.light-mode h1,
-body.light-mode h2,
-body.light-mode h3 {
-    color: #171329 !important;
-}
+
 
 
 /* Subtitles */
 
-body.light-mode .dashboard-subtitle {
-    color: #64748b !important;
-}
+
 
 
 /* Purple section labels */
 
-body.light-mode .eyebrow,
-body.light-mode .section-label {
-    color: #7c3aed !important;
-}
+
 
 
 /* =========================================================
    CARDS
 ========================================================= */
 
-body.light-mode .stat-card,
-body.light-mode .storage-card,
-body.light-mode .upload-card,
-body.light-mode .file-list,
-body.light-mode .file-row,
-body.light-mode .settings-card,
-body.light-mode .profile-card,
-body.light-mode .security-card,
-body.light-mode .share-card {
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,0.95),
-            rgba(247,244,255,0.88)
-        ) !important;
 
-    border: 1px solid rgba(124,58,237,0.12) !important;
-
-    box-shadow:
-        0 15px 45px rgba(76,29,149,0.08),
-        inset 0 1px 0 rgba(255,255,255,0.9) !important;
-
-    backdrop-filter: blur(18px);
-
-    transition:
-        transform .3s ease,
-        box-shadow .3s ease,
-        border-color .3s ease !important;
-}
 
 
 /* Card hover */
 
-body.light-mode .stat-card:hover,
-body.light-mode .storage-card:hover,
-body.light-mode .upload-card:hover {
-    transform: translateY(-4px);
 
-    border-color: rgba(124,58,237,0.28) !important;
-
-    box-shadow:
-        0 20px 55px rgba(124,58,237,0.13),
-        0 0 30px rgba(168,85,247,0.06) !important;
-}
 
 
 /* =========================================================
    STAT ICONS
 ========================================================= */
 
-body.light-mode .stat-icon {
-    box-shadow:
-        0 8px 20px rgba(124,58,237,0.12);
-}
+
 
 
 /* =========================================================
    STORAGE
 ========================================================= */
 
-body.light-mode .storage-card {
-    position: relative;
-    overflow: hidden;
-}
 
 
-body.light-mode .storage-card::before {
-    content: "";
-
-    position: absolute;
-
-    width: 220px;
-    height: 220px;
-
-    left: -120px;
-    bottom: -150px;
-
-    background: rgba(124,58,237,0.10);
-
-    border-radius: 50%;
-
-    filter: blur(50px);
-
-    pointer-events: none;
-}
 
 
-body.light-mode .storage-card::after {
-    content: "";
 
-    position: absolute;
 
-    width: 180px;
-    height: 180px;
 
-    right: -100px;
-    top: -100px;
-
-    background: rgba(59,130,246,0.09);
-
-    border-radius: 50%;
-
-    filter: blur(50px);
-
-    pointer-events: none;
-}
 
 
 /* Storage percentage */
 
-body.light-mode .storage-number {
-    color: #7c3aed !important;
 
-    text-shadow:
-        0 0 15px rgba(124,58,237,0.25);
-}
 
 
 /* Storage text */
 
-body.light-mode .storage-footer {
-    color: #64748b !important;
-}
 
 
-body.light-mode .storage-footer strong {
-    color: #334155 !important;
-}
+
+
 
 
 /* =========================================================
    UPLOAD AREA
 ========================================================= */
 
-body.light-mode .upload-card {
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,0.98),
-            rgba(245,243,255,0.95)
-        ) !important;
-
-    border: 1px dashed rgba(124,58,237,0.28) !important;
-}
 
 
-body.light-mode .upload-card:hover {
-    border-color: #8b5cf6 !important;
-
-    box-shadow:
-        0 0 35px rgba(124,58,237,0.10) !important;
-}
 
 
-body.light-mode .upload-card i {
-    color: #7c3aed !important;
-}
+
+
+
 
 
 /* =========================================================
    FILE LIST
 ========================================================= */
 
-body.light-mode .file-row {
-    background:
-        linear-gradient(
-            100deg,
-            rgba(255,255,255,0.95),
-            rgba(248,246,255,0.92)
-        ) !important;
-}
 
 
-body.light-mode .file-row:hover {
-    border-color: rgba(124,58,237,0.25) !important;
-
-    box-shadow:
-        0 10px 30px rgba(124,58,237,0.09) !important;
-}
 
 
-body.light-mode .file-info strong {
-    color: #1e1b4b !important;
-}
 
 
-body.light-mode .file-info span {
-    color: #64748b !important;
-}
+
+
+
+
 
 
 /* File icon */
 
-body.light-mode .file-type-icon {
-    background:
-        linear-gradient(
-            135deg,
-            #ede9fe,
-            #dbeafe
-        ) !important;
 
-    color: #7c3aed !important;
-
-    box-shadow:
-        0 8px 20px rgba(124,58,237,0.10);
-}
 
 
 /* =========================================================
    FILE ACTIONS
 ========================================================= */
 
-body.light-mode .file-actions a {
-    color: #64748b !important;
-
-    transition:
-        color .2s ease,
-        transform .2s ease !important;
-}
 
 
-body.light-mode .file-actions a:hover {
-    color: #7c3aed !important;
 
-    transform: translateY(-2px) scale(1.08);
-}
+
 
 
 /* =========================================================
    BUTTONS
 ========================================================= */
 
-body.light-mode .primary-button {
-    background:
-        linear-gradient(
-            100deg,
-            #7c3aed,
-            #6366f1,
-            #8b5cf6
-        ) !important;
-
-    color: white !important;
-
-    border: none !important;
-
-    box-shadow:
-        0 12px 28px rgba(124,58,237,0.25) !important;
-}
 
 
-body.light-mode .primary-button:hover {
-    box-shadow:
-        0 15px 35px rgba(124,58,237,0.35),
-        0 0 25px rgba(168,85,247,0.18) !important;
 
-    transform: translateY(-2px);
-}
+
 
 
 /* =========================================================
    EMPTY STATE
 ========================================================= */
 
-body.light-mode .empty-state {
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,0.92),
-            rgba(246,243,255,0.90)
-        ) !important;
-
-    border-color: rgba(124,58,237,0.16) !important;
-}
 
 
-body.light-mode .empty-icon {
-    background:
-        linear-gradient(
-            135deg,
-            #ede9fe,
-            #dbeafe
-        ) !important;
 
-    color: #7c3aed !important;
-}
+
 
 
 /* =========================================================
    INPUTS / FORMS
 ========================================================= */
 
-body.light-mode input,
-body.light-mode select,
-body.light-mode textarea {
-    background: rgba(255,255,255,0.85) !important;
-
-    color: #171329 !important;
-
-    border-color: rgba(100,116,139,0.20) !important;
-}
 
 
-body.light-mode input:focus,
-body.light-mode select:focus,
-body.light-mode textarea:focus {
-    border-color: #8b5cf6 !important;
 
-    box-shadow:
-        0 0 0 4px rgba(124,58,237,0.10),
-        0 0 20px rgba(124,58,237,0.08) !important;
-}
+
 
 
 /* =========================================================
    SCROLLBAR
 ========================================================= */
 
-body.light-mode::-webkit-scrollbar {
-    width: 10px;
-}
 
 
-body.light-mode::-webkit-scrollbar-track {
-    background: #f1effb;
-}
 
 
-body.light-mode::-webkit-scrollbar-thumb {
-    background:
-        linear-gradient(
-            180deg,
-            #8b5cf6,
-            #6366f1
-        );
-
-    border-radius: 20px;
-
-    border: 2px solid #f1effb;
-}
 
 
-body.light-mode::-webkit-scrollbar-thumb:hover {
-    background:
-        linear-gradient(
-            180deg,
-            #7c3aed,
-            #4f46e5
-        );
-}
+
+
+
+
 /* =========================================================
    VAULTSHARE — AURORA LIGHT MODE
    Premium colorful glass theme
 ========================================================= */
 
-body.light-mode {
-    background:
-        radial-gradient(
-            circle at 5% 5%,
-            rgba(124, 58, 237, 0.18),
-            transparent 25%
-        ),
-        radial-gradient(
-            circle at 95% 8%,
-            rgba(59, 130, 246, 0.16),
-            transparent 24%
-        ),
-        radial-gradient(
-            circle at 75% 70%,
-            rgba(236, 72, 153, 0.10),
-            transparent 28%
-        ),
-        radial-gradient(
-            circle at 20% 90%,
-            rgba(99, 102, 241, 0.12),
-            transparent 25%
-        ),
-        linear-gradient(
-            135deg,
-            #f8f7ff 0%,
-            #f0edff 45%,
-            #f7f5ff 100%
-        ) !important;
 
-    color: #171329 !important;
-}
 
 
 /* =========================================================
    SIDEBAR — AURORA GLASS
 ========================================================= */
 
-body.light-mode .sidebar {
-    background:
-        linear-gradient(
-            180deg,
-            rgba(255,255,255,0.92),
-            rgba(242,238,255,0.94)
-        ) !important;
 
-    border-right: 1px solid rgba(124,58,237,0.14) !important;
-
-    box-shadow:
-        12px 0 45px rgba(91,33,182,0.10),
-        inset -1px 0 rgba(255,255,255,0.8) !important;
-
-    backdrop-filter: blur(24px);
-}
 
 
 /* =========================================================
    LOGO
 ========================================================= */
 
-body.light-mode .brand-logo {
-    background:
-        linear-gradient(
-            135deg,
-            #6d28d9,
-            #7c3aed 45%,
-            #2563eb
-        ) !important;
-
-    box-shadow:
-        0 12px 30px rgba(124,58,237,0.35),
-        0 0 35px rgba(139,92,246,0.20) !important;
-}
 
 
-body.light-mode .brand span {
-    background:
-        linear-gradient(
-            90deg,
-            #6d28d9,
-            #8b5cf6,
-            #2563eb
-        );
 
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent !important;
 
-    font-weight: 850 !important;
-}
 
 
 /* =========================================================
    SIDEBAR LINKS
 ========================================================= */
 
-body.light-mode .sidebar-nav a,
-body.light-mode .sidebar-bottom a {
-    color: #64748b !important;
-
-    transition:
-        all .25s cubic-bezier(.2,.8,.2,1) !important;
-}
 
 
-body.light-mode .sidebar-nav a i,
-body.light-mode .sidebar-bottom a i {
-    color: #64748b !important;
 
-    transition:
-        all .25s ease !important;
-}
+
 
 
 /* Hover */
 
-body.light-mode .sidebar-nav a:hover,
-body.light-mode .sidebar-bottom a:hover {
-    color: #6d28d9 !important;
-
-    background:
-        linear-gradient(
-            90deg,
-            rgba(124,58,237,0.10),
-            rgba(99,102,241,0.035)
-        ) !important;
-
-    transform: translateX(5px);
-
-    box-shadow:
-        inset 3px 0 #8b5cf6 !important;
-}
 
 
-body.light-mode .sidebar-nav a:hover i,
-body.light-mode .sidebar-bottom a:hover i {
-    color: #7c3aed !important;
 
-    transform: scale(1.15);
-}
+
 
 
 /* Active */
 
-body.light-mode .sidebar-nav a.active,
-body.light-mode .sidebar-bottom a.active {
-    color: white !important;
-
-    background:
-        linear-gradient(
-            110deg,
-            #7c3aed,
-            #6366f1 55%,
-            #8b5cf6
-        ) !important;
-
-    box-shadow:
-        0 14px 35px rgba(124,58,237,0.32),
-        0 0 35px rgba(139,92,246,0.18) !important;
-}
 
 
-body.light-mode .sidebar-nav a.active i,
-body.light-mode .sidebar-bottom a.active i {
-    color: white !important;
-}
+
+
 
 
 /* =========================================================
    MAIN CONTENT
 ========================================================= */
 
-body.light-mode .dashboard-main {
-    background: transparent !important;
-}
 
 
-body.light-mode h1,
-body.light-mode h2,
-body.light-mode h3 {
-    color: #171329 !important;
-}
 
 
-body.light-mode .dashboard-subtitle {
-    color: #64748b !important;
-}
 
 
-body.light-mode .eyebrow,
-body.light-mode .section-label {
-    color: #7c3aed !important;
 
-    text-shadow:
-        0 0 15px rgba(124,58,237,0.15);
-}
+
+
+
 
 
 /* =========================================================
    STAT CARDS — COLORFUL GLASS
 ========================================================= */
 
-body.light-mode .stat-card {
-    position: relative;
 
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,0.98),
-            rgba(248,245,255,0.90)
-        ) !important;
-
-    border: 1px solid rgba(124,58,237,0.14) !important;
-
-    box-shadow:
-        0 12px 35px rgba(76,29,149,0.08),
-        inset 0 1px rgba(255,255,255,0.95) !important;
-
-    overflow: hidden;
-
-    transition:
-        transform .3s ease,
-        box-shadow .3s ease !important;
-}
 
 
 /* colorful light inside cards */
 
-body.light-mode .stat-card::before {
-    content: "";
-
-    position: absolute;
-
-    width: 160px;
-    height: 160px;
-
-    right: -90px;
-    top: -90px;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(124,58,237,0.13),
-            transparent 70%
-        );
-
-    pointer-events: none;
-}
 
 
-body.light-mode .stat-card:hover {
-    transform: translateY(-5px);
 
-    box-shadow:
-        0 20px 50px rgba(124,58,237,0.14),
-        0 0 30px rgba(168,85,247,0.07) !important;
-}
+
 
 
 /* =========================================================
    STAT ICONS
 ========================================================= */
 
-body.light-mode .stat-icon {
-    box-shadow:
-        0 10px 25px rgba(124,58,237,0.15) !important;
-}
+
 
 
 /* =========================================================
    STORAGE CARD
 ========================================================= */
 
-body.light-mode .storage-card {
-    position: relative;
 
-    overflow: hidden;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,0.98),
-            rgba(246,243,255,0.94)
-        ) !important;
-
-    border: 1px solid rgba(124,58,237,0.16) !important;
-
-    box-shadow:
-        0 15px 45px rgba(76,29,149,0.09),
-        inset 0 1px rgba(255,255,255,0.9) !important;
-}
 
 
 /* Purple aura */
 
-body.light-mode .storage-card::before {
-    content: "";
 
-    position: absolute;
-
-    width: 300px;
-    height: 300px;
-
-    left: -160px;
-    bottom: -220px;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(124,58,237,0.14),
-            transparent 70%
-        );
-
-    filter: blur(15px);
-
-    pointer-events: none;
-}
 
 
 /* Blue aura */
 
-body.light-mode .storage-card::after {
-    content: "";
-
-    position: absolute;
-
-    width: 250px;
-    height: 250px;
-
-    right: -130px;
-    top: -170px;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(59,130,246,0.12),
-            transparent 70%
-        );
-
-    filter: blur(15px);
-
-    pointer-events: none;
-}
 
 
-body.light-mode .storage-number {
-    color: #7c3aed !important;
 
-    text-shadow:
-        0 0 18px rgba(124,58,237,0.22);
-}
+
 
 
 /* =========================================================
    STORAGE RAIL
 ========================================================= */
 
-body.light-mode .storage-bar {
-    background:
-        linear-gradient(
-            90deg,
-            #e9e3ff,
-            #eeeafe
-        ) !important;
-
-    border: 1px solid rgba(124,58,237,0.14) !important;
-
-    box-shadow:
-        inset 0 2px 5px rgba(76,29,149,0.08) !important;
-}
 
 
-body.light-mode .storage-fill {
-    background:
-        linear-gradient(
-            90deg,
-            #6d28d9,
-            #7c3aed,
-            #a855f7,
-            #6366f1
-        ) !important;
 
-    box-shadow:
-        0 0 10px rgba(124,58,237,0.80),
-        0 0 22px rgba(139,92,246,0.45) !important;
-}
+
 
 
 /* =========================================================
    UPLOAD CARD
 ========================================================= */
 
-body.light-mode .upload-card {
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,0.98),
-            rgba(246,243,255,0.94)
-        ) !important;
-
-    border: 1px dashed rgba(124,58,237,0.30) !important;
-
-    box-shadow:
-        0 12px 40px rgba(76,29,149,0.07) !important;
-
-    transition:
-        all .3s ease !important;
-}
 
 
-body.light-mode .upload-card:hover {
-    border-color: #8b5cf6 !important;
-
-    background:
-        linear-gradient(
-            135deg,
-            #ffffff,
-            #f4f0ff
-        ) !important;
-
-    box-shadow:
-        0 20px 50px rgba(124,58,237,0.13),
-        0 0 30px rgba(168,85,247,0.08) !important;
-
-    transform: translateY(-3px);
-}
 
 
-body.light-mode .upload-card i {
-    color: #7c3aed !important;
 
-    filter:
-        drop-shadow(
-            0 0 8px rgba(124,58,237,0.35)
-        );
-}
+
+
 
 
 /* =========================================================
    FILE LIST
 ========================================================= */
 
-body.light-mode .file-list,
-body.light-mode .file-row {
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,0.96),
-            rgba(248,246,255,0.92)
-        ) !important;
-
-    border-color: rgba(124,58,237,0.13) !important;
-}
 
 
-body.light-mode .file-row {
-    transition:
-        all .25s ease !important;
-}
 
 
-body.light-mode .file-row:hover {
-    transform: translateX(3px);
-
-    border-color: rgba(124,58,237,0.28) !important;
-
-    box-shadow:
-        0 10px 30px rgba(124,58,237,0.10) !important;
-}
 
 
-body.light-mode .file-info strong {
-    color: #1e1b4b !important;
-}
 
 
-body.light-mode .file-info span {
-    color: #64748b !important;
-}
 
 
-body.light-mode .file-type-icon {
-    background:
-        linear-gradient(
-            135deg,
-            #ede9fe,
-            #dbeafe
-        ) !important;
 
-    color: #7c3aed !important;
 
-    box-shadow:
-        0 8px 20px rgba(124,58,237,0.12);
-}
+
+
+
+
 
 
 /* =========================================================
    BUTTONS
 ========================================================= */
 
-body.light-mode .primary-button {
-    background:
-        linear-gradient(
-            110deg,
-            #6d28d9,
-            #7c3aed,
-            #6366f1,
-            #8b5cf6
-        ) !important;
-
-    background-size: 200% 100%;
-
-    color: white !important;
-
-    border: none !important;
-
-    box-shadow:
-        0 12px 30px rgba(124,58,237,0.28) !important;
-
-    animation:
-        lightButtonGradient 5s ease infinite;
-}
 
 
-body.light-mode .primary-button:hover {
-    transform: translateY(-3px);
 
-    box-shadow:
-        0 18px 40px rgba(124,58,237,0.36),
-        0 0 30px rgba(168,85,247,0.18) !important;
-}
+
 
 
 @keyframes lightButtonGradient {
@@ -5786,115 +4684,43 @@ body.light-mode .primary-button:hover {
    FILE ACTIONS
 ========================================================= */
 
-body.light-mode .file-actions a {
-    color: #64748b !important;
-
-    transition:
-        all .2s ease !important;
-}
 
 
-body.light-mode .file-actions a:hover {
-    color: #7c3aed !important;
 
-    transform:
-        translateY(-2px)
-        scale(1.1);
 
-    filter:
-        drop-shadow(
-            0 0 7px rgba(124,58,237,0.35)
-        );
-}
 
 
 /* =========================================================
    EMPTY STATE
 ========================================================= */
 
-body.light-mode .empty-state {
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,0.95),
-            rgba(246,243,255,0.92)
-        ) !important;
-
-    border-color:
-        rgba(124,58,237,0.18) !important;
-}
 
 
-body.light-mode .empty-icon {
-    background:
-        linear-gradient(
-            135deg,
-            #ede9fe,
-            #dbeafe
-        ) !important;
 
-    color: #7c3aed !important;
 
-    box-shadow:
-        0 10px 30px rgba(124,58,237,0.15);
-}
 
 
 /* =========================================================
    INPUTS
 ========================================================= */
 
-body.light-mode input,
-body.light-mode select,
-body.light-mode textarea {
-    background:
-        rgba(255,255,255,0.82) !important;
-
-    color: #171329 !important;
-
-    border-color:
-        rgba(100,116,139,0.18) !important;
-}
 
 
-body.light-mode input:focus,
-body.light-mode select:focus,
-body.light-mode textarea:focus {
-    border-color: #8b5cf6 !important;
 
-    box-shadow:
-        0 0 0 4px rgba(124,58,237,0.09),
-        0 0 25px rgba(124,58,237,0.10) !important;
-}
+
 
 
 /* =========================================================
    SCROLLBAR
 ========================================================= */
 
-body.light-mode::-webkit-scrollbar {
-    width: 10px;
-}
 
 
-body.light-mode::-webkit-scrollbar-track {
-    background: #eeeaff;
-}
 
 
-body.light-mode::-webkit-scrollbar-thumb {
-    background:
-        linear-gradient(
-            180deg,
-            #7c3aed,
-            #6366f1,
-            #a855f7
-        );
 
-    border-radius: 20px;
 
-    border: 2px solid #eeeaff;
-}
+
 
 /* =========================================================
    VAULTSHARE — GLOBAL AURORA LIGHT MODE
@@ -5902,87 +4728,19 @@ body.light-mode::-webkit-scrollbar-thumb {
 
 /* ---------- GLOBAL PAGE BACKGROUND ---------- */
 
-body.light-mode {
-    min-height: 100vh !important;
 
-    background:
-        radial-gradient(
-            circle at 5% 5%,
-            rgba(124, 58, 237, 0.18),
-            transparent 24%
-        ),
-        radial-gradient(
-            circle at 95% 8%,
-            rgba(59, 130, 246, 0.16),
-            transparent 23%
-        ),
-        radial-gradient(
-            circle at 85% 75%,
-            rgba(236, 72, 153, 0.12),
-            transparent 28%
-        ),
-        radial-gradient(
-            circle at 15% 90%,
-            rgba(139, 92, 246, 0.12),
-            transparent 25%
-        ),
-        linear-gradient(
-            135deg,
-            #f8f7ff 0%,
-            #f0edff 42%,
-            #f5f3ff 70%,
-            #eef3ff 100%
-        ) !important;
-
-    background-attachment: fixed !important;
-
-    color: #171329 !important;
-}
 
 
 /* Make all main page wrappers transparent */
 
-body.light-mode .dashboard-page,
-body.light-mode .app-layout,
-body.light-mode .dashboard-main,
-body.light-mode main {
-    background: transparent !important;
-}
+
 
 
 /* =========================================================
    SUBTLE MOVING AURORA
 ========================================================= */
 
-body.light-mode::before {
-    content: "";
 
-    position: fixed;
-
-    width: 420px;
-    height: 420px;
-
-    top: 8%;
-    right: 8%;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(124, 58, 237, 0.10),
-            rgba(99, 102, 241, 0.04),
-            transparent 70%
-        );
-
-    filter: blur(35px);
-
-    border-radius: 50%;
-
-    pointer-events: none;
-
-    z-index: 0;
-
-    animation: lightAurora 12s ease-in-out infinite alternate;
-}
 
 
 @keyframes lightAurora {
@@ -6004,94 +4762,24 @@ body.light-mode::before {
 
 /* Keep actual content above aura */
 
-body.light-mode .sidebar,
-body.light-mode .dashboard-main {
-    position: relative;
-    z-index: 1;
-}
+
 
 
 /* =========================================================
    PREMIUM VAULTSHARE LOGO
 ========================================================= */
 
-body.light-mode .brand-logo {
-    position: relative;
 
-    background:
-        linear-gradient(
-            135deg,
-            #5b21b6 0%,
-            #7c3aed 35%,
-            #6366f1 68%,
-            #2563eb 100%
-        ) !important;
-
-    border: 1px solid rgba(255,255,255,0.65) !important;
-
-    box-shadow:
-        0 10px 25px rgba(124,58,237,0.35),
-        0 0 25px rgba(124,58,237,0.30),
-        0 0 55px rgba(99,102,241,0.18) !important;
-
-    overflow: visible !important;
-
-    animation:
-        logoPulse 4s ease-in-out infinite;
-}
 
 
 /* Logo inner shine */
 
-body.light-mode .brand-logo::before {
-    content: "";
 
-    position: absolute;
-
-    inset: 2px;
-
-    border-radius: inherit;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,0.30),
-            transparent 42%,
-            rgba(255,255,255,0.08)
-        );
-
-    pointer-events: none;
-}
 
 
 /* Purple glow behind logo */
 
-body.light-mode .brand-logo::after {
-    content: "";
 
-    position: absolute;
-
-    width: 100%;
-    height: 100%;
-
-    left: 0;
-    top: 0;
-
-    border-radius: inherit;
-
-    background:
-        linear-gradient(
-            135deg,
-            #8b5cf6,
-            #6366f1
-        );
-
-    filter: blur(18px);
-
-    opacity: 0.32;
-
-    z-index: -1;
-}
 
 
 /* Logo pulse */
@@ -6120,214 +4808,70 @@ body.light-mode .brand-logo::after {
    LOGO LETTER / ICON
 ========================================================= */
 
-body.light-mode .brand-logo i,
-body.light-mode .brand-logo span {
-    color: white !important;
 
-    text-shadow:
-        0 2px 8px rgba(0,0,0,0.18),
-        0 0 15px rgba(255,255,255,0.20);
-}
 
 
 /* If your logo uses text V */
 
-body.light-mode .brand-logo {
-    color: white !important;
-    font-weight: 900 !important;
-}
+
 
 
 /* =========================================================
    VAULTSHARE BRAND NAME
 ========================================================= */
 
-body.light-mode .brand > span {
-    background:
-        linear-gradient(
-            90deg,
-            #5b21b6 0%,
-            #7c3aed 35%,
-            #6366f1 70%,
-            #2563eb 100%
-        ) !important;
 
-    -webkit-background-clip: text !important;
-    background-clip: text !important;
-
-    -webkit-text-fill-color: transparent !important;
-
-    color: transparent !important;
-
-    font-weight: 900 !important;
-
-    filter:
-        drop-shadow(
-            0 0 8px rgba(124,58,237,0.16)
-        );
-}
 
 
 /* =========================================================
    SIDEBAR GLASS
 ========================================================= */
 
-body.light-mode .sidebar {
-    background:
-        linear-gradient(
-            180deg,
-            rgba(255,255,255,0.90),
-            rgba(244,241,255,0.94)
-        ) !important;
 
-    backdrop-filter: blur(24px);
-
-    border-right:
-        1px solid rgba(124,58,237,0.13) !important;
-
-    box-shadow:
-        10px 0 40px rgba(76,29,149,0.08),
-        inset -1px 0 rgba(255,255,255,0.8) !important;
-}
 
 
 /* =========================================================
    SIDEBAR ACTIVE ITEM
 ========================================================= */
 
-body.light-mode .sidebar a.active {
-    background:
-        linear-gradient(
-            110deg,
-            #7c3aed,
-            #6366f1,
-            #8b5cf6
-        ) !important;
-
-    color: white !important;
-
-    box-shadow:
-        0 12px 32px rgba(124,58,237,0.30),
-        0 0 30px rgba(139,92,246,0.15) !important;
-}
 
 
-body.light-mode .sidebar a.active i {
-    color: white !important;
-}
+
+
 
 
 /* =========================================================
    SIDEBAR HOVER
 ========================================================= */
 
-body.light-mode .sidebar a:hover {
-    color: #6d28d9 !important;
-
-    background:
-        linear-gradient(
-            90deg,
-            rgba(124,58,237,0.09),
-            rgba(99,102,241,0.03)
-        ) !important;
-
-    transform: translateX(4px);
-}
 
 
-body.light-mode .sidebar a:hover i {
-    color: #7c3aed !important;
-}
+
+
 
 
 /* =========================================================
    PAGE HEADINGS
 ========================================================= */
 
-body.light-mode h1,
-body.light-mode h2,
-body.light-mode h3 {
-    color: #171329 !important;
-}
 
 
-body.light-mode .eyebrow,
-body.light-mode .section-label {
-    color: #7c3aed !important;
 
-    text-shadow:
-        0 0 14px rgba(124,58,237,0.16);
-}
+
 
 
 /* =========================================================
    CARDS — SAME STYLE EVERYWHERE
 ========================================================= */
 
-body.light-mode
-.storage-card,
-body.light-mode
-.upload-card,
-body.light-mode
-.stat-card,
-body.light-mode
-.file-list,
-body.light-mode
-.file-row,
-body.light-mode
-.settings-card,
-body.light-mode
-.profile-card,
-body.light-mode
-.security-card,
-body.light-mode
-.share-card {
 
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,0.94),
-            rgba(247,244,255,0.88)
-        ) !important;
-
-    border:
-        1px solid rgba(124,58,237,0.13) !important;
-
-    box-shadow:
-        0 15px 45px rgba(76,29,149,0.08),
-        inset 0 1px rgba(255,255,255,0.95) !important;
-
-    backdrop-filter: blur(18px);
-}
 
 
 /* =========================================================
    BUTTONS
 ========================================================= */
 
-body.light-mode .primary-button {
-    background:
-        linear-gradient(
-            110deg,
-            #6d28d9,
-            #7c3aed,
-            #6366f1,
-            #8b5cf6
-        ) !important;
 
-    background-size: 250% 100%;
-
-    color: white !important;
-
-    border: none !important;
-
-    box-shadow:
-        0 12px 30px rgba(124,58,237,0.30),
-        0 0 20px rgba(139,92,246,0.10) !important;
-
-    animation:
-        vaultButtonFlow 6s ease infinite;
-}
 
 
 @keyframes vaultButtonFlow {
@@ -6347,55 +4891,433 @@ body.light-mode .primary-button {
 }
 
 
-body.light-mode .primary-button:hover {
-    transform: translateY(-3px);
 
-    box-shadow:
-        0 18px 40px rgba(124,58,237,0.36),
-        0 0 30px rgba(168,85,247,0.18) !important;
-}
 
 
 /* =========================================================
    SETTINGS / PROFILE / SECURITY BACKGROUND
 ========================================================= */
 
-body.light-mode .settings-page,
-body.light-mode .profile-page,
-body.light-mode .security-page,
-body.light-mode .share-page {
-    background: transparent !important;
-}
+
 
 
 /* =========================================================
    STORAGE BAR
 ========================================================= */
 
-body.light-mode .storage-bar {
-    background:
-        linear-gradient(
-            90deg,
-            #e8e0ff,
-            #eeeaff
-        ) !important;
 
-    border:
-        1px solid rgba(124,58,237,0.14) !important;
+
+
+
+
+/* Authentication page polish and theme control */
+.auth-theme-toggle {
+    position: fixed;
+    top: 22px;
+    right: 24px;
+    z-index: 1000;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 40px;
+    padding: 0 14px;
+    border: 1px solid #30394a;
+    border-radius: 999px;
+    background: rgba(18, 25, 37, .88);
+    color: #e8eaf2;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, .16);
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 650;
+    backdrop-filter: blur(14px);
+    transition: background .2s ease, border-color .2s ease, transform .2s ease;
+}
+.auth-theme-toggle:hover { transform: translateY(-1px); border-color: #8b79ff; }
+.auth-theme-toggle i { color: #b9a8ff; }
+.auth-brand .brand-logo, .mobile-brand .brand-logo {
+    width: 44px; height: 44px; flex: 0 0 44px; border-radius: 14px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #6d45ef, #5367f7);
+    color: #fff; font-size: 21px;
+    box-shadow: 0 10px 28px rgba(104, 75, 245, .32);
+}
+.auth-brand .brand-logo i, .mobile-brand .brand-logo i { color: #fff; }
+.auth-brand > span, .mobile-brand > span {
+    font-size: 22px; font-weight: 800; letter-spacing: -.5px;
+}
+.auth-form-section { position: relative; }
+.login-card { position: relative; z-index: 1; }
+.login-card .form-group input { min-height: 47px; }
+.login-card .auth-submit { min-height: 47px; border-radius: 11px; font-size: 14px; }
+.login-card .auth-secondary-button { min-height: 45px; border-radius: 11px; }
+.auth-page .password-toggle { border-radius: 8px; }
+.auth-page .password-toggle:focus-visible,
+.auth-page .auth-theme-toggle:focus-visible,
+.auth-page .auth-submit:focus-visible,
+.auth-page .auth-secondary-button:focus-visible {
+    outline: 3px solid rgba(139, 124, 255, .55); outline-offset: 3px;
 }
 
 
-body.light-mode .storage-fill {
-    background:
-        linear-gradient(
-            90deg,
-            #6d28d9,
-            #7c3aed,
-            #a855f7,
-            #6366f1
-        ) !important;
 
-    box-shadow:
-        0 0 10px rgba(124,58,237,0.85),
-        0 0 22px rgba(139,92,246,0.45) !important;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 800px) {
+    .auth-theme-toggle { top: 14px; right: 14px; min-height: 38px; padding: 0 12px; }
+    .auth-form-section { padding-top: 74px; }
+    .mobile-brand { align-items: center; }
+}
+@media (max-width: 420px) {
+    .auth-theme-toggle .theme-toggle-label { display: none; }
+    .auth-theme-toggle { width: 40px; padding: 0; justify-content: center; }
+}
+
+/* VaultShare theme refinement: calm lavender light mode */
+:root {
+    color-scheme: dark;
+    --vs-accent: #8065f6;
+    --vs-accent-strong: #6948e8;
+    --vs-accent-soft: rgba(128, 101, 246, .12);
+}
+
+html[data-theme="light"] { color-scheme: light; }
+html[data-theme="dark"] { color-scheme: dark; }
+
+
+
+
+
+
+/* Consistent vault mark and restrained purple accent */
+.brand-logo,
+.auth-brand .brand-logo,
+.mobile-brand .brand-logo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    background: linear-gradient(140deg, #7658e8 0%, #6557d9 55%, #4d67d9 100%) !important;
+    color: #fff !important;
+    border: 1px solid rgba(255,255,255,.24) !important;
+    box-shadow: 0 7px 18px rgba(101, 79, 211, .22) !important;
+    animation: none !important;
+}
+.brand-logo::before,
+.brand-logo::after { display: none !important; }
+.brand-logo i,
+.auth-brand .brand-logo i,
+.mobile-brand .brand-logo i { color: #fff !important; }
+
+
+
+
+
+
+
+
+
+/* Main content surfaces: clean white cards with gentle separation */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Inputs keep a consistent accessible contrast */
+
+
+
+
+/* Login and registration share one calm, branded light theme */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (prefers-reduced-motion: reduce) {
+    
+}
+
+
+/* VaultShare dark-only polish */
+html, body { color-scheme: dark; }
+.security-card { max-width: 900px; padding: clamp(24px, 4vw, 42px); border: 1px solid rgba(139, 92, 246, .22); background: linear-gradient(145deg, rgba(19, 25, 40, .98), rgba(13, 18, 30, .98)); box-shadow: 0 22px 70px rgba(0,0,0,.22); }
+.security-status-card { display:flex; align-items:center; gap:20px; padding:26px 30px; margin:24px 0; border-radius:22px; border:1px solid rgba(34,197,94,.20); background:linear-gradient(120deg,rgba(16,185,129,.09),rgba(59,130,246,.06),rgba(139,92,246,.07)); }
+.security-status-icon { width:58px;height:58px;flex:0 0 58px;display:grid;place-items:center;border-radius:18px;background:linear-gradient(135deg,#10b981,#0ea5e9);color:white;font-size:24px;box-shadow:0 10px 28px rgba(16,185,129,.2); }
+.security-card .settings-card-header { padding-bottom:24px;margin-bottom:26px;border-bottom:1px solid rgba(148,163,184,.13); }
+.security-form { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 24px; }
+.security-form .form-group { min-width:0;margin:0; }
+.security-form .form-group:first-child { grid-column:1 / -1; }
+.security-form label { display:block;margin:0 0 9px;color:#dfe5f5;font-size:14px;font-weight:700; }
+.security-form .password-input { position:relative;display:flex;align-items:center; }
+.security-form .password-input input { width:100%;min-width:0;padding:15px 48px 15px 16px;border-radius:13px;border:1px solid #30394d;background:#0c1220;color:#f5f7ff;outline:none;transition:border-color .2s,box-shadow .2s; }
+.security-form .password-input input:focus { border-color:#8b5cf6;box-shadow:0 0 0 4px rgba(139,92,246,.12); }
+.security-form .password-input i { position:absolute;right:16px;color:#8f9ab3;pointer-events:none; }
+.security-form .settings-button { grid-column:1 / -1;justify-self:start;min-width:210px;padding:14px 20px;border:0;border-radius:13px;background:linear-gradient(110deg,#7c3aed,#5965f5,#0ea5e9);color:#fff;box-shadow:0 12px 28px rgba(92,80,230,.22);transition:transform .2s,filter .2s; }
+.security-form .settings-button:hover { transform:translateY(-2px);filter:brightness(1.08); }
+.security-features { margin-top:22px; }
+.storage-footer { gap:16px;flex-wrap:wrap; }
+.storage-number { color:#b59aff; }
+.storage-fill { background:linear-gradient(90deg,#7c3aed,#a855f7,#22d3ee);box-shadow:0 0 18px rgba(139,92,246,.28); }
+.ai-loading-icon { animation: aiCoreFloat 3.2s ease-in-out infinite; }
+.ai-loading-icon::before { animation: aiOrbit 5s linear infinite, aiOrbitGlow 2s ease-in-out infinite alternate; }
+.ai-loading-content { animation: aiPanelEnter .75s cubic-bezier(.2,.8,.2,1) both; }
+.ai-grid { animation: aiGridDrift 22s linear infinite; }
+.ai-orb-1 { animation: orbMove1 8s ease-in-out infinite, aiOrbBreathe 5s ease-in-out infinite alternate; }
+.ai-orb-2 { animation: orbMove2 10s ease-in-out infinite, aiOrbBreathe 6s ease-in-out infinite alternate-reverse; }
+@keyframes aiCoreFloat { 0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-7px) scale(1.035)} }
+@keyframes aiOrbit { from{transform:rotate(0)}to{transform:rotate(360deg)} }
+@keyframes aiOrbitGlow { from{filter:drop-shadow(0 0 3px rgba(139,92,246,.35))}to{filter:drop-shadow(0 0 12px rgba(34,211,238,.7))} }
+@keyframes aiPanelEnter { from{opacity:0;transform:translateY(24px) scale(.975);filter:blur(5px)}to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)} }
+@keyframes aiGridDrift { from{background-position:0 0}to{background-position:45px 45px} }
+@keyframes aiOrbBreathe { from{opacity:.55}to{opacity:1} }
+@media(max-width:680px){.security-status-card{align-items:flex-start;padding:20px}.security-form{grid-template-columns:1fr}.security-form .form-group:first-child,.security-form .settings-button{grid-column:auto}.security-form .settings-button{width:100%}}
+@media(prefers-reduced-motion:reduce){.ai-loading-icon,.ai-loading-icon::before,.ai-loading-content,.ai-grid,.ai-orb-1,.ai-orb-2{animation:none!important}}
+
+
+/* VaultShare visual polish: unified mark, auth motion, typography and storage */
+.brand-logo,
+.auth-brand .brand-logo,
+.mobile-brand .brand-logo {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    border: 1px solid rgba(207, 190, 255, .48) !important;
+    background: linear-gradient(145deg, #8b5cf6 0%, #635bff 52%, #3478ff 100%) !important;
+    box-shadow: 0 8px 26px rgba(111, 76, 255, .28), inset 0 1px 0 rgba(255,255,255,.28) !important;
+}
+.brand-logo::after,
+.auth-brand .brand-logo::after,
+.mobile-brand .brand-logo::after {
+    content: "";
+    position: absolute;
+    inset: -70% 35%;
+    z-index: -1;
+    background: rgba(255,255,255,.22);
+    transform: rotate(35deg);
+    animation: vaultLogoSweep 5s ease-in-out infinite;
+}
+.brand-logo i { filter: drop-shadow(0 2px 4px rgba(20,10,60,.25)); }
+@keyframes vaultLogoSweep { 0%, 65%, 100% { transform: translateX(-160%) rotate(35deg); } 35% { transform: translateX(160%) rotate(35deg); } }
+
+.auth-page { position: relative; isolation: isolate; overflow-x: hidden; }
+.auth-page::before,
+.auth-page::after {
+    content: "";
+    position: fixed;
+    pointer-events: none;
+    z-index: -1;
+    width: 38rem;
+    height: 38rem;
+    border-radius: 50%;
+    filter: blur(75px);
+    opacity: .18;
+}
+.auth-page::before { top: -15rem; left: -12rem; background: #7546ff; animation: authOrbOne 17s ease-in-out infinite alternate; }
+.auth-page::after { right: -14rem; bottom: -19rem; background: #168bff; animation: authOrbTwo 21s ease-in-out infinite alternate; }
+.auth-visual { overflow: hidden; }
+.auth-visual::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: .12;
+    background-image: linear-gradient(rgba(167,139,250,.18) 1px, transparent 1px), linear-gradient(90deg, rgba(167,139,250,.18) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: linear-gradient(135deg, black, transparent 78%);
+    animation: authGridDrift 32s linear infinite;
+}
+.auth-visual-content, .auth-brand, .auth-footer { position: relative; z-index: 1; }
+.auth-feature { transition: transform .25s ease, background .25s ease; }
+.auth-feature:hover { transform: translateX(5px); }
+.auth-visual h1 span { background: linear-gradient(90deg, #b7a0ff, #7fbcff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.auth-page .login-card { animation: authCardEnter .65s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes authOrbOne { to { transform: translate(12rem, 9rem) scale(1.12); } }
+@keyframes authOrbTwo { to { transform: translate(-10rem, -8rem) scale(1.16); } }
+@keyframes authGridDrift { to { background-position: 88px 88px; } }
+@keyframes authCardEnter { from { opacity: 0; transform: translateY(18px) scale(.99); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+.settings-storage-track { height: 10px; margin: 0 0 18px; border-radius: 999px; overflow: hidden; background: #080b13; border: 1px solid rgba(139,92,246,.24); }
+.settings-storage-track span { display: block; height: 100%; min-width: 0; border-radius: inherit; background: linear-gradient(90deg,#7c3aed,#8b5cf6,#38bdf8); box-shadow: 0 0 16px rgba(139,92,246,.45); transition: width .7s ease; }
+.settings-card h2 { letter-spacing: -.025em; }
+.settings-card p, .setting-info span { line-height: 1.55; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; } }
+
+
+/* File activity, previews and storage summaries */
+.storage-breakdown {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    align-items: start;
+    margin-top: 14px;
+}
+.storage-breakdown > span {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 0;
+}
+.storage-breakdown strong {
+    color: #f4f1ff;
+    font-size: clamp(14px, 1.2vw, 18px);
+    font-weight: 750;
+    font-variant-numeric: tabular-nums;
+}
+.storage-breakdown small {
+    color: #8f9bb2;
+    font-size: 12px;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+.recent-files-panel, .activity-panel, .preview-panel, .preview-unavailable-card {
+    margin-top: 24px;
+    padding: 24px;
+    border: 1px solid rgba(145, 105, 255, .2);
+    border-radius: 22px;
+    background: linear-gradient(145deg, rgba(25, 29, 46, .94), rgba(15, 19, 31, .98));
+    box-shadow: 0 18px 45px rgba(0, 0, 0, .14);
+}
+.recent-files-list { display: grid; gap: 10px; margin-top: 16px; }
+.recent-file-item, .activity-row {
+    display: flex; align-items: center; gap: 14px; padding: 14px;
+    border: 1px solid rgba(150, 160, 190, .12); border-radius: 15px;
+    background: rgba(255,255,255,.025); transition: border-color .2s, transform .2s, background .2s;
+}
+.recent-file-item:hover { transform: translateY(-2px); border-color: rgba(151, 113, 255, .48); background: rgba(125, 88, 255, .08); }
+.recent-file-icon, .activity-icon, .preview-unavailable-icon {
+    width: 44px; height: 44px; flex: 0 0 44px; display: grid; place-items: center;
+    border-radius: 14px; color: #c4a7ff; background: linear-gradient(135deg, rgba(124, 75, 255, .22), rgba(46, 174, 255, .12));
+}
+.recent-file-copy, .activity-copy { display: flex; flex-direction: column; gap: 5px; min-width: 0; flex: 1; }
+.recent-file-copy strong { overflow-wrap: anywhere; }
+.recent-file-copy small, .activity-copy span { color: #8e9bb1; font-size: 13px; }
+.recent-empty { display: flex; align-items: center; gap: 12px; color: #8e9bb1; padding: 22px 0 4px; }
+.activity-row { margin-bottom: 10px; }
+.activity-row time { color: #8e9bb1; font-size: 12px; white-space: nowrap; }
+.preview-panel { overflow: hidden; }
+.preview-frame { width: 100%; height: min(72vh, 850px); border: 1px solid #283247; border-radius: 14px; background: #fff; }
+.text-preview-frame { background: #111722; }
+.preview-image { display: block; max-width: 100%; max-height: 72vh; margin: 0 auto; object-fit: contain; border-radius: 12px; }
+.preview-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
+.preview-unavailable-card { text-align: center; padding: 48px 24px; }
+.preview-unavailable-icon { margin: 0 auto 18px; width: 64px; height: 64px; font-size: 25px; }
+.preview-unavailable-card p { color: #8e9bb1; margin-top: 8px; }
+.share-expiry-form { margin-top: 24px; padding: 18px; border: 1px solid rgba(145,105,255,.2); border-radius: 16px; background: rgba(124,75,255,.05); }
+.share-expiry-form label { display: block; font-weight: 700; margin-bottom: 10px; }
+.share-expiry-controls { display: flex; gap: 12px; flex-wrap: wrap; }
+.share-expiry-controls select { min-width: 200px; flex: 1; padding: 12px 14px; color: #e7e9f2; background: #151b29; border: 1px solid #343b50; border-radius: 12px; }
+.share-expiry-note { margin-top: 10px; color: #9eabc0; font-size: 13px; }
+.share-revoke-form { margin-top: 12px; }
+.danger-button { border-color: rgba(255,90,110,.35) !important; color: #ff9aa8 !important; }
+@media (max-width: 650px) {
+    .storage-breakdown { gap: 8px; }
+    .storage-breakdown strong { font-size: 13px; overflow-wrap: anywhere; }
+    .storage-breakdown small { font-size: 10px; }
+    .recent-files-panel, .activity-panel, .preview-panel { padding: 16px; }
+    .activity-row { align-items: flex-start; }
+    .activity-row time { white-space: normal; text-align: right; }
+}
+
+
+/* Keep storage figures aligned consistently on every page */
+.storage-breakdown {
+    width: 100%;
+    box-sizing: border-box;
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: center;
+    justify-items: center;
+    column-gap: 12px;
+    row-gap: 10px;
+    padding: 4px 0 2px;
+}
+
+.storage-breakdown > span {
+    width: 100%;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    text-align: center;
+}
+
+.storage-breakdown strong {
+    display: block;
+    max-width: 100%;
+    white-space: nowrap;
+    font-size: clamp(14px, 1.25vw, 18px);
+    line-height: 1.3;
+    font-variant-numeric: tabular-nums;
+}
+
+.storage-breakdown small {
+    display: block;
+    line-height: 1.2;
+    margin: 0;
+    text-align: center;
+}
+
+@media (max-width: 520px) {
+    .storage-breakdown {
+        column-gap: 6px;
+    }
+
+    .storage-breakdown strong {
+        font-size: 12px;
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
+    .storage-breakdown small {
+        font-size: 10px;
+    }
 }

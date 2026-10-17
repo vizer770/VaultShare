@@ -20,9 +20,7 @@
     <aside class="sidebar">
 
     <div class="brand">
-        <div class="brand-logo">
-            <span>V</span>
-        </div>
+        <div class="brand-logo"><i class="fa-solid fa-vault" aria-hidden="true"></i></div>
 
         <span class="brand-name">VaultShare</span>
     </div>
@@ -39,6 +37,11 @@
             <i class="fa-solid fa-folder"></i>
             <span>My Files</span>
         </a>
+
+<a href="/ai-tools">
+    <i class="fa-solid fa-wand-magic-sparkles"></i>
+    <span>AI Analyze</span>
+</a>
 
         <a href="/shared">
             <i class="fa-solid fa-share-nodes"></i>
@@ -59,6 +62,8 @@
 
 
     <div class="sidebar-bottom">
+
+            <a href="/activity"><i class="fa-solid fa-clock-rotate-left"></i><span>Activity History</span></a>
 
         <a href="/security">
             <i class="fa-solid fa-shield-halved"></i>
@@ -101,59 +106,7 @@
         <!-- ================= SETTINGS ================= -->
 
         <div class="settings-container">
-
-            <!-- Appearance -->
-            <section class="settings-card">
-
-                <div class="settings-card-header">
-
-                    <div class="settings-icon purple">
-                        ◐
-                    </div>
-
-                    <div>
-                        <h2>Appearance</h2>
-
-                        <p>
-                            Change how VaultShare looks.
-                        </p>
-                    </div>
-
-                </div>
-
-
-                <div class="setting-row">
-
-                    <div class="setting-info">
-
-                        <strong>Theme</strong>
-
-                        <span>
-                            Choose your preferred interface theme.
-                        </span>
-
-                    </div>
-
-
-                    <select id="themeSelect"
-                            class="settings-select">
-
-                        <option value="dark">
-                            Dark
-                        </option>
-
-                        <option value="light">
-                            Light
-                        </option>
-
-                    </select>
-
-                </div>
-
-            </section>
-
-
-            <!-- Notifications -->
+<!-- Notifications -->
             <section class="settings-card">
 
                 <div class="settings-card-header">
@@ -223,22 +176,13 @@
                 </div>
 
 
-                <div class="setting-row">
-
-                    <div class="setting-info">
-
-                        <strong>Storage Limit</strong>
-
-                        <span>
-                            Maximum storage available for your account.
-                        </span>
-
-                    </div>
-
-                    <strong>500 MB</strong>
-
+                <div class="storage-footer storage-breakdown settings-storage-breakdown">
+                    <span><strong>{{ format_bytes(storage_used) }}</strong><small>Used</small></span>
+                    <span><strong>{{ format_bytes(storage_remaining) }}</strong><small>Available</small></span>
+                    <span><strong>{{ format_bytes(storage_limit) }}</strong><small>Total</small></span>
                 </div>
 
+                <div class="settings-storage-track"><span style="width: {{ storage_percent }}%"></span></div>
 
                 <div class="setting-row">
 
@@ -363,43 +307,8 @@
 <script>
 
 document.addEventListener("DOMContentLoaded", function () {
-
-    const themeSelect =
-        document.getElementById("themeSelect");
-
-    const notificationToggle =
+const notificationToggle =
         document.getElementById("notificationToggle");
-
-
-    // ---------------- THEME ----------------
-
-    const savedTheme =
-        localStorage.getItem("vaultshare-theme") || "dark";
-
-    themeSelect.value = savedTheme;
-
-
-    themeSelect.addEventListener("change", function () {
-
-        const theme = this.value;
-
-        localStorage.setItem(
-            "vaultshare-theme",
-            theme
-        );
-
-        if (theme === "light") {
-
-            document.body.classList.add("light-mode");
-
-        } else {
-
-            document.body.classList.remove("light-mode");
-
-        }
-
-    });
-
 
     // ---------------- NOTIFICATIONS ----------------
 

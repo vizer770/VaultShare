@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Activity history • VaultShare</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body class="dashboard-page">
+<div class="app-layout">
+    <aside class="sidebar">
+        <div class="brand"><div class="brand-logo"><i class="fa-solid fa-vault"></i></div><span class="brand-name">VaultShare</span></div>
+        <nav class="sidebar-nav">
+            <a href="/dashboard"><i class="fa-solid fa-table-columns"></i><span>Dashboard</span></a>
+            <a href="/my-files"><i class="fa-solid fa-folder"></i><span>My Files</span></a>
+            <a href="/ai-tools"><i class="fa-solid fa-wand-magic-sparkles"></i><span>AI Analyze</span></a>
+            <a href="/shared"><i class="fa-solid fa-share-nodes"></i><span>Shared</span></a>
+            <a href="/favorites"><i class="fa-solid fa-star"></i><span>Favorites</span></a>
+            <a href="/trash"><i class="fa-solid fa-trash"></i><span>Trash</span></a>
+        </nav>
+        <div class="sidebar-bottom">
+            <a href="/activity" class="active"><i class="fa-solid fa-clock-rotate-left"></i><span>Activity History</span></a>
+            <a href="/security"><i class="fa-solid fa-shield-halved"></i><span>Security</span></a>
+            <a href="/settings"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
+            <a href="/logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
+        </div>
+    </aside>
+    <main class="dashboard-main">
+        <div class="dashboard-top">
+            <div><p class="eyebrow">ACCOUNT ACTIVITY</p><h1>Activity history</h1><p class="dashboard-subtitle">A recent timeline of uploads, downloads, previews and sharing changes.</p></div>
+        </div>
+        <section class="activity-panel">
+        {% if activities %}
+            {% for item in activities %}
+            <article class="activity-row">
+                <span class="activity-icon"><i class="fa-solid {% if 'upload' in item['action']|lower %}fa-cloud-arrow-up{% elif 'download' in item['action']|lower %}fa-download{% elif 'preview' in item['action']|lower %}fa-eye{% elif 'share' in item['action']|lower %}fa-share-nodes{% else %}fa-clock{% endif %}"></i></span>
+                <div class="activity-copy"><strong>{{ item["action"] }}</strong><span>{% if item["filename"] %}{{ item["filename"] }}{% elif item["details"] %}{{ item["details"] }}{% else %}VaultShare account{% endif %}</span></div>
+                <time>{{ item["created_at"] }}</time>
+            </article>
+            {% endfor %}
+        {% else %}
+            <div class="recent-empty"><i class="fa-regular fa-clock"></i><span>Your activity will appear here as you use VaultShare.</span></div>
+        {% endif %}
+        </section>
+    </main>
+</div>
+<script src="{{ url_for('static', filename='theme.js') }}"></script>
+</body>
+</html>

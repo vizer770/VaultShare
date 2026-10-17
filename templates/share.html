@@ -48,6 +48,11 @@
                 <span>My Files</span>
             </a>
 
+<a href="/ai-tools">
+    <i class="fa-solid fa-wand-magic-sparkles"></i>
+    <span>AI Analyze</span>
+</a>
+
             <a href="/shared" class="active">
                 <i class="fa-solid fa-share-nodes"></i>
                 <span>Shared</span>
@@ -67,6 +72,8 @@
 
 
         <div class="sidebar-bottom">
+
+            <a href="/activity"><i class="fa-solid fa-clock-rotate-left"></i><span>Activity History</span></a>
 
             <a href="/security">
                 <i class="fa-solid fa-shield-halved"></i>
@@ -237,6 +244,38 @@
             </div>
 
 
+            <form method="post" class="share-expiry-form">
+                <label for="expiry_hours">Link expiration</label>
+                <div class="share-expiry-controls">
+                    <select name="expiry_hours" id="expiry_hours">
+                        <option value="never" {% if not share["expires_at"] %}selected{% endif %}>Never expires</option>
+                        <option value="1">Expire in 1 hour</option>
+                        <option value="24">Expire in 24 hours</option>
+                        <option value="168">Expire in 7 days</option>
+                        <option value="720">Expire in 30 days</option>
+                    </select>
+                    <button type="submit" class="secondary-button"><i class="fa-solid fa-clock"></i> Update expiry</button>
+                </div>
+                {% if share["expires_at"] %}<p class="share-expiry-note">Expires at {{ share["expires_at"] }}.</p>{% endif %}
+            </form>
+            <form method="post" action="{{ url_for('revoke_share', file_id=file['id']) }}" onsubmit="return confirm('Revoke this share link? Anyone using it will lose access.');" class="share-revoke-form">
+                <button type="submit" class="secondary-button danger-button"><i class="fa-solid fa-link-slash"></i> Revoke share link</button>
+            </form>
+
+            <div class="share-qr-card" style="margin-top: 26px; padding: 22px; border: 1px solid rgba(140, 120, 255, .25); border-radius: 18px; display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
+                <div id="shareQrCode" aria-label="QR code for the shared file" style="width: 180px; min-height: 180px; display: grid; place-items: center; padding: 10px; background: #fff; border-radius: 12px;"></div>
+                <div style="flex: 1; min-width: 200px;">
+                    <span class="section-label">SCAN TO OPEN</span>
+                    <h2 style="margin: 8px 0;">Share with a QR code</h2>
+                    <p style="margin-bottom: 16px; color: var(--muted-text, #9ca3af);">Scan this code with a phone camera to open the shared file page.</p>
+                    <button type="button" class="secondary-button" onclick="downloadShareQr()">
+                        <i class="fa-solid fa-download"></i> Download QR code
+                    </button>
+                    <p id="qrStatus" role="status" style="font-size: 13px; margin-top: 10px;"></p>
+                </div>
+            </div>
+
+
             <!-- BUTTONS -->
 
             <div
@@ -281,7 +320,10 @@
 </div>
 
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
+
+const shareUrl = {{ share_url|tojson }};
 
 function copyShareLink() {
 
@@ -297,6 +339,40 @@ function copyShareLink() {
     alert("Share link copied!");
 
 }
+
+function downloadShareQr() {
+    const qrBox = document.getElementById("shareQrCode");
+    const canvas = qrBox.querySelector("canvas");
+    const image = qrBox.querySelector("img");
+    const dataUrl = canvas ? canvas.toDataURL("image/png") : image?.src;
+
+    if (!dataUrl) {
+        document.getElementById("qrStatus").textContent = "The QR code is not ready yet. Please try again.";
+        return;
+    }
+
+    const link = document.createElement("a");
+    link.href = dataUrl;
+    link.download = "vaultshare-qr.png";
+    link.click();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const qrBox = document.getElementById("shareQrCode");
+    if (typeof QRCode === "undefined") {
+        document.getElementById("qrStatus").textContent = "QR generation could not load. Check your internet connection and refresh.";
+        return;
+    }
+
+    new QRCode(qrBox, {
+        text: shareUrl,
+        width: 160,
+        height: 160,
+        colorDark: "#17132a",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+    });
+});
 
 </script>
 

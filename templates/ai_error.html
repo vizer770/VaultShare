@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis issue | VaultShare</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        .ai-error-page { min-height:100vh; display:grid; place-items:center; padding:28px; background:#0b0f17; color:#e8eaf2; }
+        .ai-error-card { width:min(100%,620px); padding:clamp(24px,5vw,42px); border:1px solid #2a3142; border-radius:24px; background:rgba(19,25,38,.94); box-shadow:0 24px 80px rgba(0,0,0,.25); }
+        .ai-error-icon { width:58px;height:58px;display:grid;place-items:center;border-radius:18px;background:rgba(248,113,113,.12);color:#fb8d8d;font-size:24px;margin-bottom:22px; }
+        .ai-error-card h1 { margin:0 0 12px;font-size:clamp(24px,4vw,32px);color:inherit; }
+        .ai-error-card p { line-height:1.7;color:#aab3c4;margin:0 0 12px; }
+        .ai-error-hint { padding:14px 16px;margin:20px 0 24px;border:1px solid rgba(139,124,255,.22);border-radius:14px;background:rgba(118,87,255,.08);font-size:14px; }
+        .ai-error-actions { display:flex;gap:10px;flex-wrap:wrap; }
+        .ai-error-actions a { display:inline-flex;align-items:center;gap:9px;padding:12px 16px;border-radius:11px;background:linear-gradient(135deg,#7657ff,#5367f7);color:white;font-weight:700; }
+        .ai-error-actions a.secondary { background:transparent;border:1px solid #3a4355;color:inherit; }
+    </style>
+</head>
+<body>
+    <main class="ai-error-page">
+        <section class="ai-error-card">
+            <div class="ai-error-icon"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i></div>
+            <p class="eyebrow">VAULTSHARE DOCUMENT TOOLS</p>
+            <h1>{{ error_title }}</h1>
+            <p>{{ error_message }}</p>
+            <div class="ai-error-hint"><strong>What to do:</strong><br>{{ error_hint }}</div>
+            <div class="ai-error-actions">
+                <a href="{{ url_for('ai_tools') }}"><i class="fa-solid fa-wand-magic-sparkles"></i> Back to AI Analyze</a>
+                <a class="secondary" href="{{ url_for('my_files') }}"><i class="fa-solid fa-folder"></i> My Files</a>
+            </div>
+        </section>
+    </main>
+    <script src="{{ url_for('static', filename='theme.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>File preview • VaultShare</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body class="dashboard-page">
+<div class="app-layout">
+    <aside class="sidebar">
+        <div class="brand"><div class="brand-logo"><i class="fa-solid fa-vault"></i></div><span class="brand-name">VaultShare</span></div>
+        <nav class="sidebar-nav">
+            <a href="/dashboard"><i class="fa-solid fa-table-columns"></i><span>Dashboard</span></a>
+            <a href="/my-files"><i class="fa-solid fa-folder"></i><span>My Files</span></a>
+            <a href="/ai-tools"><i class="fa-solid fa-wand-magic-sparkles"></i><span>AI Analyze</span></a>
+            <a href="/shared"><i class="fa-solid fa-share-nodes"></i><span>Shared</span></a>
+            <a href="/favorites"><i class="fa-solid fa-star"></i><span>Favorites</span></a>
+            <a href="/trash"><i class="fa-solid fa-trash"></i><span>Trash</span></a>
+        </nav>
+        <div class="sidebar-bottom">
+            <a href="/activity"><i class="fa-solid fa-clock-rotate-left"></i><span>Activity History</span></a>
+            <a href="/security"><i class="fa-solid fa-shield-halved"></i><span>Security</span></a>
+            <a href="/settings"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
+            <a href="/logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
+        </div>
+    </aside>
+    <main class="dashboard-main">
+        <div class="dashboard-top">
+            <div><p class="eyebrow">FILE PREVIEW</p><h1>{{ file["filename"] }}</h1><p class="dashboard-subtitle">Preview your file without downloading it.</p></div>
+            <a href="/my-files" class="secondary-button"><i class="fa-solid fa-arrow-left"></i> Back to My Files</a>
+        </div>
+        <section class="preview-panel">
+            {% if extension in [".png", ".jpg", ".jpeg", ".gif", ".webp"] %}
+                <img class="preview-image" src="{{ url_for('preview_content', file_id=file['id']) }}" alt="{{ file['filename'] }}">
+            {% elif extension == ".pdf" %}
+                <iframe class="preview-frame" src="{{ url_for('preview_content', file_id=file['id']) }}" title="PDF preview"></iframe>
+            {% else %}
+                <iframe class="preview-frame text-preview-frame" src="{{ url_for('preview_content', file_id=file['id']) }}" title="Text preview"></iframe>
+            {% endif %}
+            <div class="preview-actions"><a class="primary-button" href="{{ url_for('download_file', file_id=file['id']) }}"><i class="fa-solid fa-download"></i> Download file</a></div>
+        </section>
+    </main>
+</div>
+<script src="{{ url_for('static', filename='theme.js') }}"></script>
+</body>
+</html>

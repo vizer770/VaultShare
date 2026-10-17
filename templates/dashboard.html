@@ -25,9 +25,7 @@
     <aside class="sidebar">
 
        <div class="brand">
-    <div class="brand-logo">
-        <span>V</span>
-    </div>
+    <div class="brand-logo"><i class="fa-solid fa-vault" aria-hidden="true"></i></div>
 
     <span class="brand-name">VaultShare</span>
 </div>
@@ -43,6 +41,11 @@
                 <i class="fa-solid fa-folder"></i>
                 <span>My Files</span>
             </a>
+
+<a href="/ai-tools">
+    <i class="fa-solid fa-wand-magic-sparkles"></i>
+    <span>AI Analyze</span>
+</a>
 
             <a href="/shared">
                 <i class="fa-solid fa-share-nodes"></i>
@@ -63,6 +66,8 @@
 
 
         <div class="sidebar-bottom">
+
+            <a href="/activity"><i class="fa-solid fa-clock-rotate-left"></i><span>Activity History</span></a>
 
             <a href="/security">
                 <i class="fa-solid fa-shield-halved"></i>
@@ -164,7 +169,7 @@
                     </span>
 
                     <strong>
-                        {{ "%.2f"|format(user["storage_used"] / 1024 / 1024) }}
+                        {{ "%.2f"|format(storage_used / 1024 / 1024) }}
                         MB
                     </strong>
 
@@ -220,6 +225,26 @@
 
         </section>
 
+        <section class="recent-files-panel">
+            <div class="section-heading">
+                <div><span class="section-label">QUICK ACCESS</span><h2>Recently opened</h2></div>
+                <a class="secondary-button" href="/my-files">All files</a>
+            </div>
+            {% if recent_files %}
+            <div class="recent-files-list">
+                {% for file in recent_files %}
+                <a class="recent-file-item" href="{{ url_for('preview_file', file_id=file['id']) }}">
+                    <span class="recent-file-icon"><i class="fa-solid fa-file-lines"></i></span>
+                    <span class="recent-file-copy"><strong>{{ file["filename"] }}</strong><small>Opened {{ file["last_opened_at"] }}</small></span>
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </a>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="recent-empty"><i class="fa-regular fa-clock"></i><span>Your recently opened files will appear here.</span></div>
+            {% endif %}
+        </section>
+
 
         <!-- ================================================= -->
         <!-- STORAGE -->
@@ -243,7 +268,7 @@
 
                 <div class="storage-number">
 
-                    {{ "%.1f"|format(storage_percent) }}%
+                    {{ "%.2f"|format(storage_percent) }}%
 
                 </div>
 
@@ -260,18 +285,10 @@
             </div>
 
 
-            <div class="storage-footer">
-
-                <span>
-                    {{ "%.2f"|format(user["storage_used"] / 1024 / 1024) }}
-                    MB used
-                </span>
-
-                <span>
-                    {{ "%.0f"|format(user["storage_limit"] / 1024 / 1024) }}
-                    MB available
-                </span>
-
+            <div class="storage-footer storage-breakdown">
+                <span><strong>{{ format_bytes(storage_used) }}</strong><small>Used</small></span>
+                <span><strong>{{ format_bytes(storage_remaining) }}</strong><small>Available</small></span>
+                <span><strong>{{ format_bytes(user["storage_limit"]) }}</strong><small>Total</small></span>
             </div>
 
         </section>

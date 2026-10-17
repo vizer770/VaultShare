@@ -612,76 +612,25 @@
 
         /* ================= LIGHT MODE ================= */
 
-        body.light-mode .ai-loading-page {
-
-            background:
-                radial-gradient(
-                    circle at 20% 20%,
-                    rgba(124,60,255,.12),
-                    transparent 35%
-                ),
-                radial-gradient(
-                    circle at 80% 80%,
-                    rgba(0,190,255,.08),
-                    transparent 35%
-                ),
-                #f4f6ff;
-
-        }
+        
 
 
-        body.light-mode .ai-loading-content {
-
-            background:
-                rgba(255,255,255,.82);
-
-            border-color:
-                rgba(124,60,255,.15);
-
-            box-shadow:
-                0 30px 80px
-                rgba(50,60,120,.15);
-
-        }
+        
 
 
-        body.light-mode .ai-loading-content h1 {
-
-            color: #171b2e;
-
-        }
+        
 
 
-        body.light-mode .ai-loading-subtitle {
-
-            color: #69758c;
-
-        }
+        
 
 
-        body.light-mode .ai-processing-box {
-
-            background:
-                rgba(124,60,255,.035);
-
-            border-color:
-                rgba(80,90,130,.10);
-
-        }
+        
 
 
-        body.light-mode .ai-step strong {
-
-            color: #252a3d;
-
-        }
+        
 
 
-        body.light-mode .ai-step span {
-
-            color: #738097;
-
-        }
+        
 
 
         /* ================= MOBILE ================= */
@@ -944,12 +893,7 @@ async function getAIResult() {
         const html =
             await response.text();
 
-        if (!response.ok) {
-            throw new Error("AI analysis failed");
-        }
-
         aiResult = html;
-
         checkComplete();
 
     }
@@ -962,7 +906,11 @@ async function getAIResult() {
         clearInterval(stepTimer);
 
         document.getElementById("loadingText").textContent =
-            "Something went wrong. Please try again.";
+            "Analysis could not finish. Preparing troubleshooting details...";
+
+        setTimeout(() => {
+            window.location.href = "/ai-tools";
+        }, 3500);
 
     }
 

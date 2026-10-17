@@ -22,17 +22,22 @@ import os
 import uuid
 import webbrowser
 import threading
+import mimetypes
+from datetime import datetime, timedelta
 from dotenv import load_dotenv
 from google import genai
-import os
 
-load_dotenv()
+APP_DIR = os.path.dirname(os.path.abspath(__file__))
+load_dotenv(os.path.join(APP_DIR, ".env"))
 
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.8-flash").strip() or "gemini-3.8-flash"
 
-client = genai.Client(
-    api_key=GEMINI_API_KEY
-)
+def get_gemini_client():
+    """Create the Gemini client only when analysis is requested."""
+    api_key = os.getenv("GEMINI_API_KEY", "").strip()
+    if not api_key:
+        return None
+    return genai.Client(api_key=api_key)
 
 
 
@@ -45,7 +50,7 @@ app = Flask(__name__)
 
 app.secret_key = "vaultshare-secret-key-change-later"
 
-UPLOAD_FOLDER = "storage"
+UPLOAD_FOLDER = os.path.join(APP_DIR, "storage")
 STORAGE_LIMIT = 500 * 1024 * 1024
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -55,7 +60,7 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 # DATABASE
 # =========================================================
 
-DATABASE = "database.db"
+DATABASE = os.path.join(APP_DIR, "database.db")
 
 
 def get_db():
@@ -165,6 +170,27 @@ def init_db():
 
             pass
 
+    try:
+        conn.execute("ALTER TABLE files ADD COLUMN last_opened_at TIMESTAMP")
+    except sqlite3.OperationalError:
+        pass
+
+    try:
+        conn.execute("ALTER TABLE shares ADD COLUMN expires_at TIMESTAMP")
+    except sqlite3.OperationalError:
+        pass
+
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS activity_log (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            file_id INTEGER,
+            action TEXT NOT NULL,
+            details TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
+
     conn.commit()
 
     conn.close()
@@ -192,6 +218,16 @@ def current_user():
     return user
 
 
+def log_activity(user_id, action, file_id=None, details=None):
+    conn = get_db()
+    conn.execute(
+        "INSERT INTO activity_log (user_id, file_id, action, details) VALUES (?, ?, ?, ?)",
+        (user_id, file_id, action, details)
+    )
+    conn.commit()
+    conn.close()
+
+
 def calculate_storage(user_id):
 
     conn = get_db()
@@ -206,6 +242,20 @@ def calculate_storage(user_id):
     conn.close()
 
     return result["total"]
+
+
+def format_bytes(value):
+    value = max(int(value or 0), 0)
+    if value < 1024:
+        return f"{value} B"
+    if value < 1024 ** 2:
+        return f"{value / 1024:.1f} KB"
+    if value < 1024 ** 3:
+        return f"{value / (1024 ** 2):.2f} MB"
+    return f"{value / (1024 ** 3):.2f} GB"
+
+
+app.jinja_env.globals["format_bytes"] = format_bytes
 
 
 def update_storage(user_id):
@@ -429,11 +479,16 @@ def dashboard():
         ORDER BY uploaded_at DESC
     """, (session["user_id"],)).fetchall()
 
+    recent_files = conn.execute("""
+        SELECT * FROM files
+        WHERE user_id = ? AND is_deleted = 0 AND last_opened_at IS NOT NULL
+        ORDER BY last_opened_at DESC LIMIT 5
+    """, (session["user_id"],)).fetchall()
+
     conn.close()
 
-    storage_used = calculate_storage(
-        session["user_id"]
-    )
+    storage_used = calculate_storage(session["user_id"])
+    update_storage(session["user_id"])
 
     storage_percent = 0
 
@@ -453,7 +508,10 @@ def dashboard():
         "dashboard.html",
         user=user,
         files=files,
-        storage_percent=storage_percent
+        storage_used=storage_used,
+        storage_percent=storage_percent,
+        recent_files=recent_files,
+        storage_remaining=max(int(user["storage_limit"] or 0) - int(storage_used or 0), 0)
     )
 
 
@@ -539,7 +597,7 @@ def upload_file():
                 file_data
             )
 
-        conn.execute("""
+        cursor = conn.execute("""
             INSERT INTO files (
                 user_id,
                 filename,
@@ -555,7 +613,10 @@ def upload_file():
             stored_name,
             file_size
         ))
-
+        conn.execute(
+            "INSERT INTO activity_log (user_id, file_id, action, details) VALUES (?, ?, ?, ?)",
+            (session["user_id"], cursor.lastrowid, "File uploaded", original_name)
+        )
         current_storage += file_size
 
     conn.execute("""
@@ -602,20 +663,46 @@ def my_files():
 
     conn.close()
 
-    storage_used = calculate_storage(
-        session["user_id"]
-    )
+    storage_used = calculate_storage(session["user_id"])
+    update_storage(session["user_id"])
 
     return render_template(
         "my_files.html",
         files=files,
         user=user,
-        storage_used=storage_used
+        storage_used=storage_used,
+        storage_remaining=max(int(user["storage_limit"] or 0) - int(storage_used or 0), 0)
     )
 
 # =========================================================
 # AI ANALYSIS LOADING PAGE
 # =========================================================
+
+@app.route("/ai-tools")
+def ai_tools():
+    if "user_id" not in session:
+        return redirect("/login")
+
+    conn = get_db()
+    files = conn.execute("""
+        SELECT *
+        FROM files
+        WHERE user_id = ?
+        AND is_deleted = 0
+        ORDER BY uploaded_at DESC
+    """, (session["user_id"],)).fetchall()
+    conn.close()
+
+    supported_extensions = {".txt", ".pdf", ".pptx"}
+    file_items = []
+    for file in files:
+        item = dict(file)
+        extension = os.path.splitext(item["filename"])[1].lower()
+        item["ai_supported"] = extension in supported_extensions
+        file_items.append(item)
+
+    return render_template("ai_tools.html", files=file_items)
+
 
 @app.route("/ai-analyze/<int:file_id>")
 def ai_analyze_loading(file_id):
@@ -664,13 +751,12 @@ def ai_analyze(file_id):
     extension = os.path.splitext(filename)[1].lower()
 
     if extension not in allowed_extensions:
-        return """
-        <h2>AI Analysis</h2>
-        <p>
-            AI analysis currently supports TXT and PDF files.
-        </p>
-        <a href="/my-files">← Back to My Files</a>
-        """, 400
+        return render_template(
+            "ai_unavailable.html",
+            filename=filename,
+            reason="This file type is not supported yet.",
+            detail="VaultShare can currently analyze TXT, PDF and PPTX files.",
+        ), 400
 
     user_folder = os.path.join(
         UPLOAD_FOLDER,
@@ -763,15 +849,12 @@ def ai_analyze(file_id):
             """, 500
 
     if not text.strip():
-
-        return """
-        <h2>No readable text found</h2>
-        <p>
-            This file doesn't contain readable text that
-            VaultShare can analyze.
-        </p>
-        <a href="/my-files">← Back to My Files</a>
-        """, 400
+        return render_template(
+            "ai_unavailable.html",
+            filename=filename,
+            reason="No readable text found",
+            detail="This file may contain scanned pages, images, or empty text. Try a text-based PDF, TXT or PPTX file.",
+        ), 400
 
     # -----------------------------------------------------
     # LIMIT TEXT SENT TO AI
@@ -807,22 +890,55 @@ DOCUMENT:
 {text}
 """
 
-    try:
+    api_key = os.getenv("GEMINI_API_KEY", "").strip()
+    if not api_key:
+        return render_template(
+            "ai_error.html",
+            error_title="Gemini API key is missing",
+            error_message="VaultShare cannot connect to Gemini because GEMINI_API_KEY is not configured.",
+            error_hint="Open your .env file, add GEMINI_API_KEY=your_key, save it, and restart VaultShare."
+        ), 503
 
+    try:
+        client = get_gemini_client()
         response = client.models.generate_content(
-            model="gemini-3.5-flash-lite",
+            model=GEMINI_MODEL,
             contents=prompt
         )
-
-        ai_result = response.text
+        ai_result = (response.text or "").strip()
+        if not ai_result:
+            raise RuntimeError("Gemini returned an empty response.")
 
     except Exception as e:
+        detail = str(e).lower()
+        if "api key" in detail or "unauthenticated" in detail or "permission_denied" in detail or "403" in detail:
+            title = "Gemini API key was rejected"
+            message = "Google did not accept the configured API key or the key does not have access to this model."
+            hint = "Check GEMINI_API_KEY in your .env file, confirm the key is active in Google AI Studio, and restart the app."
+        elif "429" in detail or "quota" in detail or "resource_exhausted" in detail or "rate limit" in detail:
+            title = "Gemini usage limit reached"
+            message = "The Gemini API quota or rate limit has been reached for this key."
+            hint = "Wait and try again, or check the API quota and billing settings for your Google AI Studio project."
+        elif "model" in detail and ("not found" in detail or "not supported" in detail or "404" in detail):
+            title = "Gemini model is unavailable"
+            message = f"The configured model ({GEMINI_MODEL}) is not available for this API key."
+            hint = "Check GEMINI_MODEL in .env or remove it to use the default model configured in app.py."
+        elif "timed out" in detail or "timeout" in detail or "connection" in detail or "network" in detail:
+            title = "Could not reach Gemini"
+            message = "VaultShare could not connect to the Gemini API. Check your internet connection and try again."
+            hint = "If your connection is working, wait a moment and retry the analysis."
+        else:
+            title = "Document analysis failed"
+            message = "Gemini could not finish analyzing this document."
+            hint = "Try again with a smaller TXT, PDF, or PPTX file. If the issue continues, check the Flask terminal for the technical error."
 
-        return f"""
-        <h2>AI Analysis Error</h2>
-        <p>{str(e)}</p>
-        <a href="/my-files">← Back to My Files</a>
-        """, 500
+        app.logger.exception("Gemini document analysis failed")
+        return render_template(
+            "ai_error.html",
+            error_title=title,
+            error_message=message,
+            error_hint=hint
+        ), 502
 
     return render_template(
         "ai_result.html",
@@ -858,22 +974,17 @@ def download_file(file_id):
         session["user_id"]
     )).fetchone()
 
+    if file:
+        conn.execute("UPDATE files SET last_opened_at = CURRENT_TIMESTAMP WHERE id = ?", (file_id,))
+        conn.commit()
     conn.close()
 
     if not file:
         return "File not found.", 404
 
-    user_folder = os.path.join(
-        UPLOAD_FOLDER,
-        str(session["user_id"])
-    )
-
-    return send_from_directory(
-        user_folder,
-        file["stored_name"],
-        as_attachment=True,
-        download_name=file["filename"]
-    )
+    log_activity(session["user_id"], "File downloaded", file_id, file["filename"])
+    user_folder = os.path.join(UPLOAD_FOLDER, str(session["user_id"]))
+    return send_from_directory(user_folder, file["stored_name"], as_attachment=True, download_name=file["filename"])
 
 
 # =========================================================
@@ -915,20 +1026,82 @@ def delete_file(file_id):
         session["user_id"]
     ))
 
+    conn.execute(
+        "INSERT INTO activity_log (user_id, file_id, action, details) VALUES (?, ?, ?, ?)",
+        (session["user_id"], file_id, "File moved to Trash", file["filename"])
+    )
     conn.commit()
-
     conn.close()
 
-    update_storage(
-        session["user_id"]
-    )
-
+    update_storage(session["user_id"])
     return redirect(request.referrer or "/dashboard")
 
 
 # =========================================================
 # TRASH
 # =========================================================
+
+@app.route("/preview/<int:file_id>")
+def preview_file(file_id):
+    if "user_id" not in session:
+        return redirect("/login")
+    conn = get_db()
+    file = conn.execute("""
+        SELECT * FROM files
+        WHERE id = ? AND user_id = ? AND is_deleted = 0
+    """, (file_id, session["user_id"])).fetchone()
+    if not file:
+        conn.close()
+        return "File not found.", 404
+
+    extension = os.path.splitext(file["filename"])[1].lower()
+    allowed = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".pdf", ".txt"}
+    if extension not in allowed:
+        conn.close()
+        return render_template("preview_unavailable.html", file=file), 415
+
+    conn.execute("UPDATE files SET last_opened_at = CURRENT_TIMESTAMP WHERE id = ?", (file_id,))
+    conn.commit()
+    conn.close()
+    log_activity(session["user_id"], "File previewed", file_id, file["filename"])
+    return render_template("file_preview.html", file=file, extension=extension)
+
+
+@app.route("/preview-content/<int:file_id>")
+def preview_content(file_id):
+    if "user_id" not in session:
+        return redirect("/login")
+    conn = get_db()
+    file = conn.execute("""
+        SELECT * FROM files
+        WHERE id = ? AND user_id = ? AND is_deleted = 0
+    """, (file_id, session["user_id"])).fetchone()
+    conn.close()
+    if not file:
+        return "File not found.", 404
+    extension = os.path.splitext(file["filename"])[1].lower()
+    if extension not in {".png", ".jpg", ".jpeg", ".gif", ".webp", ".pdf", ".txt"}:
+        return "Preview not supported.", 415
+    user_folder = os.path.join(UPLOAD_FOLDER, str(session["user_id"]))
+    return send_from_directory(user_folder, file["stored_name"], as_attachment=False, download_name=file["filename"], mimetype=mimetypes.guess_type(file["filename"])[0] or "application/octet-stream")
+
+
+@app.route("/activity")
+def activity_history():
+    if "user_id" not in session:
+        return redirect("/login")
+    conn = get_db()
+    rows = conn.execute("""
+        SELECT activity_log.*, files.filename
+        FROM activity_log
+        LEFT JOIN files ON files.id = activity_log.file_id
+        WHERE activity_log.user_id = ?
+        ORDER BY activity_log.created_at DESC
+        LIMIT 100
+    """, (session["user_id"],)).fetchall()
+    conn.close()
+    return render_template("activity.html", activities=rows)
+
 
 @app.route("/trash")
 def trash():
@@ -1132,77 +1305,89 @@ def toggle_favorite(file_id):
 # CREATE SHARE
 # =========================================================
 
-@app.route("/share/<int:file_id>")
+@app.route("/share/<int:file_id>", methods=["GET", "POST"])
 def create_share(file_id):
-
     if "user_id" not in session:
         return redirect("/login")
 
     conn = get_db()
-
     file = conn.execute("""
-        SELECT *
-        FROM files
-        WHERE id = ?
-        AND user_id = ?
-        AND is_deleted = 0
-    """, (
-        file_id,
-        session["user_id"]
-    )).fetchone()
+        SELECT * FROM files
+        WHERE id = ? AND user_id = ? AND is_deleted = 0
+    """, (file_id, session["user_id"])).fetchone()
 
     if not file:
-
         conn.close()
-
         return "File not found.", 404
 
     existing = conn.execute("""
-        SELECT token
-        FROM shares
-        WHERE file_id = ?
-        AND user_id = ?
-    """, (
-        file_id,
-        session["user_id"]
-    )).fetchone()
+        SELECT * FROM shares WHERE file_id = ? AND user_id = ?
+    """, (file_id, session["user_id"])).fetchone()
 
-    if existing:
+    if request.method == "POST":
+        expiry_hours = request.form.get("expiry_hours", "never")
+        expires_at = None
+        if expiry_hours in {"1", "24", "168", "720"}:
+            expires_at = (datetime.utcnow() + timedelta(hours=int(expiry_hours))).strftime("%Y-%m-%d %H:%M:%S")
 
-        token = existing["token"]
-
-    else:
-
-        token = uuid.uuid4().hex
-
-        conn.execute("""
-            INSERT INTO shares (
-                file_id,
-                user_id,
-                token
-            )
-            VALUES (?, ?, ?)
-        """, (
-            file_id,
-            session["user_id"],
-            token
-        ))
-
+        if existing:
+            conn.execute("UPDATE shares SET expires_at = ? WHERE id = ?", (expires_at, existing["id"]))
+            token = existing["token"]
+        else:
+            token = uuid.uuid4().hex
+            conn.execute("""
+                INSERT INTO shares (file_id, user_id, token, expires_at)
+                VALUES (?, ?, ?, ?)
+            """, (file_id, session["user_id"], token, expires_at))
         conn.commit()
+        log_action_conn = conn.execute(
+            "INSERT INTO activity_log (user_id, file_id, action, details) VALUES (?, ?, ?, ?)",
+            (session["user_id"], file_id, "Share link created/updated", file["filename"])
+        )
+        conn.commit()
+        conn.close()
+        return redirect(url_for("create_share", file_id=file_id))
+
+    if existing and existing["expires_at"]:
+        try:
+            expiry_dt = datetime.fromisoformat(existing["expires_at"])
+            if expiry_dt < datetime.utcnow():
+                existing = None
+        except (ValueError, TypeError):
+            pass
+
+    if not existing:
+        token = uuid.uuid4().hex
+        conn.execute("""
+            INSERT INTO shares (file_id, user_id, token)
+            VALUES (?, ?, ?)
+        """, (file_id, session["user_id"], token))
+        conn.commit()
+        existing = conn.execute("SELECT * FROM shares WHERE token = ?", (token,)).fetchone()
 
     conn.close()
+    share_url = url_for("shared_file", token=existing["token"], _external=True)
+    return render_template("share.html", file=file, share_url=share_url, share=existing)
 
-    share_url = url_for(
-        "shared_file",
-        token=token,
-        _external=True
-    )
 
-    return render_template(
-        "share.html",
-        file=file,
-        share_url=share_url
-    )
+@app.route("/share/<int:file_id>/revoke", methods=["POST"])
+def revoke_share(file_id):
+    if "user_id" not in session:
+        return redirect("/login")
+    conn = get_db()
+    file = conn.execute(
+        "SELECT filename FROM files WHERE id = ? AND user_id = ?",
+        (file_id, session["user_id"])
+    ).fetchone()
+    if file:
+        conn.execute("DELETE FROM shares WHERE file_id = ? AND user_id = ?", (file_id, session["user_id"]))
+        conn.commit()
+        conn.close()
+        log_activity(session["user_id"], "Share link revoked", file_id, file["filename"])
+        flash("Share link revoked.")
+        return redirect(url_for("my_files"))
+    conn.close()
+    return "File not found.", 404
 
 
 # =========================================================
@@ -1259,6 +1444,7 @@ def shared_file(token):
         ON shares.file_id = files.id
         WHERE shares.token = ?
         AND files.is_deleted = 0
+        AND (shares.expires_at IS NULL OR shares.expires_at > CURRENT_TIMESTAMP)
     """, (token,)).fetchone()
 
     conn.close()
@@ -1292,6 +1478,7 @@ def download_shared_file(token):
         ON shares.file_id = files.id
         WHERE shares.token = ?
         AND files.is_deleted = 0
+        AND (shares.expires_at IS NULL OR shares.expires_at > CURRENT_TIMESTAMP)
     """, (token,)).fetchone()
 
     conn.close()
@@ -1300,17 +1487,9 @@ def download_shared_file(token):
 
         return "Shared file not found.", 404
 
-    user_folder = os.path.join(
-        UPLOAD_FOLDER,
-        str(result["user_id"])
-    )
-
-    return send_from_directory(
-        user_folder,
-        result["stored_name"],
-        as_attachment=True,
-        download_name=result["filename"]
-    )
+    log_activity(result["user_id"], "Shared file downloaded", result["id"], result["filename"])
+    user_folder = os.path.join(UPLOAD_FOLDER, str(result["user_id"]))
+    return send_from_directory(user_folder, result["stored_name"], as_attachment=True, download_name=result["filename"])
 
 
 # =========================================================
@@ -1432,10 +1611,18 @@ def settings():
         return redirect("/login")
 
     user = current_user()
+    storage_used = calculate_storage(session["user_id"])
+    storage_limit = int(user["storage_limit"] or 0)
+    storage_remaining = max(storage_limit - storage_used, 0)
+    storage_percent = min((storage_used / storage_limit * 100) if storage_limit else 0, 100)
 
     return render_template(
         "settings.html",
-        user=user
+        user=user,
+        storage_used=storage_used,
+        storage_limit=storage_limit,
+        storage_remaining=storage_remaining,
+        storage_percent=storage_percent
     )
 
 
