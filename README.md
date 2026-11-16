@@ -41,8 +41,22 @@ https://vaultshare-pj6y.onrender.com
 
    Windows PowerShell:
 
+   If PowerShell blocks the virtual-environment activation script with an execution-policy error, run this command **once** in PowerShell. It applies only to your current Windows user account:
+
+   ```powershell
+   Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+   ```
+
+   If PowerShell asks for confirmation, enter `Y` and press Enter. Then activate the virtual environment:
+
    ```powershell
    .\venv\Scripts\Activate.ps1
+   ```
+
+   **Note:** `RemoteSigned` allows locally created scripts to run and generally requires downloaded scripts to be signed. Only run scripts you trust. To inspect your current policy, use:
+
+   ```powershell
+   Get-ExecutionPolicy -List
    ```
 
 3. Install dependencies:
